@@ -303,6 +303,29 @@ division(X,Y) :-
   RTA is X / Y,
   format('Resultado ~w',[RTA]).
 
+menu_calc :-
+  writeln('Primer numero'), read(N1),
+  writeln('Segundo numero'), read(N2),
+  format('Opciones: ~n 1 Suma ~n 2 Resta ~n 3 multiplicacion ~n 4 division ~n 5 Salir ~n'), read(OPC),
+  operacion(OPC,N1,N2),
+  format('~n ------------------- ~n'),
+  OPC < 5,
+  menu_calc.
+
+%menu_calc :- write('Opcion invalida'), menu_calc.
+
+operacion(1,X,Y) :-
+  suma(X,Y).
+operacion(2,X,Y) :-
+  resta(X,Y).
+operacion(3,X,Y) :-
+  multiplicacion(X,Y).
+operacion(4,X,Y) :-
+  division(X,Y).
+operacion(OPC,_,_):-
+  OPC \= 5,
+  writeln('Opcion invalida').
+
 % Ejecicios 8
 % horoscopo(Signo,DiaIni,MesIni,DiaFin,MesFin).
 horoscopo(aries,21,3,20,4).
@@ -409,7 +432,7 @@ requiere_de(X,Y) :-
 % factorial(N,Fact).
 % . N es el número ingresado (argumento de entrada).
 % . Fact es el resultado calculado (argumento de salida).
-
+/*
 factorial(1,Fact) :-
   Fact is N * 1.
 
@@ -417,5 +440,5 @@ factorial(N,Fact) :-
   Next is N - 1,
   Fact is N * Next,
   factorial(Next,Fact).
-
+*/
 
