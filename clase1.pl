@@ -195,18 +195,17 @@ tiene_deuda(X) :-
 % Ejercicio 6
 %
 % El programa debe responder si en una ciudad (dato de entrada), se puede o  no formar una banda.
+musico(guitarrista,carolina).
+musico(guitarrista,jose).
+musico(guitarrista,miguel).
 
-guitarrista(carolina).
-guitarrista(jose).
-guitarrista(miguel).
+musico(cantante,mariano).
+musico(cantante,silvia).
+musico(cantante,mauro).
 
-cantante(mariano).
-cantante(silvia).
-cantante(mauro).
-
-baterista(eduardo).
-baterista(diego).
-baterista(laura).
+musico(baterista,eduardo).
+musico(baterista,diego).
+musico(baterista,laura).
 
 vive_en(carolina,rosario).
 vive_en(jose,rosario).
@@ -220,6 +219,34 @@ vive_en(eduardo,roldan).
 
 % banda son necesarios un guitarrista, un cantante y un baterista.
 es_banda(X,Y,Z) :-
+  musico(cantante,X),
+  musico(guitarrista,Y),
+  musico(baterista,Z).
+es_banda(X,Y,Z) :-
+  musico(cantante,X),
+  musico(guitarrista,Z),
+  musico(baterista,Y).
+
+es_banda(X,Y,Z) :-
+  musico(cantante,Y),
+  musico(guitarrista,X),
+  musico(baterista,Z).
+es_banda(X,Y,Z) :-
+  musico(cantante,Y),
+  musico(guitarrista,Z),
+  musico(baterista,X).
+
+es_banda(X,Y,Z) :-
+  musico(cantante,Z),
+  musico(guitarrista,Y),
+  musico(baterista,X).
+es_banda(X,Y,Z) :-
+  musico(cantante,Z),
+  musico(guitarrista,X),
+  musico(baterista,Y).
+
+/*
+es_banda(X,Y,Z) :-
   guitarrista(X),
   cantante(Y),
   baterista(Z).
@@ -245,6 +272,7 @@ es_banda(X,Y,Z) :-
   guitarrista(Z),
   cantante(X),
   baterista(Y).
+*/
 
 se_puede_formar_banda(Ciudad) :-
   es_banda(X,Y,Z),
@@ -253,7 +281,11 @@ se_puede_formar_banda(Ciudad) :-
   vive_en(Z,Ciudad),
   format('en la ciudad de ~s se puede formar una banda con ~s, ~s y ~s ~n', [Ciudad,X,Y,Z]).
 
+se_puede_formar_banda(_) :-
+  writeln('No se puede formar banda').
+
 % Ejercicio 7
+% FIXME usar read
 suma(X,Y) :-
   RTA is X + Y,
   format('Resultado ~w',[RTA]).
@@ -371,4 +403,19 @@ requiere_de(X,Y) :-
   precede(Otra,Y),
   requiere_de(X,Otra).
 
-%
+% Ejercicio 11
+
+% Hacer un programa para calcular el factorial de un número.
+% factorial(N,Fact).
+% . N es el número ingresado (argumento de entrada).
+% . Fact es el resultado calculado (argumento de salida).
+
+factorial(1,Fact) :-
+  Fact is N * 1.
+
+factorial(N,Fact) :-
+  Next is N - 1,
+  Fact is N * Next,
+  factorial(Next,Fact).
+
+
