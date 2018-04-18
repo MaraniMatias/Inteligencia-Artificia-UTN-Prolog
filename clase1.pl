@@ -158,6 +158,12 @@ abuela(A,X) :-
   A\=X,
   format('~w ~s ~s ~n', [A,'es abuela de',X]).
 
+% TODO: abuelo_abuela(A,N),
+abuelo_abuela(A,N) :-
+  abuela(A,N).
+abuelo_abuela(A,N) :-
+  abuelo(A,N).
+
 nieto(N,A) :-
   hombre(N),
   abuelo_abuela(A,N),
@@ -167,9 +173,8 @@ nieta(N,A) :-
   abuelo_abuela(A,N),
   format('~w ~s ~s ~n', [N,'es nieta de',A]).
 
-
 % Ejercicio 5
-
+% NOTA: gtrace
 % auto(patente,propietario)
 auto(hti687,pedro).
 auto(jug144,juan).
@@ -289,18 +294,17 @@ valida_fecha_inicio(Dia,Mes,Signo) :-
   DiaIni =< Dia.
 valida_fecha_fin(Dia,Mes,Signo) :-
   horoscopo(Signo,_,_,DiaFin,MesFin),
-  MesIni < Mes,
   MesFin == Mes,
   DiaFin >= Dia.
 
 signo(Dia,Mes,Signo) :-
-  horoscopo(Signo,DiaIni,MesIni,DiaFin,MesFin),
+  horoscopo(Signo,DiaIni,MesIni,_,MesFin),
   MesIni == Mes,
   DiaIni =< Dia,
   MesFin > Mes.
 
 signo(Dia,Mes,Signo) :-
-  horoscopo(Signo,DiaIni,MesIni,DiaFin,MesFin),
+  horoscopo(Signo,_,_,DiaFin,MesFin),
   MesFin == Mes,
   DiaFin >= Dia.
 
@@ -321,3 +325,21 @@ validar_signo(Dia,Mes,Signo) :-
 signo(Dia,Mes) :-
   signo(Dia,Mes,Signo),
   format('El signo es ~s ~w',[Signo]).
+
+% Ejemplo 9
+
+% Donde hijo(X,Y) indica que X es hijo de Y.
+% pensar con el ejercicio anterior
+hijo(juan,miguel).
+hijo(jose,miguel).
+hijo(miguel,roberto).
+hijo(julio,roberto).
+hijo(roberto,carlos).
+
+% Definir la regla descendiente(A,B), la cual permite determinar si A es descendiente de B.
+descendiente(A,B) :-
+  hijo(A,B).
+
+descendiente(A,B) :-
+  hijo(A,X),
+  descendiente(X,B).
