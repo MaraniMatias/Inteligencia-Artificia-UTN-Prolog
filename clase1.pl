@@ -326,7 +326,7 @@ signo(Dia,Mes) :-
   signo(Dia,Mes,Signo),
   format('El signo es ~s ~w',[Signo]).
 
-% Ejemplo 9
+% Ejercicio 9
 
 % Donde hijo(X,Y) indica que X es hijo de Y.
 % pensar con el ejercicio anterior
@@ -338,8 +338,37 @@ hijo(roberto,carlos).
 
 % Definir la regla descendiente(A,B), la cual permite determinar si A es descendiente de B.
 descendiente(A,B) :-
-  hijo(A,B).
+  hijo(A,B),
+  format('~s es descendiente de ~s',[A,B]).
 
 descendiente(A,B) :-
   hijo(A,X),
   descendiente(X,B).
+
+% Ejercicio 10
+
+% A necesita la tariea _
+precede(a,_).
+precede(b,_).
+precede(c,a).
+precede(d,c).
+precede(d,b).
+precede(e,d).
+precede(h,e).
+precede(i,e).
+precede(j,i).
+precede(j,h).
+precede(j,g).
+precede(g,f).
+precede(f,b).
+
+% Definir la regla requiere_de(X,Y), la cual permite saber si para la ejecución
+% de la tarea Y se requiere tener finalizada la tarea X.
+requiere_de(X,Y) :-
+  precede(Y,X).
+
+requiere_de(X,Y) :-
+  precede(Otra,Y),
+  requiere_de(X,Otra).
+
+%
