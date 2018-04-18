@@ -284,8 +284,7 @@ se_puede_formar_banda(Ciudad) :-
 se_puede_formar_banda(_) :-
   writeln('No se puede formar banda').
 
-% Ejercicio 7
-% FIXME usar read
+% Ejercicio 7, ejecutar menu_cacl
 suma(X,Y) :-
   RTA is X + Y,
   format('Resultado ~w',[RTA]).
@@ -303,17 +302,6 @@ division(X,Y) :-
   RTA is X / Y,
   format('Resultado ~w',[RTA]).
 
-menu_calc :-
-  writeln('Primer numero'), read(N1),
-  writeln('Segundo numero'), read(N2),
-  format('Opciones: ~n 1 Suma ~n 2 Resta ~n 3 multiplicacion ~n 4 division ~n 5 Salir ~n'), read(OPC),
-  operacion(OPC,N1,N2),
-  format('~n ------------------- ~n'),
-  OPC < 5,
-  menu_calc.
-
-%menu_calc :- write('Opcion invalida'), menu_calc.
-
 operacion(1,X,Y) :-
   suma(X,Y).
 operacion(2,X,Y) :-
@@ -322,9 +310,24 @@ operacion(3,X,Y) :-
   multiplicacion(X,Y).
 operacion(4,X,Y) :-
   division(X,Y).
-operacion(OPC,_,_):-
-  OPC \= 5,
+
+operacion(_,_,_) :-
   writeln('Opcion invalida').
+
+menu_calc :-
+  writeln('Primer numero'), read(N1),
+  writeln('Segundo numero'), read(N2),
+  format('Opciones:
+    1 Suma
+    2 Resta
+    3 multiplicacion
+    4 division
+    0 Salir ~n'),
+  read(OPC),
+  OPC > 0,
+  operacion(OPC,N1,N2),
+  format('~n---------------------~n'),
+  menu_calc.
 
 % Ejecicios 8
 % horoscopo(Signo,DiaIni,MesIni,DiaFin,MesFin).
