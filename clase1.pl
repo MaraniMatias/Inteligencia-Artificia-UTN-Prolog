@@ -439,11 +439,12 @@ requiere_de(X,Y) :-
 % . Fact es el resultado calculado (argumento de salida).
 
 factorial(1,Fact) :-
-  Fact is N * 1,
-  format('Resultado: ~w',[Fact]).
+  writeln(1),
+  format('Resultado: ~w ~n',[Fact]).
 
 factorial(N,Fact) :-
-  Next is N - 1,
-  Fact is N * Next,
-  factorial(Next,Fact).
+  writeln(N),
+  Nn is N - 1,
+  %% Fact is Fact * Nn,
+  factorial(Nn, Fact).
 
