@@ -315,6 +315,7 @@ operacion(_,_,_) :-
   writeln('Opcion invalida').
 
 menu_calc :-
+  write('<-oO Ejercico 5 Oo->'), nl,
   write('Primer numero'), nl, read(N1),
   write('Segundo numero'), nl, read(N2),
   format('Opciones:
@@ -324,10 +325,11 @@ menu_calc :-
     4 division
     0 Salir ~n'),
   read(OPC),
+  format('=> Opciones elegidas: N1 ~w N2 ~w OPC ~w ~n',[N1,N2,OPC]),
   OPC > 0,
-  operacion(OPC,N1,N2),
-  format('~n=> Opciones elegidas: N1 ~w N2 ~w OPC ~w ~n',[N1,N2,OPC]),
-  menu_calc, !. % Evita que las variables queden guardadas :D
+  operacion(OPC,N1,N2), nl,
+  !, % ! Evita que las variables queden guardadas :D
+  menu_calc.
 
 % Ejecicios 8
 % horoscopo(Signo,DiaIni,MesIni,DiaFin,MesFin).
@@ -435,13 +437,13 @@ requiere_de(X,Y) :-
 % factorial(N,Fact).
 % . N es el número ingresado (argumento de entrada).
 % . Fact es el resultado calculado (argumento de salida).
-/*
+
 factorial(1,Fact) :-
-  Fact is N * 1.
+  Fact is N * 1,
+  format('Resultado: ~w',[Fact]).
 
 factorial(N,Fact) :-
   Next is N - 1,
   Fact is N * Next,
   factorial(Next,Fact).
-*/
 
