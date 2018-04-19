@@ -315,8 +315,8 @@ operacion(_,_,_) :-
   writeln('Opcion invalida').
 
 menu_calc :-
-  writeln('Primer numero'), read(N1),
-  writeln('Segundo numero'), read(N2),
+  write('Primer numero'), nl, read(N1),
+  write('Segundo numero'), nl, read(N2),
   format('Opciones:
     1 Suma
     2 Resta
@@ -326,8 +326,8 @@ menu_calc :-
   read(OPC),
   OPC > 0,
   operacion(OPC,N1,N2),
-  format('~n---------------------~n'),
-  menu_calc.
+  format('~n=> Opciones elegidas: N1 ~w N2 ~w OPC ~w ~n',[N1,N2,OPC]),
+  menu_calc, !.
 
 % Ejecicios 8
 % horoscopo(Signo,DiaIni,MesIni,DiaFin,MesFin).
