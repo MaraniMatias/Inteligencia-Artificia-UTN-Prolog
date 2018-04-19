@@ -327,7 +327,7 @@ menu_calc :-
   OPC > 0,
   operacion(OPC,N1,N2),
   format('~n=> Opciones elegidas: N1 ~w N2 ~w OPC ~w ~n',[N1,N2,OPC]),
-  menu_calc, !.
+  menu_calc, !. % Evita que las variables queden guardadas :D
 
 % Ejecicios 8
 % horoscopo(Signo,DiaIni,MesIni,DiaFin,MesFin).
