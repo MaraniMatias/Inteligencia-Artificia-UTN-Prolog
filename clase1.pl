@@ -315,8 +315,9 @@ operacion(_,_,_) :-
   writeln('Opcion invalida').
 
 menu_calc :-
-  writeln('Primer numero'), read(N1),
-  writeln('Segundo numero'), read(N2),
+  write('<-oO Ejercico 5 Oo->'), nl,
+  write('Primer numero'), nl, read(N1),
+  write('Segundo numero'), nl, read(N2),
   format('Opciones:
     1 Suma
     2 Resta
@@ -324,9 +325,10 @@ menu_calc :-
     4 division
     0 Salir ~n'),
   read(OPC),
+  format('=> Opciones elegidas: N1 ~w N2 ~w OPC ~w ~n',[N1,N2,OPC]),
   OPC > 0,
-  operacion(OPC,N1,N2),
-  format('~n---------------------~n'),
+  operacion(OPC,N1,N2), nl,
+  !, % ! Evita que las variables queden guardadas :D
   menu_calc.
 
 % Ejecicios 8
@@ -435,6 +437,7 @@ requiere_de(X,Y) :-
 % factorial(N,Fact).
 % . N es el número ingresado (argumento de entrada).
 % . Fact es el resultado calculado (argumento de salida).
+<<<<<<< HEAD
 /*
 factorial(0, Fact) :-
   write(Fact).
@@ -455,4 +458,3 @@ factorial(N, Fact) :-
   N1 is N - 1,
   factorial(N1, F1), % Cuando N1 es 0 pone 1 a F1
   Fact is N * F1.
-
