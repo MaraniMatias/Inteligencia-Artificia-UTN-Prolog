@@ -436,12 +436,23 @@ requiere_de(X,Y) :-
 % . N es el número ingresado (argumento de entrada).
 % . Fact es el resultado calculado (argumento de salida).
 /*
-factorial(1,Fact) :-
-  Fact is N * 1.
+factorial(0, Fact) :-
+  write(Fact).
 
-factorial(N,Fact) :-
+factorial(N, FactAcum) :-
+  N > 0,
   Next is N - 1,
-  Fact is N * Next,
-  factorial(Next,Fact).
+  Fact is N * FactAcum,
+  factorial(Next, Fact).
+
+factorial(N) :-
+  Next is N - 1,
+  factorial(Next, N).
 */
+factorial(0, 1).
+factorial(N, Fact) :-
+  N > 0,
+  N1 is N - 1,
+  factorial(N1, F1), % Cuando N1 es 0 pone 1 a F1
+  Fact is N * F1.
 
