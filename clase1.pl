@@ -437,7 +437,6 @@ requiere_de(X,Y) :-
 % factorial(N,Fact).
 % . N es el número ingresado (argumento de entrada).
 % . Fact es el resultado calculado (argumento de salida).
-<<<<<<< HEAD
 /*
 factorial(0, Fact) :-
   write(Fact).
@@ -458,3 +457,23 @@ factorial(N, Fact) :-
   N1 is N - 1,
   factorial(N1, F1), % Cuando N1 es 0 pone 1 a F1
   Fact is N * F1.
+
+%  Ejercicio 12
+% 5+4+3+2+1
+sumatoria(0, 0).
+sumatoria(N, Suma) :-
+  N > 0,
+  N1 is N - 1,
+  sumatoria(N1, S1),
+  Suma is N + S1.
+
+% Ejercicio 13
+%
+% Hacer un programa que permita ingresar un número y calcule la
+% sumatoria de sus términos descontados en una unidad (hasta llegar a cero)
+% pares e impares.
+% suma(N,SumPares,SumImpares).
+%. N es el número ingresado (argumento de entrada).
+%. SumPares es uno de los resultados calculados (argumento de salida).
+%. SumImpares es uno de los resultados calculados (argumento de salida).
+
