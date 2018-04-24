@@ -143,26 +143,25 @@ abuelo(A,X) :-
 
 abuela(A,X) :-
   mujer(A),
-  % Buscar los padres de X
-  padre(X,Px,_),
-  % Buscar abuela paterna, madre del padre de x
-  padre(Px,_,A),
+  abuelo_abuela(A,X),
   A\=X,
   format('~w ~s ~s ~n', [A,'es abuela de',X]).
 abuela(A,X) :-
   mujer(A),
-  % Buscar los padres de X
-  padre(X,_,Mx),
-  % Buscar abuela paterna, madre del padre de x
-  padre(Mx,_,A),
+  abuelo_abuela(A,X),
   A\=X,
   format('~w ~s ~s ~n', [A,'es abuela de',X]).
 
-% TODO: abuelo_abuela(A,N),
-abuelo_abuela(A,N) :-
-  abuela(A,N).
-abuelo_abuela(A,N) :-
-  abuelo(A,N).
+abuelo_abuela(A,X) :-
+  % Buscar los padres de X
+  padre(X,_,Mx),
+  % Buscar abuela paterna, madre del padre de x
+  padre(Mx,_,A).
+abuelo_abuela(A,X) :-
+  % Buscar los padres de X
+  padre(X,Px,_),
+  % Buscar abuela paterna, madre del padre de x
+  padre(Px,_,A).
 
 nieto(N,A) :-
   hombre(N),
