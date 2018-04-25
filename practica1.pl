@@ -330,6 +330,27 @@ menu_calc :-
   !, % ! Evita que las variables queden guardadas :D
   menu_calc.
 
+% Menu profe
+% probar si tiene el mismo error
+menu:-
+  write('<-oO Ejercico 5 Oo->'), nl,
+  write('Primer numero'), nl, read(N1),
+  write('Segundo numero'), nl, read(N2),
+  format('Opciones:
+    1 Suma
+    2 Resta
+    3 multiplicacion
+    4 division
+    0 Salir ~n'),
+  read(OPC),
+  format('=> Opciones elegidas: N1 ~w N2 ~w OPC ~w ~n',[N1,N2,OPC]),
+  OPC \= 0,
+  operacion(OPC,N1,N2), nl,
+  menu.
+
+menu:-
+  write('adios').
+
 % Ejecicios 8
 % horoscopo(Signo,DiaIni,MesIni,DiaFin,MesFin).
 horoscopo(aries,21,3,20,4).
@@ -396,6 +417,7 @@ hijo(julio,roberto).
 hijo(roberto,carlos).
 
 % Definir la regla descendiente(A,B), la cual permite determinar si A es descendiente de B.
+% la foma mas basica.
 descendiente(A,B) :-
   hijo(A,B),
   format('~s es descendiente de ~s',[A,B]).
@@ -475,4 +497,6 @@ sumatoria(N, Suma) :-
 %. N es el número ingresado (argumento de entrada).
 %. SumPares es uno de los resultados calculados (argumento de salida).
 %. SumImpares es uno de los resultados calculados (argumento de salida).
+
+
 
