@@ -508,16 +508,14 @@ sumatoria(N, Suma) :-
 suma(0,0,0).
 suma(N,SumPares,SumImpares) :-
   N > 0,
-  EsPar is mod(N,2),
-  EsPar == 0,
+  0 is mod(N,2),
   N1 is N - 1,
   suma(N1, SP1, SumImpares),
   SumPares is N + SP1.
 
 suma(N,SumPares,SumImpares) :-
   N > 0,
-  EsImPar is mod(N,2),
-  EsImPar == 1,
+  1 is mod(N,2),
   N1 is N - 1,
   suma(N1, SumPares, SI1),
   SumImpares is N + SI1.
