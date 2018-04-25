@@ -331,7 +331,6 @@ menu_calc :-
   menu_calc.
 
 % Menu profe
-% probar si tiene el mismo error
 menu:-
   write('<-oO Ejercico 5 Oo->'), nl,
   write('Primer numero'), nl, read(N1),
@@ -488,6 +487,8 @@ sumatoria(N, Suma) :-
   sumatoria(N1, S1),
   Suma is N + S1.
 
+% NOTA: las operacion despues de la recusiviad la hace ala vuelta, es decir cuando pasa la condicion
+
 % Ejercicio 13
 %
 % Hacer un programa que permita ingresar un número y calcule la
@@ -497,6 +498,27 @@ sumatoria(N, Suma) :-
 %. N es el número ingresado (argumento de entrada).
 %. SumPares es uno de los resultados calculados (argumento de salida).
 %. SumImpares es uno de los resultados calculados (argumento de salida).
+%
+% suma(5,SumPares,SumImpares).
+% 5 4 3 2 1 0
+% SumImpares 9
+% SumPares 6
 
+% suma(N,SumPares,SumImpares).
+suma(0,0,0).
+suma(N,SumPares,SumImpares) :-
+  N > 0,
+  EsPar is mod(N,2),
+  EsPar == 0,
+  N1 is N - 1,
+  suma(N1, SP1, SumImpares),
+  SumPares is N + SP1.
 
+suma(N,SumPares,SumImpares) :-
+  N > 0,
+  EsImPar is mod(N,2),
+  EsImPar == 1,
+  N1 is N - 1,
+  suma(N1, SumPares, SI1),
+  SumImpares is N + SI1.
 
