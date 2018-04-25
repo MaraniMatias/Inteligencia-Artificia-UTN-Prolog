@@ -510,13 +510,13 @@ suma(N,SumPares,SumImpares) :-
   N > 0,
   0 is mod(N,2),
   N1 is N - 1,
-  suma(N1, SP1, SumImpares),
-  SumPares is N + SP1.
+  suma(N1, SP, SumImpares),
+  SumPares is N + SP.
 
 suma(N,SumPares,SumImpares) :-
   N > 0,
   1 is mod(N,2),
   N1 is N - 1,
-  suma(N1, SumPares, SI1),
-  SumImpares is N + SI1.
+  suma(N1, SumPares, SI),
+  SumImpares is N + SI.
 
