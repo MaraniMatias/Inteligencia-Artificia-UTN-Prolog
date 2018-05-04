@@ -20,10 +20,10 @@ conexion(A,B) :-
   desde(A,X),
   conexion(X,B).
 
-% Menu
+% Menu, creo que no tiene sentido usar un menu
 menu:-
   write('<-oO Trabajo Practico Oo->'), nl,
-  format('Para salir pulse 0 ~n'),
+  format('Para salir pulse 0 ~n Para continuar cualquier numero. ~n'),
   read(OPC), OPC \= 0,
   write('Ciudad de origen'), nl, read(C1),
   write('Ciudad de destino'), nl, read(C2),
