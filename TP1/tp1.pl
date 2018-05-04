@@ -18,7 +18,6 @@ conexion(A,B) :-
 
 conexion(A,B) :-
   desde(A,X),
-  X \= B, % Evita loops
   conexion(X,B).
 
 % Menu
