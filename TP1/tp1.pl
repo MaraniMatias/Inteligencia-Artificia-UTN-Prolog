@@ -4,6 +4,11 @@ desde(ciudad1,ciudad4).
 desde(ciudad2,ciudad3).
 desde(ciudad4,ciudad6).
 desde(ciudad4,ciudad5).
+desde(ciudad5,ciudad6).
+% punto d
+desde(ciudad2,ciudad5).
+% punto e
+desde(ciudad2,ciudad1).
 
 % Rebla permita establecer si es posible llegar desde la ciudad A hasta la ciudad B.
 
@@ -13,11 +18,8 @@ conexion(A,B) :-
 
 conexion(A,B) :-
   desde(A,X),
+  X \= B, % Evita loops
   conexion(X,B).
-
-% En caso de no encontrar una conexión.
-conexion(_,_) :-
-  writeln('No existe conexión').
 
 % Menu
 menu:-
