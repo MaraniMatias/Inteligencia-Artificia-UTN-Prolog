@@ -14,10 +14,6 @@ defmodule Main do
     end)
   end
 
-  def conexioan(recorridos, {origen, nil}) do
-    "No exite conexion"
-  end
-
   def conexion(recorridos, {origen, destino}) do
     {ciudad_origen, destinos} = buscar_origen(recorridos, destino)
 
