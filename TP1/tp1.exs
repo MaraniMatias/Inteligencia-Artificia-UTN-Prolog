@@ -10,11 +10,11 @@ destinos = [
 ]
 
 defmodule Main do
-  def listar_destinos(destinos) do
-    for {ciudad_origen, ciudad_destino} <- destinos, ciudad_destino do
-      IO.puts("Desde #{ciudad_origen} hasta #{ciudad_destino}")
-    end
-  end
+  # def listar_destinos(destinos) do
+  #  for {ciudad_origen, ciudad_destino} <- destinos, ciudad_destino do
+  #    IO.puts("Desde #{ciudad_origen} hasta #{ciudad_destino}")
+  #  end
+  # end
 
   # def conexion(destinos, {a, b}) do
   #  IO.puts("#{a} -> #{b}")
@@ -22,10 +22,14 @@ defmodule Main do
   #  IO.puts(ciudad_destino == b)
   # end
 
-  def conexion(destinos, viaje) do
+  def find(destinos, viaje) do
     Enum.find(destinos, fn ciudades ->
       viaje == ciudades
     end)
+  end
+
+  def conexion(destinos, viaje) do
+    find(destinos, viaje)
   end
 end
 
