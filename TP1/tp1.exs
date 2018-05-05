@@ -1,8 +1,3 @@
-# {:ok, "Successful!"}
-{:ok, value} = {:ok, "Successful!"}
-# "Successful!"
-IO.puts(value)
-
 destinos = [
   {:ciudad1, "ciudad2"},
   {:ciudad1, "ciudad4"},
@@ -21,12 +16,27 @@ defmodule Main do
     end
   end
 
-  def conexion(destinos, {a, b}) do
-    IO.puts("#{a} -> #{b}")
-    %{^a => ciudad_destino} = %{a => destinos[a]}
-    IO.puts(ciudad_destino == b)
+  # def conexion(destinos, {a, b}) do
+  #  IO.puts("#{a} -> #{b}")
+  #  %{^a => ciudad_destino} = %{a => destinos[a]}
+  #  IO.puts(ciudad_destino == b)
+  # end
+
+  def conexion(destinos, viaje) do
+    Enum.find(destinos, fn ciudades ->
+      viaje == ciudades
+    end)
   end
 end
 
 # IO.puts(Main.listar_destinos(destinos))
-IO.puts(Main.conexion(destinos, {:ciudad1, "ciudad2"}))
+
+IO.inspect(
+  destinos
+  |> Main.conexion({:ciudad1, "ciudad4"})
+)
+
+IO.inspect(
+  destinos
+  |> Main.conexion({:ciudad1, "ciudad5"})
+)
