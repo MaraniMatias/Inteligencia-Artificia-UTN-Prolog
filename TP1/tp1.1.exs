@@ -19,7 +19,6 @@ defmodule Main do
   end
 
   def conexion(recorridos, {origen, destino}) do
-    IO.puts("Conexion para  #{origen}, #{destino}")
     {ciudad_origen, destinos} = buscar_origen(recorridos, destino)
 
     if ciudad_origen == origen do
@@ -30,17 +29,10 @@ defmodule Main do
   end
 end
 
-IO.inspect(
-  recorridos
-  |> Main.conexion({"ciudad1", "ciudad4"})
-)
+IO.puts(recorridos |> Main.conexion({"ciudad1", "ciudad4"}))
 
-IO.inspect(
-  recorridos
-  |> Main.conexion({"ciudad1", "ciudad2"})
-)
+IO.puts(recorridos |> Main.conexion({"ciudad1", "ciudad2"}))
 
-IO.inspect(
-  recorridos
-  |> Main.conexion({"ciudad1", "ciudad5"})
-)
+IO.puts(recorridos |> Main.conexion({"ciudad1", "ciudad5"}))
+
+IO.puts(recorridos |> Main.conexion({"ciudad2", "ciudad5"}))

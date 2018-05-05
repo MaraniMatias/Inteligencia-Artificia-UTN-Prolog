@@ -1,47 +1,38 @@
-destinos = [
-  {:ciudad1, "ciudad2"},
-  {:ciudad1, "ciudad4"},
-  {:ciudad2, "ciudad3"},
-  {:ciudad4, "ciudad6"},
-  {:ciudad4, "ciudad5"},
-  {:ciudad5, "ciudad6"},
-  {:ciudad2, "ciudad5"},
-  {:ciudad2, "ciudad1"}
+recorridos = [
+  {"ciudad1", ["ciudad2", "ciudad4"]},
+  {"ciudad2", ["ciudad3", "ciudad5", "ciudad1"]},
+  {"ciudad4", ["ciudad6", "ciudad5"]},
+  {"ciudad5", ["ciudad6"]}
 ]
 
 defmodule Main do
-  # def conexion(destinos, {a, b}) do
-  #  IO.puts("#{a} -> #{b}")
-  #  %{^a => ciudad_destino} = %{a => destinos[a]}
-  #  IO.puts(ciudad_destino == b)
-  # end
+  def buscar_origen(recorridos, destino) do
+    Enum.find(recorridos, fn ruta ->
+      {ciudad_origen, destinos} = ruta
 
-  def find_destinos(recorridos, origen) do
-    Enum.find(recorridos, fn ciudades ->
-      {^origen, destinos} = ciudades
+      Enum.find(destinos, fn ciudad -> destino == ciudad end)
     end)
   end
 
-  def find(destinos, viaje) do
-    Enum.find(destinos, fn ciudades ->
-      viaje == ciudades
-    end)
+  def conexioan(recorridos, {origen, nil}) do
+    "No exite conexion"
   end
 
-  def conexion(destinos, viaje) do
-    destinos = find_destinos(destinos, origen)
-    IO.inspect(destinos)
-    viaje_posible = find(destinos, viaje)
-    viaje_posible
+  def conexion(recorridos, {origen, destino}) do
+    {ciudad_origen, destinos} = buscar_origen(recorridos, destino)
+
+    if ciudad_origen == origen do
+      "Exite conexion"
+    else
+      conexion(recorridos, {origen, ciudad_origen})
+    end
   end
 end
 
-IO.inspect(
-  destinos
-  |> Main.conexion({:ciudad1, "ciudad4"})
-)
+IO.puts(recorridos |> Main.conexion({"ciudad2", "ciudad4"}))
 
-IO.inspect(
-  destinos
-  |> Main.conexion({:ciudad1, "ciudad5"})
-)
+IO.puts(recorridos |> Main.conexion({"ciudad1", "ciudad2"}))
+
+IO.puts(recorridos |> Main.conexion({"ciudad1", "ciudad5"}))
+
+IO.puts(recorridos |> Main.conexion({"ciudad2", "ciudad5"}))
