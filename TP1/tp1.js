@@ -1,25 +1,22 @@
 const recoridos = {
   ciudad1: ["ciudad2", "ciudad4"],
   ciudad2: ["ciudad3", "ciudad5", "ciudad1"],
+  ciudad3: [],
   ciudad4: ["ciudad6", "ciudad5"],
-  ciudad5: ["ciudad6"]
+  ciudad5: ["ciudad6"],
+  ciudad6: []
 };
 
 function conexion(A, B) {
   console.log('Buscar conexion %s con %s', A, B);
- if (typeof recoridos[A] === 'undefined') {
-    return false;
-  } else {
-    let rta = recoridos[A].find(destino => {
-      if (B !== destino) {
-        return true;
-      } else {
-        return conexion(destino, B);
-      }
-    });
-
-    return rta;
-  }
+  let rta = recoridos[A].find(destino => {
+    if (B !== destino) {
+      return true;
+    } else {
+      return conexion(destino, B);
+    }
+  });
+  return rta ? true : false;
 }
 
 console.log(conexion("ciudad4", "ciudad1") || "No exite conexion");
