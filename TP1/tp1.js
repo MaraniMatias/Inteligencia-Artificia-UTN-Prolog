@@ -7,12 +7,9 @@ const recoridos = {
 
 function conexion(A, B) {
   console.log('Buscar conexion %s con %s', A, B);
-  if (A == B) {
-    return true;
-  } else  if (typeof recoridos[A] === 'undefined') {
+ if (typeof recoridos[A] === 'undefined') {
     return false;
   } else {
-    // obtengo todos los destionos
     let rta = recoridos[A].find(destino => {
       if (B !== destino) {
         return true;
@@ -20,11 +17,8 @@ function conexion(A, B) {
         return conexion(destino, B);
       }
     });
-    if (rta) {
-      return true;
-    } else {
-      return false;
-    }
+
+    return rta;
   }
 }
 
