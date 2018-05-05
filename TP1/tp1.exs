@@ -29,7 +29,8 @@ defmodule Main do
   end
 
   def conexion(destinos, viaje) do
-    find(destinos, viaje)
+    viaje_posible = find(destinos, viaje)
+    viaje_posible
   end
 end
 

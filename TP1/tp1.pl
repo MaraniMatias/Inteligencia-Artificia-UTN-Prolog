@@ -17,6 +17,7 @@ conexion(A,B) :-
   desde(A,B).
 
 conexion(A,B) :-
+  A \= B,
   desde(A,X),
   conexion(X,B).
 
