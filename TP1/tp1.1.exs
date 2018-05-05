@@ -19,13 +19,17 @@ defmodule Main do
 
   def conexion(recorridos, {origen, destino}) do
     IO.puts("Buscar para  #{origen}, #{destino}")
-    {ciudad_origen, destinos} = buscar_origen(recorridos, destino)
+    rta = buscar_origen(recorridos, destino)
 
-    if ciudad_origen == origen do
-      "Exite conexion"
-    else
-      IO.puts("#{ciudad_origen}, #{origen}, #{destino}")
-      conexion(recorridos, {origen, ciudad_origen})
+    if rta do
+      {ciudad_origen, destinos} = rta
+
+      if ciudad_origen == origen do
+        "Exite conexion"
+      else
+        IO.puts("#{ciudad_origen}, #{origen}, #{destino}")
+        conexion(recorridos, {origen, ciudad_origen})
+      end
     end
   end
 end
