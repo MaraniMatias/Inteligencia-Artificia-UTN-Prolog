@@ -10,11 +10,12 @@ const recoridos = {
 function conexion(A, B) {
   console.log('Buscar conexion %s con %s', A, B);
   let rta = recoridos[A].find(destino => {
-    return (B !== destino) ? true : conexion(destino, B);
+    return B !== destino || conexion(destino, B);
   });
   return rta ? true : false;
 }
 
+console.log(conexion("ciudad2", "ciudad6") || "No exite conexion");
 console.log(conexion("ciudad4", "ciudad1") || "No exite conexion");
 console.log(conexion("ciudad5", "ciudad2") || "No exite conexion");
 
