@@ -10,30 +10,33 @@ recorridos = %{
 
 defmodule Main do
   def buscar_origen(recorridos, {origen, destino}) do
-    IO.puts("Buscar origen para #{origen} y #{destino}")
+    # IO.puts("Buscar origen para #{origen} y #{destino}")
 
-    {ciudad, _} =
-      Enum.find(recorridos, fn ruta ->
+    {ciudad_orgien, _} =
+      Enum.find(recorridos, {nil, []}, fn ruta ->
         {_, destinos} = ruta
 
-        Enum.find(destinos, fn origen_nuevo ->
-          origen_nuevo == destino
+        Enum.find(destinos, fn destino_nuevo ->
+          destino_nuevo == destino
         end)
       end)
 
-    ciudad
+    ciudad_orgien
   end
 
   def conexion(_, {origen, destino}) when origen == destino do
     "Con Conexion"
   end
 
-  def conexion(_, {nil, _}) do
+  def conexion(_, {origen, destino}) when origen == nil or destino == nil do
     "Sin Conexion"
   end
 
   def conexion(recorridos, {origen, destino}) when origen != destino do
-    conexion(recorridos, {origen, buscar_origen(recorridos, {origen, destino})})
+    conexion(recorridos, {
+      origen,
+      buscar_origen(recorridos, {origen, destino})
+    })
   end
 
   def conexion_string(recorridos, {origen, destino}) do

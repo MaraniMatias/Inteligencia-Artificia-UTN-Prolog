@@ -1,6 +1,6 @@
 recorridos = %{
   ciudad1: [:ciudad2, :ciudad4],
-  # ciudad2 => ["ciudad3", "ciudad5", "ciudad1"],
+  # ciudad2: [:ciudad3, :ciudad5, :ciudad1],
   ciudad2: [:ciudad3, :ciudad5],
   ciudad3: [],
   ciudad4: [:ciudad6, :ciudad5],
@@ -9,31 +9,34 @@ recorridos = %{
 }
 
 defmodule Main do
-  def buscar(recorridos, {origen, destino}) do
+  def buscar_origen(recorridos, {origen, destino}) do
     # IO.puts("Buscar origen para #{origen} y #{destino}")
-    destinos = recorridos[origen]
-    ciudad = Enum.find(destinos, fn destino_nuevo -> destino_nuevo === destino end)
 
-    if ciudad != nil do
-      ciudad
-    else
-      Enum.find(destinos, fn destino_nuevo ->
-        buscar(recorridos, {origen, destino_nuevo})
+    {ciudad_orgien, _} =
+      Enum.find(recorridos, {nil, []}, fn ruta ->
+        {_, destinos} = ruta
+
+        Enum.find(destinos, fn destino_nuevo ->
+          destino_nuevo == destino
+        end)
       end)
-    end
+
+    ciudad_orgien
   end
 
   def conexion(_, {origen, destino}) when origen == destino do
     "Con Conexion"
   end
 
-  def conexion(_, {nil, _}) do
+  def conexion(_, {origen, destino}) when origen == nil or destino == nil do
     "Sin Conexion"
   end
 
   def conexion(recorridos, {origen, destino}) when origen != destino do
-    ciudad = buscar(recorridos, {origen, destino})
-    conexion(recorridos, {ciudad, destino})
+    conexion(recorridos, {
+      origen,
+      buscar_origen(recorridos, {origen, destino})
+    })
   end
 
   def conexion_string(recorridos, {origen, destino}) do
