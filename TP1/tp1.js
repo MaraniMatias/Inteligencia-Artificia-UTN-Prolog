@@ -10,11 +10,7 @@ const recoridos = {
 function conexion(A, B) {
   console.log('Buscar conexion %s con %s', A, B);
   let rta = recoridos[A].find(destino => {
-    if (B !== destino) {
-      return true;
-    } else {
-      return conexion(destino, B);
-    }
+    return (B !== destino) ? true : conexion(destino, B);
   });
   return rta ? true : false;
 }
