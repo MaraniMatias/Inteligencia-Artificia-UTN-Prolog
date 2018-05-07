@@ -1,6 +1,6 @@
 recorridos = %{
   ciudad1: [:ciudad2, :ciudad4],
-  # ciudad2 => ["ciudad3", "ciudad5", "ciudad1"],
+  # ciudad2: [:ciudad3, :ciudad5, :ciudad1],
   ciudad2: [:ciudad3, :ciudad5],
   ciudad3: [],
   ciudad4: [:ciudad6, :ciudad5],
@@ -12,12 +12,12 @@ defmodule Main do
   def buscar_origen(recorridos, {origen, destino}) do
     IO.puts("Buscar origen para #{origen} y #{destino}")
 
-    {ciudad, destinos} =
+    {ciudad, _} =
       Enum.find(recorridos, fn ruta ->
-        {ciudad, destinos} = ruta
+        {_, destinos} = ruta
 
         Enum.find(destinos, fn origen_nuevo ->
-          origen_nuevo === destino
+          origen_nuevo == destino
         end)
       end)
 
@@ -33,8 +33,7 @@ defmodule Main do
   end
 
   def conexion(recorridos, {origen, destino}) when origen != destino do
-    ciudad = buscar_origen(recorridos, {origen, destino})
-    conexion(recorridos, {origen, ciudad})
+    conexion(recorridos, {origen, buscar_origen(recorridos, {origen, destino})})
   end
 
   def conexion_string(recorridos, {origen, destino}) do
