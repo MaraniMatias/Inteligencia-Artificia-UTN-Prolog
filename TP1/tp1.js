@@ -15,10 +15,10 @@ function conexion(A, B) {
   return rta ? true : false;
 }
 
-console.log(conexion("ciudad2", "ciudad6") || "No exite conexion");
 console.log(conexion("ciudad4", "ciudad1") || "No exite conexion");
 console.log(conexion("ciudad5", "ciudad2") || "No exite conexion");
 
+console.log(conexion("ciudad2", "ciudad6") && "Exite conexion");
 console.log(conexion("ciudad1", "ciudad1") && "Exite conexion");
 console.log(conexion("ciudad1", "ciudad2") && "Exite conexion");
 console.log(conexion("ciudad1", "ciudad3") && "Exite conexion");
