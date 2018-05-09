@@ -8,14 +8,12 @@ const recoridos = {
 };
 
 function conexion(A, B, A_original) {
-  debugger;
   // console.log('Buscar conexion %s con %s', A, B);
-  if (A === B) return true;
-  let exite_conexion = false;
+  let exite_conexion = A === B || A === A_original || false;
   recoridos[A].forEach(destino => {
     if (destino === B) exite_conexion = true;
     if (!exite_conexion) {
-      exite_conexion = A === A_original || conexion(destino, B, A_original || A);
+      exite_conexion = conexion(destino, B, A_original || A);
     }
   });
   return exite_conexion;
