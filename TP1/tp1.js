@@ -1,4 +1,4 @@
-const recoridos = {
+const recorridos = {
   ciudad1: ["ciudad2", "ciudad4"],
   ciudad2: ["ciudad3", "ciudad5", "ciudad1"],
   ciudad3: [],
@@ -10,7 +10,7 @@ const recoridos = {
 function conexion(A, B, A_original) {
   // console.log('Buscar conexion %s con %s', A, B);
   let exite_conexion = A === B || A === A_original || false;
-  recoridos[A].forEach(destino => {
+  recorridos[A].forEach(destino => {
     if (destino === B) exite_conexion = true;
     if (!exite_conexion) {
       exite_conexion = conexion(destino, B, A_original || A);
