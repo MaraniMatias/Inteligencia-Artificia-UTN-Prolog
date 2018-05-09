@@ -9,7 +9,7 @@ recorridos = %{
 }
 
 defmodule Main do
-  def buscar_origen(recorridos, {origen, destino}) do
+  defp buscar_origen(recorridos, {origen, destino}) do
     IO.puts("Buscar origen para #{origen} y #{destino}")
 
     {ciudad_orgien, _} =
@@ -24,15 +24,15 @@ defmodule Main do
     ciudad_orgien
   end
 
-  def conexion(_, {origen, destino}) when origen == destino do
+  defp conexion(_, {origen, destino}) when origen == destino do
     "Con Conexion"
   end
 
-  def conexion(_, {origen, destino}) when origen == nil or destino == nil do
+  defp conexion(_, {origen, destino}) when origen == nil or destino == nil do
     "Sin Conexion"
   end
 
-  def conexion(recorridos, {origen, destino}) when origen != destino do
+  defp conexion(recorridos, {origen, destino}) when origen != destino do
     ciudad_destino = buscar_origen(recorridos, {origen, destino})
     IO.puts("Conxion entre #{origen} y #{destino} -> #{ciudad_destino}")
     conexion(recorridos, {origen, ciudad_destino})
