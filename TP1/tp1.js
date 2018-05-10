@@ -18,6 +18,7 @@ function conexion(A, B, A_original) {
   });
   return exite_conexion;
 }
+
 console.log('1', conexion("ciudad1", "ciudad1") && "Exite conexion");
 console.log('2', conexion("ciudad1", "ciudad2") && "Exite conexion");
 console.log('3', conexion("ciudad1", "ciudad3") && "Exite conexion");
