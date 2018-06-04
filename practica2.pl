@@ -1,5 +1,8 @@
 q :- halt.
 
+operacion(10, Lista) :-
+  pertenece(Lista, Ele).
+
 operacion(9, Lista) :-
   avg_list(Lista, S, C),
   format('Suma de los elementos: ~2f ~n Cantidad de elementos: ~2f ~n', [S, C]).
@@ -41,16 +44,17 @@ menu :-
   writeln('Ingrese los elementos de una lista y para terminar [].'),
   read_list(Lista),
   format('Opciones:
-    0 Salir.
-    1 Mostrar la lista.
-    2 Separa cabeza y cola.
-    3 Mostrar primer elemento.
-    4 Mostrar los dos primero elementos.
-    5 Ultimo elemento.
-    6 Diferencia entre el ultimo y el primer elemento de la lista.
-    7 Cuántos elementos tiene.
-    8 Suma de los lementos de la lista.
-    9 Valor promedio de los elemtos de la lista.
+    0  Salir.
+    1  Mostrar la lista.
+    2  Separa cabeza y cola.
+    3  Mostrar primer elemento.
+    4  Mostrar los dos primero elementos.
+    5  Ultimo elemento.
+    6  Diferencia entre el ultimo y el primer elemento de la lista.
+    7  Cuántos elementos tiene.
+    8  Suma de los lementos de la lista.
+    9  Valor promedio de los elemtos de la lista.
+    10 Un elemento pertenece ala lista.
   '),
   read(OPC),
   format('Opcion elegida: [~w] ~n', [OPC]),
@@ -133,4 +137,12 @@ avg_list(L, S, C) :-
   suma_element_list(L, S),
   Avg is S / C,
   format('El promedio es: ~2f ~n', [Avg]).
+
+% Ejercicio 10
+% Ingresar una lista y un elemento e informar si ese elemento está en la lista.
+pertenece([Ele|_], Ele) :-
+  !. % Para terminar la ejecucion
+
+pertenece([_|Lista], Ele) :-
+  pertenece(Lista, Ele).
 
