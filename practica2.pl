@@ -142,8 +142,14 @@ avg_list(L, S, C) :-
 % Ejercicio 10
 % Ingresar una lista y un elemento e informar si ese elemento está en la lista.
 pertenece([Ele|_], Ele) :-
+  writeln('Elemento pertenece a la lista'),
   !. % Para terminar la ejecucion
 
 pertenece([_|Lista], Ele) :-
   pertenece(Lista, Ele).
 
+pertenece(_, Ele) :-
+  writeln('Elemento NO esta a la lista'),
+  !. % Para terminar la ejecucion
+
+% Ejercicio 11
