@@ -1,3 +1,5 @@
+q :- halt.
+
 operacion(9, Lista) :-
   avg_list(Lista, S, C),
   format('Suma de los elementos: ~2f ~n Cantidad de elementos: ~2f ~n', [S, C]).
@@ -119,6 +121,7 @@ suma_element_list([], 0).
 suma_element_list([H|T], Suma) :-
   H \= [],
   suma_element_list(T, S1),
+  number(H),
   Suma is H + S1.
 
 % Ejercicio 9
