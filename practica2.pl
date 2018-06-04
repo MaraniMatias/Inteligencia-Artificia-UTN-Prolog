@@ -1,3 +1,64 @@
+operacion(9, Lista) :-
+  avg_list(Lista, S, C),
+  format('Suma de los elementos: ~2f ~n Cantidad de elementos: ~2f ~n', [S, C]).
+
+operacion(8, Lista) :-
+  suma_element_list(Lista, Suma),
+  writeln(Suma).
+
+operacion(7, Lista) :-
+  length_list(Lista, Length) :-
+  writeln(Length).
+
+operacion(6, Lista) :-
+  firstElement_save(Lista, First),
+  lastElement_save(Lista, Last),
+  Rest is Last - First,
+  format('~f - ~f = ~f',[Last, First, Rest]).
+
+operacion(5, Lista) :-
+  lastElement(Lista).
+
+operacion(4, Lista) :-
+  twoFirstElement(Lista).
+
+operacion(3, Lista) :-
+  firstElement(Lista).
+
+operacion(2, Lista) :-
+  separarHaedTail(Lista).
+
+operacion(1, Lista) :-
+  write(Lista).
+
+operacion(_, _) :-
+  writeln('Opcion invalida').
+
+menu :-
+  writeln('<-oO MENU Oo->'),
+  writeln('Ingrese los elementos de una lista y para terminar [].'),
+  read_list(Lista),
+  format('Opciones:
+    0 Salir.
+    1 Mostrar la lista.
+    2 Separa cabeza y cola.
+    3 Mostrar primer elemento.
+    4 Mostrar los dos primero elementos.
+    5 Ultimo elemento.
+    6 Diferencia entre el ultimo y el primer elemento de la lista.
+    7 Cuántos elementos tiene.
+    8 Suma de los lementos de la lista.
+    9 Valor promedio de los elemtos de la lista.
+  '),
+  read(OPC),
+  format('Opcion elegida: [~w] ~n', [OPC]),
+  OPC \= 0,
+  operacion(OPC, Lista), nl,
+  menu.
+
+menu :-
+  writeln('adios').
+
 % Ejercicio 1
 % Ingresar una lista de elementos y mostrarla por pantalla.
 % Ingresar elementos de auno y termina con [].
@@ -6,13 +67,9 @@ lista([1,2,3]).
 read_list([H|T]) :-
   read(H),
   H \= [],
-  read_list(T).
+  read_list(T),
+  !. % ! Elimina backtracking en el menu
 read_list([]).
-
-inicio :-
-  writeln('Ingrese los elementos de una lista: '),
-  read_list(Lista),
-  write(Lista).
 
 % Ejercicio 2
 % Ingresar una lista de elementos y mostrar su cabeza y su cola.
@@ -20,20 +77,10 @@ separarHaedTail([H|T]) :-
   write('Cabeza: '), writeln(H),
   write('Cola: '), write(T).
 
-inicio2 :-
-  writeln('Ingrese los elementos de una lista: '),
-  read_list(Lista),
-  separarHaedTail(Lista).
-
 % Ejercicio 3
 % Ingresar una lista de elementos y mostrar su primer elemento.
 firstElement([H|_]) :-
   write('Cabeza: '), writeln(H).
-
-inicio3 :-
-  writeln('Ingrese los elementos de una lista: '),
-  read_list(Lista),
-  separarHadTail(Lista).
 
 % Ejercicio 4
 % Ingresar una lista de elementos y mostrar sus dos primeros elementos.
@@ -41,22 +88,12 @@ twoFirstElement([H|[T|_]]) :-
   write('Primer elemento: '), writeln(H),
   write('Segundo elemento: '), writeln(T).
 
-inicio4 :-
-  writeln('Ingrese los elementos de una lista: '),
-  read_list(Lista),
-  twoFirstElement(Lista).
-
 % Ejercicio 5
 % Ingresar una lista de elementos y mostrar su último elemento.
 lastElement([L]) :-
   write('Ultimo elemento: '), writeln(L).
 lastElement([_|L]) :-
   lastElement(L).
-
-inicio5 :-
-  writeln('Ingrese los elementos de una lista: '),
-  read_list(Lista),
-  lastElement(Lista).
 
 % Ejercicio 6
 % Ingresar una lista de números enteros y
@@ -68,14 +105,6 @@ lastElement_save([L], List) :-
   List is L.
 lastElement_save([_|L], List) :-
   lastElement_save(L, List).
-
-inicio6 :-
-  writeln('Ingrese los elementos de una lista: '),
-  read_list(Lista),
-  firstElement_save(Lista, First),
-  lastElement_save(Lista, Last),
-  Rest is Last - First,
-  format('~f - ~f = ~f',[Last, First, Rest]).
 
 % Ejercicio 7
 % Ingresar una lista de elementos e informar cuántos elementos tiene.
