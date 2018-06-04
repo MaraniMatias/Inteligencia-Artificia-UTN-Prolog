@@ -1,6 +1,7 @@
 q :- halt.
 
 operacion(10, Lista) :-
+  writeln('Elemento a buscar:'), read(Ele),
   pertenece(Lista, Ele).
 
 operacion(9, Lista) :-
