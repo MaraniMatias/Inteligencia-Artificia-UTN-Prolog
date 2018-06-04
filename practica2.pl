@@ -1,5 +1,10 @@
 q :- halt.
 
+operacion(11, Lista) :-
+%   max_list(List, Max),
+  max_in_list(Lista, Max),
+  format('El maximo es: ~f', [Max]).
+
 operacion(10, Lista) :-
   writeln('Elemento a buscar:'), read(Ele),
   pertenece(Lista, Ele).
@@ -13,7 +18,7 @@ operacion(8, Lista) :-
   writeln(Suma).
 
 operacion(7, Lista) :-
-  length_list(Lista, Length) :-
+  length_list(Lista, Length),
   writeln(Length).
 
 operacion(6, Lista) :-
@@ -77,6 +82,11 @@ read_list([H|T]) :-
   read_list(T),
   !. % ! Elimina backtracking en el menu
 read_list([]).
+
+write_list([]).
+write_list([Head|Tail]) :-
+  write(Head), nl,
+  write_list(Tail).
 
 % Ejercicio 2
 % Ingresar una lista de elementos y mostrar su cabeza y su cola.
@@ -148,8 +158,27 @@ pertenece([Ele|_], Ele) :-
 pertenece([_|Lista], Ele) :-
   pertenece(Lista, Ele).
 
-pertenece(_, Ele) :-
+pertenece(_, _) :-
   writeln('Elemento NO esta a la lista'),
   !. % Para terminar la ejecucion
 
 % Ejercicio 11
+%   Ingresar una lista de enteros e informar cuál es el mayor de todos los números.
+%   max_list([1,2,3,5,5], Max)
+
+max_in_list([H|T]) :-
+  max_in_list(T, H, H).
+
+max_in_list([H|T], Valor, Max) :-
+  Valor >= Max,
+  max_in_list(T, H, Valor).
+
+max_in_list([H|T], Valor, Max) :-
+  Valor < Max,
+  max_in_list(T, H, Max).
+
+max_in_list([], _, Max) :-
+  format('El maximo es: ~w', [Max]).
+
+% Ejercicio 12
+%   Ingresar una lista de enteros e informar cuál es el menor de todos los números.
