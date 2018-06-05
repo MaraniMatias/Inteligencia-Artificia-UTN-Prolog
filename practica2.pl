@@ -1,9 +1,14 @@
 q :- halt.
 
+operacion(12, Lista) :-
+%   min_list(List, Min),
+  min_in_list(Lista, Min),
+  format('El minimo es: ~w', [Min]).
+
 operacion(11, Lista) :-
 %   max_list(List, Max),
   max_in_list(Lista, Max),
-  format('El maximo es: ~f', [Max]).
+  format('El maximo es: ~w', [Max]).
 
 operacion(10, Lista) :-
   writeln('Elemento a buscar:'), read(Ele),
@@ -61,6 +66,8 @@ menu :-
     8  Suma de los lementos de la lista.
     9  Valor promedio de los elemtos de la lista.
     10 Un elemento pertenece ala lista.
+    11 Maximo valor.
+    12 Minimo valor.
   '),
   read(OPC),
   format('Opcion elegida: [~w] ~n', [OPC]),
@@ -167,19 +174,31 @@ pertenece(_, _) :-
 %   max_list([1,2,3,5,5], Max)
 
 max_in_list([H|T], Max) :-
-  Max is H,
-  max_in_list(T, H).
+  max_in_list(T, H, Max). % Inicio
 
-max_in_list([H|T], Max) :-
-  H >= Max,
-  max_in_list(T, H).
+max_in_list([], Max, Max). % Condicion de cierre
 
-max_in_list([H|T], Max) :-
-  H < Max,
-  max_in_list(T, Max).
+max_in_list([H|T], Value, Max) :-
+  H >  Value,
+  max_in_list(T, H, Max).
 
-max_in_list([H|_], Max) :-
-  format('H: ~w, M: ~w ~n', [H, Max]).
+max_in_list([H|T], Value, Max) :-
+  H =< Value,
+  max_in_list(T, Value, Max).
 
 % Ejercicio 12
 %   Ingresar una lista de enteros e informar cuál es el menor de todos los números.
+%   min_list([1,2,3,5,5], Max)
+
+min_in_list([H|T], Min) :-
+  min_in_list(T, H, Min). % Inicio
+
+min_in_list([], Min, Min). % Condicion de cierre
+
+min_in_list([H|T], Value, Min) :-
+  H <  Value,
+  min_in_list(T, H, Min).
+
+min_in_list([H|T], Value, Min) :-
+  H >= Value,
+  min_in_list(T, Value, Min).

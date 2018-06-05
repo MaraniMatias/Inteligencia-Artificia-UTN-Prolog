@@ -23,11 +23,11 @@ Operaciones básicas
       el formato del predicado promedio(L,S,C) donde L es la lista ingresada,
       S la sumatoria y C el contador de los elementos de la lista.
 10.   Ingresar una lista y un elemento e informar si ese elemento está en la lista.
-
-
-
 11.   Ingresar una lista de enteros e informar cuál es el mayor de todos los números.
 12.   Ingresar una lista de enteros e informar cuál es el menor de todos los números.
+
+
+
 
 13.   Ingresar dos listas de elementos, concatenarlas (los elementos deben
       ser asignados de a uno en la lista de salida) y mostrarlas en una
