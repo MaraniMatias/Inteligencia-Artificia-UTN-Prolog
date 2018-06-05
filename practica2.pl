@@ -203,22 +203,42 @@ min_in_list([H|T], Value, Min) :-
   H >= Value,
   min_in_list(T, Value, Min).
 
+% -----------------------------------
+inver_list([], ListConcat, ListConcat).
+
+inver_list([H|T], List, ListConcat) :-
+  inver_list(T, [H|List], ListConcat).
+
+inver_list([H|T], ListConcat) :- % Start
+  inver_list(T, [H], ListConcat).
+% -----------------------------------
+
 % Ejercicio 12
 %   Ingresar dos listas de elementos, concatenarlas (los elementos deben
 %   ser asignados de a uno en la lista de salida) y mostrarlas en una tercera.
 
-concat_list([], ListConcat, ListConcat).
-
-concat_list([H|T], List, ListConcat) :-
-  concat_list(T, [H|List], ListConcat).
+concat_list(ListA, ListB, ListConcat) :-
+  inver_list(ListA, List),
+  concat_list_2(List, ListB, ListConcat).
 % ------------------------------------------------------
-concat_list_2([], [], ListConcat, ListConcat).
+concat_list_2([], ListConcat, ListConcat).
 
-concat_list_2([H|T], ListOriginal, List, ListConcat) :-
-  concat_list_2(T, ListOriginal, [H|List], ListConcat).
+concat_list_2([H|T], List, ListConcat) :-
+  concat_list_2(T, [H|List], ListConcat).
+% ------------------------------------------------------
+%concat_list([], [], ListConcat, ListConcat).
+%
+%concat_list([H|T], ListOriginal, List, ListConcat) :-
+%  concat_list(T, ListOriginal, [H|List], ListConcat).
+%
+%concat_list([], [H|T], List, ListConcat) :-
+%  concat_list([], T, [H|List], ListConcat).
+%
+%concat_list([H|T], List, ListConcat) :- % Start
+%  concat_list(T, List, [H], ListConcat).
+% ------------------------------------------------------
+concat_list_1(ListConcat, [], ListConcat).
 
-concat_list_2([], [H|T], List, ListConcat) :-
-  concat_list_2([], T, [H|List], ListConcat).
-
-concat_list_2([H|T], List, ListConcat) :- % Start
-  concat_list_2(T, List, [H], ListConcat).
+concat_list_1(List, [A|B], ListConcat) :-
+  concat_list_1([A|List], B, ListConcat).
+% ------------------------------------------------------
