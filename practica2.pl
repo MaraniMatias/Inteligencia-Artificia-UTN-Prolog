@@ -211,3 +211,14 @@ concat_list([], ListConcat, ListConcat).
 
 concat_list([H|T], List, ListConcat) :-
   concat_list(T, [H|List], ListConcat).
+% ------------------------------------------------------
+concat_list_2([], [], ListConcat, ListConcat).
+
+concat_list_2([H|T], ListOriginal, List, ListConcat) :-
+  concat_list_2(T, ListOriginal, [H|List], ListConcat).
+
+concat_list_2([], [H|T], List, ListConcat) :-
+  concat_list_2([], T, [H|List], ListConcat).
+
+concat_list_2([H|T], List, ListConcat) :- % Start
+  concat_list_2(T, List, [H], ListConcat).
