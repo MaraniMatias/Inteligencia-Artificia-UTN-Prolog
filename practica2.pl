@@ -1,5 +1,13 @@
 q :- halt.
 
+operacion(13, ListaA) :-
+  writeln('Ingrese los elementos de la otra lista y para terminar [].'),
+  read_list(ListaB),
+  concat_list(ListA, ListB, List),
+  writeln('Lista A:'), write_list(ListA),
+  writeln('Lista B:'), write_list(ListB),
+  writeln('A <> B:'), write_list(List).
+
 operacion(12, Lista) :-
 %   min_list(List, Min),
   min_in_list(Lista, Min),
@@ -51,7 +59,7 @@ operacion(_, _) :-
   writeln('Opcion invalida').
 
 menu :-
-  writeln('<-oO MENU Oo->'),
+  format('~t<-oO MENU Oo->~t~72|~n~n'),
   writeln('Ingrese los elementos de una lista y para terminar [].'),
   read_list(Lista),
   format('Opciones:
@@ -68,6 +76,7 @@ menu :-
     10 Un elemento pertenece ala lista.
     11 Maximo valor.
     12 Minimo valor.
+    13 Concatenar lista con otra.
   '),
   read(OPC),
   format('Opcion elegida: [~w] ~n', [OPC]),
@@ -76,7 +85,8 @@ menu :-
   menu.
 
 menu :-
-  writeln('adios').
+  writeln('adios'),
+  halt.
 
 % Ejercicio 1
 % Ingresar una lista de elementos y mostrarla por pantalla.
@@ -204,41 +214,24 @@ min_in_list([H|T], Value, Min) :-
   min_in_list(T, Value, Min).
 
 % -----------------------------------
-inver_list([], ListConcat, ListConcat).
+invest_list([], ListConcat, ListConcat).
 
-inver_list([H|T], List, ListConcat) :-
-  inver_list(T, [H|List], ListConcat).
+invest_list([H|T], List, ListConcat) :-
+  invest_list(T, [H|List], ListConcat).
 
-inver_list([H|T], ListConcat) :- % Start
-  inver_list(T, [H], ListConcat).
+invest_list([H|T], ListConcat) :- % Start
+  invest_list(T, [H], ListConcat).
 % -----------------------------------
 
-% Ejercicio 12
+% Ejercicio 13
 %   Ingresar dos listas de elementos, concatenarlas (los elementos deben
 %   ser asignados de a uno en la lista de salida) y mostrarlas en una tercera.
 
 concat_list(ListA, ListB, ListConcat) :-
-  inver_list(ListA, List),
+  invest_list(ListA, List),
   concat_list_2(List, ListB, ListConcat).
 % ------------------------------------------------------
 concat_list_2([], ListConcat, ListConcat).
 
 concat_list_2([H|T], List, ListConcat) :-
   concat_list_2(T, [H|List], ListConcat).
-% ------------------------------------------------------
-%concat_list([], [], ListConcat, ListConcat).
-%
-%concat_list([H|T], ListOriginal, List, ListConcat) :-
-%  concat_list(T, ListOriginal, [H|List], ListConcat).
-%
-%concat_list([], [H|T], List, ListConcat) :-
-%  concat_list([], T, [H|List], ListConcat).
-%
-%concat_list([H|T], List, ListConcat) :- % Start
-%  concat_list(T, List, [H], ListConcat).
-% ------------------------------------------------------
-concat_list_1(ListConcat, [], ListConcat).
-
-concat_list_1(List, [A|B], ListConcat) :-
-  concat_list_1([A|List], B, ListConcat).
-% ------------------------------------------------------
