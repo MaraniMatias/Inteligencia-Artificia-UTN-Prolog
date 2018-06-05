@@ -25,13 +25,13 @@ Operaciones básicas
 10.   Ingresar una lista y un elemento e informar si ese elemento está en la lista.
 11.   Ingresar una lista de enteros e informar cuál es el mayor de todos los números.
 12.   Ingresar una lista de enteros e informar cuál es el menor de todos los números.
-
-
-
-
 13.   Ingresar dos listas de elementos, concatenarlas (los elementos deben
       ser asignados de a uno en la lista de salida) y mostrarlas en una
       tercera.
+
+
+
+
 14.   Ingresar una lista y determinar el primer elemento que se repite.
 15.   Ingresar una lista y determinar a través de una segunda lista todos los
       elementos que se repiten.

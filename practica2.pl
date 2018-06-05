@@ -83,10 +83,10 @@ menu :-
 % Ingresar elementos de auno y termina con [].
 lista([1,2,3]).
 
-read_list([H|T]) :-
-  read(H),
-  H \= [],
-  read_list(T),
+read_list([Head|Tail]) :-
+  read(Head),
+  Head \= [],
+  read_list(Tail),
   !. % ! Elimina backtracking en el menu
 read_list([]).
 
@@ -202,3 +202,12 @@ min_in_list([H|T], Value, Min) :-
 min_in_list([H|T], Value, Min) :-
   H >= Value,
   min_in_list(T, Value, Min).
+
+% Ejercicio 12
+%   Ingresar dos listas de elementos, concatenarlas (los elementos deben
+%   ser asignados de a uno en la lista de salida) y mostrarlas en una tercera.
+
+concat_list([], ListConcat, ListConcat).
+
+concat_list([H|T], List, ListConcat) :-
+  concat_list(T, [H|List], ListConcat).
