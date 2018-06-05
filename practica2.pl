@@ -83,7 +83,7 @@ read_list([H|T]) :-
   !. % ! Elimina backtracking en el menu
 read_list([]).
 
-write_list([]).
+write_list([]). % Solo para que de true
 write_list([Head|Tail]) :-
   write(Head), nl,
   write_list(Tail).
@@ -166,19 +166,20 @@ pertenece(_, _) :-
 %   Ingresar una lista de enteros e informar cuál es el mayor de todos los números.
 %   max_list([1,2,3,5,5], Max)
 
-max_in_list([H|T]) :-
-  max_in_list(T, H, H).
+max_in_list([H|T], Max) :-
+  Max is H,
+  max_in_list(T, H).
 
-max_in_list([H|T], Valor, Max) :-
-  Valor >= Max,
-  max_in_list(T, H, Valor).
+max_in_list([H|T], Max) :-
+  H >= Max,
+  max_in_list(T, H).
 
-max_in_list([H|T], Valor, Max) :-
-  Valor < Max,
-  max_in_list(T, H, Max).
+max_in_list([H|T], Max) :-
+  H < Max,
+  max_in_list(T, Max).
 
-max_in_list([], _, Max) :-
-  format('El maximo es: ~w', [Max]).
+max_in_list([H|_], Max) :-
+  format('H: ~w, M: ~w ~n', [H, Max]).
 
 % Ejercicio 12
 %   Ingresar una lista de enteros e informar cuál es el menor de todos los números.
