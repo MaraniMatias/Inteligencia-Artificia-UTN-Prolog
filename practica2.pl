@@ -234,6 +234,7 @@ invest_list([H|T], List, ListConcat) :-
 
 invest_list([H|T], ListConcat) :- % Start
   invest_list(T, [H], ListConcat).
+
 % Ejercicio 13
 %   Ingresar dos listas de elementos, concatenarlas (los elementos deben
 %   ser asignados de a uno en la lista de salida) y mostrarlas en una tercera.
@@ -247,30 +248,49 @@ concat_list_2([], ListConcat, ListConcat).
 concat_list_2([H|T], List, ListConcat) :-
   concat_list_2(T, [H|List], ListConcat).
 % ------------------------------------------------------
-concat_list_ok([H|T], [A|B], ListConcat) :-
-  concat_list_ok(T, B, [H|A], ListConcat).
+concat_list_1([H|T], [A|B], ListConcat) :-
+  concat_list_1(T, B, [H|A], ListConcat).
 
-concat_list_ok([], [], ListConcat, ListConcat).
+concat_list_1([], [], ListConcat, ListConcat).
 
-concat_list_ok([H|T], [A|B], List, ListConcat) :-
-  concat_list_ok(T, B, [H,A|List], ListConcat).
+concat_list_1([H|T], [A|B], List, ListConcat) :-
+  concat_list_1(T, B, [H,A|List], ListConcat).
 
-concat_list_ok([H|T], [], List, ListConcat) :-
-  concat_list_ok(T, [], [H|List], ListConcat).
+concat_list_1([H|T], [], List, ListConcat) :-
+  concat_list_1(T, [], [H|List], ListConcat).
 
-concat_list_ok([], [A|B], List, ListConcat) :-
-  concat_list_ok([], B, [A|List], ListConcat).
+concat_list_1([], [A|B], List, ListConcat) :-
+  concat_list_1([], B, [A|List], ListConcat).
+% ------------------------------------------------------
+concat_list_ok([], [], []).
+concat_list_ok([H1|T1], L2, [H1|T3]) :-
+  concat_list_ok(T1, L2, T3).
+concat_list_ok([], [H2|T2], [H2|T3]) :-
+  concat_list_ok([], T2, T3).
 
 % Ejercicio 14
 %   Ingresar una lista y determinar el primer elemento que se repite.
 
-find(X,[ X|_], X) :- !.
-find(X, [_|R], Ele) :-
-  find(X, R, Ele).
+find_in_list(X, [X|_], X) :- !.
+find_in_list(X, [_|R], Ele) :-
+  find_in_list(X, R, Ele).
 
 find_in_list([H|T], Ele) :-
-  find(H, T, Ele).
+  find_in_list(H, T, Ele).
 
 find_in_list([_|T], Ele) :-
   find_in_list(T, Ele).
 
+% Ejercicio 15
+%   Ingresar una lista y determinar el primer elemento que se repite.
+
+is_not_in_list(X, [_,X|_], X).
+is_not_in_list(X, [_|R], Ele) :-
+  is_not_in_list(X, R, Ele).
+is_not_in_list(X, [_], X).
+
+is_not_in_list([H|T], Ele) :-
+  is_not_in_list(H, T, Ele).
+
+%is_not_in_list([_|T], Ele) :-
+%  is_not_in_list(T, Ele).
