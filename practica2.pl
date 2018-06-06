@@ -235,3 +235,18 @@ concat_list_2([], ListConcat, ListConcat).
 
 concat_list_2([H|T], List, ListConcat) :-
   concat_list_2(T, [H|List], ListConcat).
+% ------------------------------------------------------
+concat_list_ok([H|T], [A|B], ListConcat) :-
+  concat_list_ok(T, B, [H|A], ListConcat).
+
+concat_list_ok([], [], ListConcat, ListConcat).
+
+concat_list_ok([H|T], [A|B], List, ListConcat) :-
+  concat_list_ok(T, B, [H,A|List], ListConcat).
+
+concat_list_ok([H|T], [], List, ListConcat) :-
+  concat_list_ok(T, [], [H|List], ListConcat).
+
+concat_list_ok([], [A|B], List, ListConcat) :-
+  concat_list_ok([], B, [A|List], ListConcat).
+
