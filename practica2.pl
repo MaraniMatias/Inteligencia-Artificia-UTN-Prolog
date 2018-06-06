@@ -166,6 +166,19 @@ avg_list(L, S, C) :-
   Avg is S / C,
   format('El promedio es: ~2f ~n', [Avg]).
 
+avg_list_2([], 0, 0).
+
+avg_list_2([H|T], Suma, Count) :-
+  H \= [],
+  number(H),
+  avg_list_2(T, S, C),
+  Count is C + 1,
+  Suma is H + S.
+
+avg_list_2(L, Avg) :-
+  avg_list_2(L, S, C),
+  Avg is S / C.
+
 % Ejercicio 10
 % Ingresar una lista y un elemento e informar si ese elemento está en la lista.
 pertenece([Ele|_], Ele) :-
@@ -213,7 +226,7 @@ min_in_list([H|T], Value, Min) :-
   H >= Value,
   min_in_list(T, Value, Min).
 
-% -----------------------------------
+% Ejercicio pre-13
 invest_list([], ListConcat, ListConcat).
 
 invest_list([H|T], List, ListConcat) :-
@@ -221,8 +234,6 @@ invest_list([H|T], List, ListConcat) :-
 
 invest_list([H|T], ListConcat) :- % Start
   invest_list(T, [H], ListConcat).
-% -----------------------------------
-
 % Ejercicio 13
 %   Ingresar dos listas de elementos, concatenarlas (los elementos deben
 %   ser asignados de a uno en la lista de salida) y mostrarlas en una tercera.
