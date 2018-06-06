@@ -1,12 +1,3 @@
-       Inteligencia Artificial
-       Ingeniería en Sistemas de Información
-
-
-
-
-                            Práctica 2
-                          PROLOG - Listas
-
 Operaciones básicas
 
 1.    Ingresar una lista de elementos y mostrarla por pantalla.

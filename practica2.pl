@@ -315,12 +315,15 @@ repetidos([_|T], L) :-
 
 % Ejercicio 16
 %   Ingresar una lista y un elemento e informar cuántas veces está ese elemento en la lista.
-find_ele(Ele, [Ele|_]).
-find_ele(Ele, [_|List]) :-
-  find_ele(Ele, List).
+count_ele_in_list(Ele, List, Rta) :-
+  count_ele_in_list(Ele, List, 0, Rta).
 
-count_ele_in_list(Ele, [H|T], Count) :-
-  find_ele(Ele, [H|T]),
-  Count is 1,
-  count_ele_in_list(Ele, T, Count).
+count_ele_in_list(_, [], Count, Count).
+
+count_ele_in_list(Ele, [Ele|T], Count, Rta) :-
+  Count2 is Count + 1,
+  count_ele_in_list(Ele, T, Count2, Rta).
+
+count_ele_in_list(Ele, [_|T], Count, Rta) :-
+  count_ele_in_list(Ele, T, Count, Rta).
 
