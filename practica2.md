@@ -54,14 +54,6 @@ usuario(2,'Pato Rodríguez',funes).
 usuario(3,'Marilyn Perez',rosario).
 …
 …
-
-
-
-                                         -1-
-    Inteligencia Artificial
-    Ingeniería en Sistemas de Información
-
-
 %intereses(idUsuario, [lista intereses]).
 intereses(1,['natacion','mineria de datos','yoga','comida mexicana']).
 intereses(2,['frutas organicas','Fast & Furious','yoga','formula 1']).
@@ -78,8 +70,3 @@ Construir un programa en PROLOG que permita:
       ambos (unión).
    d. Dada una ciudad, obtener una lista con los usuarios que viven en ella
       (utilizando el predicado findall/3).
-
-
-
-
-                                       -2-

@@ -250,3 +250,16 @@ concat_list_ok([H|T], [], List, ListConcat) :-
 concat_list_ok([], [A|B], List, ListConcat) :-
   concat_list_ok([], B, [A|List], ListConcat).
 
+% Ejercicio 14
+%   Ingresar una lista y determinar el primer elemento que se repite.
+
+find(X,[ X|_], X) :- !.
+find(X, [_|R], Ele) :-
+  find(X, R, Ele).
+
+find_in_list([H|T], Ele) :-
+  find(H, T, Ele).
+
+find_in_list([_|T], Ele) :-
+  find_in_list(T, Ele).
+
