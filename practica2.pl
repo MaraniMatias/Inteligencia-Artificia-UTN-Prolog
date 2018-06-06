@@ -1,3 +1,4 @@
+% Marte alas 18 consulta
 q :- halt.
 
 operacion(13, ListaA) :-
@@ -284,6 +285,7 @@ find_in_list([_|T], Ele) :-
 % Ejercicio 15
 %  Ingresar una lista y determinar a través de una segunda lista todos los
 %  elementos que se repiten.
+% TODO: Hacer con el pertenece
 
 find_in_other_list(L1, L2, List) :-
   find_in_other_list(L1, L2, [], List, L1).
@@ -298,3 +300,27 @@ find_in_other_list([], [_|B], L, List, AL1) :-
   find_in_other_list(AL1, B, L, List, AL1).
 
 find_in_other_list([], [], List, List, _).
+
+%------------------------------------------
+repetidos([], []).
+repetidos([H|T], [H|B]) :-
+  find_in_list(H, B),
+  repetidos(T, B).
+
+repetidos([_|T], L) :-
+  repetidos(T, L).
+%------------------------------------------
+% TODO Usar en pertenece y evitar que repita, usar NOT pertenece,
+% acordarse que crea la lista ala vuelta y por eso tenees que validarlo a la vuelta
+
+% Ejercicio 16
+%   Ingresar una lista y un elemento e informar cuántas veces está ese elemento en la lista.
+find_ele(Ele, [Ele|_]).
+find_ele(Ele, [_|List]) :-
+  find_ele(Ele, List).
+
+count_ele_in_list(Ele, [H|T], Count) :-
+  find_ele(Ele, [H|T]),
+  Count is 1,
+  count_ele_in_list(Ele, T, Count).
+
