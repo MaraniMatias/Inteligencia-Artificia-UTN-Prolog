@@ -282,15 +282,19 @@ find_in_list([_|T], Ele) :-
   find_in_list(T, Ele).
 
 % Ejercicio 15
-%   Ingresar una lista y determinar el primer elemento que se repite.
+%  Ingresar una lista y determinar a través de una segunda lista todos los
+%  elementos que se repiten.
 
-is_not_in_list(X, [_,X|_], X).
-is_not_in_list(X, [_|R], Ele) :-
-  is_not_in_list(X, R, Ele).
-is_not_in_list(X, [_], X).
+find_in_other_list(L1, L2, List) :-
+  find_in_other_list(L1, L2, [], List, L1).
 
-is_not_in_list([H|T], Ele) :-
-  is_not_in_list(H, T, Ele).
+find_in_other_list([X|T], [X|B], L, List, AL1) :-
+  find_in_other_list(T, [X|B], [X|L], List, AL1).
 
-%is_not_in_list([_|T], Ele) :-
-%  is_not_in_list(T, Ele).
+find_in_other_list([_|T], L2, L, List, AL1) :-
+  find_in_other_list(T, L2, L, List, AL1).
+
+find_in_other_list([], [_|B], L, List, AL1) :-
+  find_in_other_list(AL1, B, L, List, AL1).
+
+find_in_other_list([], [], List, List, _).

@@ -29,12 +29,12 @@ Operaciones básicas
       ser asignados de a uno en la lista de salida) y mostrarlas en una
       tercera.
 14.   Ingresar una lista y determinar el primer elemento que se repite.
-
-
-
-
 15.   Ingresar una lista y determinar a través de una segunda lista todos los
       elementos que se repiten.
+
+
+
+
 16.   Ingresar una lista y un elemento e informar cuántas veces está ese
       elemento en la lista.
 
