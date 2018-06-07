@@ -301,15 +301,14 @@ find_in_other_list([], [], List, List, _).
 %------------------------------------------
 % TODO Usar en pertenece y evitar que repita, usar NOT pertenece,
 % acordarse que crea la lista ala vuelta y por eso tenees que validarlo a la vuelta
-
-%------------------------------------------
 find(Ele, [Ele|_]).
 find(Ele, [_|List]) :-
   find(Ele, List).
 
 pertain([], _, []).
-pertain([H|T], [H|B], [H|L]) :-
-  pertain(T, B, L).
+pertain([H|T], List, [H|L]) :-
+  find(H, List),
+  pertain(T, List, L).
 
 pertain([_|T], List, L) :-
   pertain(T, List, L).
