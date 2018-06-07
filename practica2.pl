@@ -299,8 +299,6 @@ find_in_other_list([], [_|B], L, List, AL1) :-
 
 find_in_other_list([], [], List, List, _).
 %------------------------------------------
-% TODO Usar en pertenece y evitar que repita, usar NOT pertenece,
-% acordarse que crea la lista ala vuelta y por eso tenees que validarlo a la vuelta
 find(Ele, [Ele|_]).
 find(Ele, [_|List]) :-
   find(Ele, List).
@@ -308,7 +306,8 @@ find(Ele, [_|List]) :-
 pertain([], _, []).
 pertain([H|T], List, [H|L]) :-
   find(H, List),
-  pertain(T, List, L).
+  pertain(T, List, L),
+  not(find(H, L)).
 
 pertain([_|T], List, L) :-
   pertain(T, List, L).
