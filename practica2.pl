@@ -329,6 +329,44 @@ count_ele_in_list(Ele, [_|T], Count, Rta) :-
 
 % Ejercicio 17
 %  En una base de hechos hay un registro de personas y viajes realizados:
+%
 %  persona(nombre, [lista ciudades visitó])
+%
 %  Construir una regla que permita verificar si una persona visitó una
 %  determinada ciudad (datos de entrada: nombre persona y ciudad).
+persona(romina, ['Casilda', 'Rosario']).
+persona(matias, ['Casilda', 'Rosario', 'Paris', 'Cordoba']).
+
+% ?- visito(matias, 'Casilda').
+visito(Persona, Ciudad) :-
+  persona(Persona, Lista),
+  find(Ciudad, Lista).
+
+% Ejercicio 18
+%  En una nueva red social UTNook, se tiene la siguiente base de hechos (archivo UTNook.txt):
+%
+%   usuario(idUsuario, nombre, localidad).
+%   intereses(idUsuario, [lista intereses]).
+%
+%  Dos usuarios de UTNook son candidatos a ser amigos cuando tienen al menos 2 intereses en común.
+%
+%  Construir un programa en PROLOG que permita:
+%  a. Dados dos usuarios, mostrar una lista con los intereses que tienen en común.
+%  b. Determinar si dos usuarios son candidatos a ser amigos.
+%  c. Dados dos usuarios, obtener una lista con todos los intereses de ambos (unión).
+%  d. Dada una ciudad, obtener una lista con los usuarios que viven en ella (utilizando el predicado findall/3).
+
+% Importar hechos :D
+?- ['./UTNook.pl'].
+
+intereses_de(Usuario, Intereces) :-
+  usuario(ID, Usuario, _),
+  intereses(ID, Intereces).
+
+intereces_en_comun(Usuario1, Usuario2, Intereces) :-
+  % Buscar intecres de Usuario1
+  intereses_de(Usuario1, InterecesUsuario1),
+  % Buscar intecres de Usuario2
+  intereses_de(Usuario2, InterecesUsuario2),
+  find_in_other_list(InterecesUsuario1, InterecesUsuario2, Intereces).
+
