@@ -347,26 +347,36 @@ visito(Persona, Ciudad) :-
 %
 %   usuario(idUsuario, nombre, localidad).
 %   intereses(idUsuario, [lista intereses]).
-%
-%  Dos usuarios de UTNook son candidatos a ser amigos cuando tienen al menos 2 intereses en común.
-%
-%  Construir un programa en PROLOG que permita:
-%  a. Dados dos usuarios, mostrar una lista con los intereses que tienen en común.
-%  b. Determinar si dos usuarios son candidatos a ser amigos.
-%  c. Dados dos usuarios, obtener una lista con todos los intereses de ambos (unión).
-%  d. Dada una ciudad, obtener una lista con los usuarios que viven en ella (utilizando el predicado findall/3).
-
 % Importar hechos :D
 ?- ['./UTNook.pl'].
 
+%  Construir un programa en PROLOG que permita:
 intereses_de(Usuario, Intereces) :-
   usuario(ID, Usuario, _),
   intereses(ID, Intereces).
 
+%  a. Dados dos usuarios, mostrar una lista con los intereses que tienen en común.
 intereces_en_comun(Usuario1, Usuario2, Intereces) :-
   % Buscar intecres de Usuario1
   intereses_de(Usuario1, InterecesUsuario1),
   % Buscar intecres de Usuario2
   intereses_de(Usuario2, InterecesUsuario2),
   find_in_other_list(InterecesUsuario1, InterecesUsuario2, Intereces).
+
+%  b. Determinar si dos usuarios son candidatos a ser amigos.
+%  Dos usuarios son candidatos a ser amigos cuando tienen al menos 2 intereses en común.
+pueden_ser_amigos(Usuario1, Usuario2) :-
+  intereces_en_comun(Usuario1, Usuario2, Intereces),
+  length_list(Intereces, Length),
+  Length > 2.
+
+%  c. Dados dos usuarios, obtener una lista con todos los intereses de ambos (unión).
+intereces_de(Usuario1, Usuario2, Intereces) :-
+  % Buscar intecres de Usuario1
+  intereses_de(Usuario1, InterecesUsuario1),
+  % Buscar intecres de Usuario2
+  intereses_de(Usuario2, InterecesUsuario2),
+  concat_list_ok(InterecesUsuario1, InterecesUsuario2, Intereces).
+
+%  d. Dada una ciudad, obtener una lista con los usuarios que viven en ella (utilizando el predicado findall/3).
 
