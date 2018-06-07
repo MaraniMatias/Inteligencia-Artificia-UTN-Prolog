@@ -285,8 +285,6 @@ find_in_list([_|T], Ele) :-
 % Ejercicio 15
 %  Ingresar una lista y determinar a través de una segunda lista todos los
 %  elementos que se repiten.
-% TODO: Hacer con el pertenece
-
 find_in_other_list(L1, L2, List) :-
   find_in_other_list(L1, L2, [], List, L1).
 
@@ -300,18 +298,22 @@ find_in_other_list([], [_|B], L, List, AL1) :-
   find_in_other_list(AL1, B, L, List, AL1).
 
 find_in_other_list([], [], List, List, _).
-
-%------------------------------------------
-repetidos([], []).
-repetidos([H|T], [H|B]) :-
-  find_in_list(H, B),
-  repetidos(T, B).
-
-repetidos([_|T], L) :-
-  repetidos(T, L).
 %------------------------------------------
 % TODO Usar en pertenece y evitar que repita, usar NOT pertenece,
 % acordarse que crea la lista ala vuelta y por eso tenees que validarlo a la vuelta
+
+%------------------------------------------
+find(Ele, [Ele|_]).
+find(Ele, [_|List]) :-
+  find(Ele, List).
+
+pertain([], _, []).
+pertain([H|T], [H|B], [H|L]) :-
+  pertain(T, B, L).
+
+pertain([_|T], List, L) :-
+  pertain(T, List, L).
+%------------------------------------------
 
 % Ejercicio 16
 %   Ingresar una lista y un elemento e informar cuántas veces está ese elemento en la lista.
@@ -327,3 +329,8 @@ count_ele_in_list(Ele, [Ele|T], Count, Rta) :-
 count_ele_in_list(Ele, [_|T], Count, Rta) :-
   count_ele_in_list(Ele, T, Count, Rta).
 
+% Ejercicio 17
+%  En una base de hechos hay un registro de personas y viajes realizados:
+%  persona(nombre, [lista ciudades visitó])
+%  Construir una regla que permita verificar si una persona visitó una
+%  determinada ciudad (datos de entrada: nombre persona y ciudad).
