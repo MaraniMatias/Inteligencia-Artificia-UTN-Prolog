@@ -378,13 +378,13 @@ intereces_en_comun(Usuario1, Usuario2, Intereces) :-
  usuario(4, 'gabriela', 'rosario').
  usuario(5, 'valentino', 'pujato').
 
-buscar_usuarios_en_ciudad(Ciudad, Lista, Rta) :-
-    usuario(_, Usuario, Ciudad),
-    not(find_in_list([Usuario|Lista], Usuario)),
-    buscar_usuarios_en_ciudad(Ciudad, [Usuario|Lista], Rta).
+usuarios_en_ciudad(Ciudad, Lista, Rta) :-
+  usuario(_, Usuario, Ciudad),
+  not(find_in_list([Usuario|Lista], Usuario)),
+  usuarios_en_ciudad(Ciudad, [Usuario|Lista], Rta).
 
-buscar_usuarios_en_ciudad(_, Lista, Lista).
+usuarios_en_ciudad(_, Lista, Lista).
 
-buscar_usuarios_en_ciudad(Ciudad, Lista) :-
-  buscar_usuarios_en_ciudad(Ciudad, [], Lista).
+usuarios_en_ciudad(Ciudad, Rta) :-
+  usuarios_en_ciudad(Ciudad, [], Rta).
 
