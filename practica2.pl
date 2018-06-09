@@ -370,3 +370,21 @@ intereces_en_comun(Usuario1, Usuario2, Intereces) :-
   intereses_de(Usuario2, InterecesUsuario2),
   find_in_other_list(InterecesUsuario1, InterecesUsuario2, Intereces).
 
+
+% TODO: Me falto hacer un push :(
+ usuario(1, 'matias', 'casilda').
+ usuario(3, 'ornella', 'rosario').
+ usuario(2, 'romina', 'casilda').
+ usuario(4, 'gabriela', 'rosario').
+ usuario(5, 'valentino', 'pujato').
+
+buscar_usuarios_en_ciudad(Ciudad, Lista, Rta) :-
+    usuario(_, Usuario, Ciudad),
+    not(find_in_list(Lista, Usuario)),
+    buscar_usuarios_en_ciudad(Ciudad, [Usuario|Lista], Rta).
+
+buscar_usuarios_en_ciudad(_, Lista, Lista).
+
+buscar_usuarios_en_ciudad(Ciudad, Lista) :-
+  buscar_usuarios_en_ciudad(Ciudad, [], Lista).
+
