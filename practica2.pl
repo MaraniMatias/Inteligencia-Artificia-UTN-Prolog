@@ -141,6 +141,15 @@ lastElement_save([L], List) :-
 lastElement_save([_|L], List) :-
   lastElement_save(L, List).
 
+diff_last_first([Last], First, Rta) :-
+  Rta is Last - First.
+
+diff_last_first([_|L], First, Rta) :-
+  diff_last_first(L, First, Rta).
+
+diff_last_first([H|L], Rta) :-
+  diff_last_first(L, H, Rta).
+
 % Ejercicio 7
 % Ingresar una lista de elementos e informar cuántos elementos tiene.
 length_list([], 0).
