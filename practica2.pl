@@ -141,6 +141,15 @@ lastElement_save([L], List) :-
 lastElement_save([_|L], List) :-
   lastElement_save(L, List).
 
+diff_last_first([Last], First, Rta) :-
+  Rta is Last - First.
+
+diff_last_first([_|L], First, Rta) :-
+  diff_last_first(L, First, Rta).
+
+diff_last_first([H|L], Rta) :-
+  diff_last_first(L, H, Rta).
+
 % Ejercicio 7
 % Ingresar una lista de elementos e informar cuántos elementos tiene.
 length_list([], 0).
@@ -380,8 +389,12 @@ intereces_de(Usuario1, Usuario2, Intereces) :-
 
 %  d. Dada una ciudad, obtener una lista con los usuarios que viven en ella (utilizando el predicado findall/3). XXX: porque de laridad 3 ??
 
-find_all_user(Ciudad, ListU) :-
+find_all_user(Ciudad, Lista, Rta) :-
   usuario(_, Usuario, Ciudad),
-  find_all_user(Ciudad, [Usuario|ListU]),
-  not(find(Usuario, ListU)).
+  not(find_in_list([Usuario|Lista], Usuario)),
+  find_all_user(Ciudad, [Usuario|Lista], Rta).
 
+find_all_user(_, Lista, Lista).
+
+find_all_user(Ciudad, Rta) :-
+  find_all_user(Ciudad, [], Rta).
