@@ -378,5 +378,10 @@ intereces_de(Usuario1, Usuario2, Intereces) :-
   intereses_de(Usuario2, InterecesUsuario2),
   concat_list_ok(InterecesUsuario1, InterecesUsuario2, Intereces).
 
-%  d. Dada una ciudad, obtener una lista con los usuarios que viven en ella (utilizando el predicado findall/3).
+%  d. Dada una ciudad, obtener una lista con los usuarios que viven en ella (utilizando el predicado findall/3). XXX: porque de laridad 3 ??
+
+find_all_user(Ciudad, ListU) :-
+  usuario(_, Usuario, Ciudad),
+  find_all_user(Ciudad, [Usuario|ListU]),
+  not(find(Usuario, ListU)).
 
