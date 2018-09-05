@@ -1,5 +1,5 @@
 % Importar hechos :D
-?- ['./base-datos.pl']. % vuelo(origen, destino, tiempo)
+?- ['./vuelos.txt']. % vuelo(origen, destino, tiempo)
 
 % Inicio del programa
 inicio :-
