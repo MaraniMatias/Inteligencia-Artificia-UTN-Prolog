@@ -398,3 +398,6 @@ find_all_user(_, Lista, Lista).
 
 find_all_user(Ciudad, Rta) :-
   find_all_user(Ciudad, [], Rta).
+
+% Para el TP2
+% findall/3
