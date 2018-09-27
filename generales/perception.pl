@@ -31,15 +31,13 @@ step(_,0).
 weight(w1, []).
 perception(X, Rta) :-
   weight(w1, W),
-  W == [],
-  retractall(weight(w1, _)),
+  W \= [],
+  produc_dot(X, W, Mrta),
+  step(Mrta, Rta).
+perception(X, Rta) :-
+  retract(weight(w1, _)),
   length_list(X, LenX),
   random_list(LenX, W1),
   asserta(weight(w1, W1)),
   perception(X, Rta).
-perception(X, Rta) :-
-  weight(w1, W),
-  W \= [],
-  produc_dot(X, W, Mrta),
-  step(Mrta, Rta).
 
