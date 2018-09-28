@@ -1,4 +1,7 @@
-:- ['./database.pl'].
+% data([],label)
+:- ['./database_par.pl'].
+% :- ['./database_impar.pl'].
+% :- ['./database_mayor_5.pl'].
 :- dynamic(weight/2).
 
 % Random List
