@@ -1,12 +1,13 @@
+:- ['./database.pl'].
 :- dynamic(weight/2).
 
 % Random List
 random_list(0, []).
-random_list(C, Y):-
+random_list(C, Rta) :-
   C > 0,
   C1 is C-1,
-  random(U),
-  Y = [U|T],
+  random(H),
+  Rta = [H|T],
   random_list(C1, T).
 
 % Longitud de una lista
@@ -44,4 +45,10 @@ perception(X, Rta) :-
   random(B1),
   asserta(weight(b1, B1)), % weight sináptico
   perception(X, Rta).
+
+epoch(0,_) :-
+  writeln('ok').
+epoch(X) :-
+  X \= 0,
+  X is X - 1.
 
