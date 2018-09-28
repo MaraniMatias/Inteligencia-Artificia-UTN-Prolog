@@ -3,6 +3,9 @@
 % :- ['./database_impar.pl'].
 % :- ['./database_mayor_5.pl'].
 :- dynamic(weight/2).
+:- dynamic(error/2).
+weight(w1, []).
+error(e1, 0).
 
 % Random List
 random_list(0, []).
@@ -32,7 +35,6 @@ step(X,1) :-
   X >= 0.
 step(_,0). % 0 or -1
 
-weight(w1, []).
 perception(X, Rta) :-
   weight(w1, W),
   W \= [],
@@ -51,34 +53,28 @@ perception(X, Rta) :-
 
 adjust_weights(GetW, Err) :-
   weight(GetW, W),
-  adjust_weights(W, Err, NewW),
-  write('W: '), writeln(W),
-  write('New: '), writeln(NewW),
-  write('Err: '),  writeln(Err),
+  adjust_weights(W, Err, [], NewW),
   retract(weight(GetW, _)),
   asserta(weight(GetW, NewW)).
 
-adjust_weights([], _, []).
-adjust_weights([Hw|Tw], Err, Rta) :-
-  write('Hw: '), writeln(Hw),
-  write('Tw: '), writeln(Tw),
-  write('Err: '),  writeln(Err),
-  % restar Error por cada W
+adjust_weights([], _, Rta, Rta).
+adjust_weights([Hw|Tw], Err, T, Rta) :-
   H is Hw - Err,
-  adjust_weights(Tw, Err, [H|Rta]),
-  writeln(Rta).
+  adjust_weights(Tw, Err, [H|T], Rta).
 
 epoch(0) :-
-  write('Epoch summary'),
+  writeln('Epoch summary'),
   write('Weight: '),
-  weight(w1,W1),
+  weight(w1, W1),
   writeln(W1),
   write('Weight synaptic: '),
-  weight(b1,B1),
+  weight(b1, B1),
   writeln(B1),
-  writeln('Error :'),
-  error(e1,E1),
-  writeln(E1).
+  write('Error :'),
+  error(e1, E1),
+  writeln(E1),
+  clenaer().
+
 epoch(Epoch) :-
   Epoch \= 0,
   data(X, Label),
@@ -86,5 +82,13 @@ epoch(Epoch) :-
   Err is Label - Prediction,
   adjust_weights(w1, Err),
   NextEpoch is Epoch - 1,
+  retract(error(e1, _)),
+  asserta(error(e1, Err)),
   epoch(NextEpoch).
 
+clenaer() :-
+  retractall(weight(_, _)),
+  retractall(error(_, _)),
+  asserta(weight(w1, [])),
+  asserta(weight(b1, 0)),
+  asserta(error(e1, 0)).
