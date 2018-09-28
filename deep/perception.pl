@@ -51,18 +51,19 @@ perception(X, Rta) :-
 
 
 adjust_weights(W, Err, Rta) :-
-  adjust_weights(W, Err, Rta, Rta).
+  adjust_weights(W, Err, Rta, Rta),
+  writeln(W),
+  writeln(Err),
+  writeln(Rta).
 
 adjust_weights([], _, NewW, NewW).
 adjust_weights([Hw|Tw], Err, NewW, Rta) :-
   % restar Error por cada W
   H is Hw - Err,
-  adjust_weights(Tw, Err, [H|NewW], Rta),
-  writeln(Rta),
-  writeln(Err).
+  adjust_weights(Tw, Err, [H|NewW], Rta).
 
 adjust_weights(GetW, Err) :-
-  L_rate is 1,
+  % L_rate is 1,
   weight(GetW, W),
   adjust_weights(W, Err, NewW),
   retract(weight(GetW, _)),
