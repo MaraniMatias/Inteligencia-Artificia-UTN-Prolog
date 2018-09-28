@@ -45,11 +45,15 @@ perception(X, Rta) :-
   length_list(X, LenX),
   random_list(LenX, W1),
   asserta(weight(w1, W1)), % weight
-  random(B1),
+  B1 is 0, % random(B1),
   asserta(weight(b1, B1)), % weight synaptic
   perception(X, Rta).
 
-epoch(0,_) :-
+back_ppropagation(GetW, Err) :-
+  weight(GetW, W),
+  % restar Error por cada W
+
+epoch(0) :-
   write('Epoch summary'),
   write('Weight: '),
   weight(w1,W1),
@@ -60,8 +64,11 @@ epoch(0,_) :-
   writeln('Error :'),
   error(e1,E1),
   writeln(E1).
-epoch(E) :-
-  E \= 0,
-  data(X,Label),
-  E is E - 1.
+epoch(Epoch) :-
+  Epoch \= 0,
+  data(X, Label),
+  perception(X, Predictions),
+  Err is Label - Predictions,
+  back_ppropagation(w1, Err),
+  Epoch is Epoch - 1.
 
