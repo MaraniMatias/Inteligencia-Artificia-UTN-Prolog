@@ -8,6 +8,20 @@ weight(w1, []).
 weight(b1, 0).
 error(e1, 0).
 
+%
+updata_err(E, Val) :-
+  retract(error(E, _)),
+  asserta(error(E, Val)).
+updata_weight(W, Val) :-
+  retract(weight(W, _)),
+  asserta(weight(W, Val)).
+
+% Re-set weight values
+clenaer() :-
+  updata_weight(w1, []),
+  updata_weight(b1, 0),
+  updata_err(e1, 0).
+
 % Random List
 random_list(0, []).
 random_list(C, Rta) :-
@@ -46,26 +60,22 @@ perception(X, Rta) :-
 perception(X, Rta) :-
   length_list(X, LenX),
   random_list(LenX, W1),
-  retract(weight(w1, _)),
-  asserta(weight(w1, W1)), % weight
+  updata_weight(w1, W1), % weight
   random(B1),
-  retract(weight(b1, _)),
-  asserta(weight(b1, B1)), % weight synaptic
+  updata_weight(b1, B1), % weight synaptic
   perception(X, Rta).
 
 adjust_weights(GetW, Err) :-
   weight(GetW, W),
   adjust_weights(W, Err, [], NewW),
-  retract(weight(GetW, _)),
-  asserta(weight(GetW, NewW)),
+  updata_weight(GetW, NewW),
   weight(b1, B1),
-  NewB is B1 -Err,
-  retract(weight(b1, _)),
-  asserta(weight(b1, NewB)).
+  NewB is B1 + Err,
+  updata_weight(b1, NewB).
 
 adjust_weights([], _, Rta, Rta).
 adjust_weights([Hw|Tw], Err, T, Rta) :-
-  H is Hw - Err,
+  H is Hw + Err,
   adjust_weights(Tw, Err, [H|T], Rta).
 
 epoch(0) :-
@@ -75,7 +85,7 @@ epoch(0) :-
   weight(b1, B1),
   write('Weight synaptic: '), writeln(B1),
   error(e1, E1),
-  write('Error :'), writeln(E1),
+  write('Error : '), writeln(E1),
   clenaer().
 
 epoch(Epoch) :-
@@ -85,13 +95,5 @@ epoch(Epoch) :-
   Err is Label - Prediction,
   adjust_weights(w1, Err),
   NextEpoch is Epoch - 1,
-  retract(error(e1, _)),
-  asserta(error(e1, Err)),
+  updata_err(e1, Err),
   epoch(NextEpoch).
-
-clenaer() :-
-  retractall(weight(_, _)),
-  retractall(error(_, _)),
-  asserta(weight(w1, [])),
-  asserta(weight(b1, 0)),
-  asserta(error(e1, 0)).
