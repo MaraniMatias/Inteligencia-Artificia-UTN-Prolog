@@ -5,6 +5,7 @@
 :- dynamic(weight/2).
 :- dynamic(error/2).
 weight(w1, []).
+weight(b1, 0).
 error(e1, 0).
 
 % Random List
@@ -38,16 +39,17 @@ step(_,0). % 0 or -1
 perception(X, Rta) :-
   weight(w1, W),
   W \= [],
-  produc_dot(X, W, Mrta),
-  step(Mrta, Rta),
   weight(b1, B1),
-  Rta is Rta + B1.
+  produc_dot(X, W, Mrta),
+  MB1 is Mrta + B1,
+  step(MB1, Rta).
 perception(X, Rta) :-
-  retract(weight(w1, _)),
   length_list(X, LenX),
   random_list(LenX, W1),
+  retract(weight(w1, _)),
   asserta(weight(w1, W1)), % weight
-  B1 is 0, % random(B1),
+  random(B1),
+  retract(weight(b1, _)),
   asserta(weight(b1, B1)), % weight synaptic
   perception(X, Rta).
 
@@ -55,7 +57,11 @@ adjust_weights(GetW, Err) :-
   weight(GetW, W),
   adjust_weights(W, Err, [], NewW),
   retract(weight(GetW, _)),
-  asserta(weight(GetW, NewW)).
+  asserta(weight(GetW, NewW)),
+  weight(b1, B1),
+  NewB is B1 -Err,
+  retract(weight(b1, _)),
+  asserta(weight(b1, NewB)).
 
 adjust_weights([], _, Rta, Rta).
 adjust_weights([Hw|Tw], Err, T, Rta) :-
@@ -64,15 +70,12 @@ adjust_weights([Hw|Tw], Err, T, Rta) :-
 
 epoch(0) :-
   writeln('Epoch summary'),
-  write('Weight: '),
   weight(w1, W1),
-  writeln(W1),
-  write('Weight synaptic: '),
+  write('Weight: '), writeln(W1),
   weight(b1, B1),
-  writeln(B1),
-  write('Error :'),
+  write('Weight synaptic: '), writeln(B1),
   error(e1, E1),
-  writeln(E1),
+  write('Error :'), writeln(E1),
   clenaer().
 
 epoch(Epoch) :-
