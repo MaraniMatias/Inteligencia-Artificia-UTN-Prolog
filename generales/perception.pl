@@ -26,18 +26,22 @@ produc_dot([H1|T1], [H2|T2], Rta) :-
 % Step
 step(X,1) :-
   X >= 0.
-step(_,0).
+step(_,0). % 0 or -1
 
 weight(w1, []).
 perception(X, Rta) :-
   weight(w1, W),
   W \= [],
   produc_dot(X, W, Mrta),
-  step(Mrta, Rta).
+  step(Mrta, Rta),
+  weight(b1, B1),
+  Rta is Rta + B1.
 perception(X, Rta) :-
   retract(weight(w1, _)),
   length_list(X, LenX),
   random_list(LenX, W1),
-  asserta(weight(w1, W1)),
+  asserta(weight(w1, W1)), % weight
+  random(B1),
+  asserta(weight(b1, B1)), % weight sináptico
   perception(X, Rta).
 
