@@ -49,25 +49,24 @@ perception(X, Rta) :-
   asserta(weight(b1, B1)), % weight synaptic
   perception(X, Rta).
 
-
-adjust_weights(W, Err, Rta) :-
-  adjust_weights(W, Err, Rta, Rta),
-  writeln(W),
-  writeln(Err),
-  writeln(Rta).
-
-adjust_weights([], _, NewW, NewW).
-adjust_weights([Hw|Tw], Err, NewW, Rta) :-
-  % restar Error por cada W
-  H is Hw - Err,
-  adjust_weights(Tw, Err, [H|NewW], Rta).
-
 adjust_weights(GetW, Err) :-
-  % L_rate is 1,
   weight(GetW, W),
   adjust_weights(W, Err, NewW),
+  write('W: '), writeln(W),
+  write('New: '), writeln(NewW),
+  write('Err: '),  writeln(Err),
   retract(weight(GetW, _)),
   asserta(weight(GetW, NewW)).
+
+adjust_weights([], _, []).
+adjust_weights([Hw|Tw], Err, Rta) :-
+  write('Hw: '), writeln(Hw),
+  write('Tw: '), writeln(Tw),
+  write('Err: '),  writeln(Err),
+  % restar Error por cada W
+  H is Hw - Err,
+  adjust_weights(Tw, Err, [H|Rta]),
+  writeln(Rta).
 
 epoch(0) :-
   write('Epoch summary'),
@@ -84,7 +83,8 @@ epoch(Epoch) :-
   Epoch \= 0,
   data(X, Label),
   perception(X, Prediction),
-  Err is Prediction - Label,
+  Err is Label - Prediction,
   adjust_weights(w1, Err),
-  Epoch is Epoch - 1.
+  NextEpoch is Epoch - 1,
+  epoch(NextEpoch).
 
