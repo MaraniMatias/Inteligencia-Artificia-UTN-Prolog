@@ -49,9 +49,24 @@ perception(X, Rta) :-
   asserta(weight(b1, B1)), % weight synaptic
   perception(X, Rta).
 
-back_ppropagation(GetW, Err) :-
-  weight(GetW, W),
+
+adjust_weights(W, Err, Rta) :-
+  adjust_weights(W, Err, Rta, Rta).
+
+adjust_weights([], _, NewW, NewW).
+adjust_weights([Hw|Tw], Err, NewW, Rta) :-
   % restar Error por cada W
+  H is Hw - Err,
+  adjust_weights(Tw, Err, [H|NewW], Rta),
+  writeln(Rta),
+  writeln(Err).
+
+adjust_weights(GetW, Err) :-
+  L_rate is 1,
+  weight(GetW, W),
+  adjust_weights(W, Err, NewW),
+  retract(weight(GetW, _)),
+  asserta(weight(GetW, NewW)).
 
 epoch(0) :-
   write('Epoch summary'),
@@ -67,8 +82,8 @@ epoch(0) :-
 epoch(Epoch) :-
   Epoch \= 0,
   data(X, Label),
-  perception(X, Predictions),
-  Err is Label - Predictions,
-  back_ppropagation(w1, Err),
+  perception(X, Prediction),
+  Err is Prediction - Label,
+  adjust_weights(w1, Err),
   Epoch is Epoch - 1.
 
