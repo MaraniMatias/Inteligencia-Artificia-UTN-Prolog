@@ -46,12 +46,22 @@ perception(X, Rta) :-
   random_list(LenX, W1),
   asserta(weight(w1, W1)), % weight
   random(B1),
-  asserta(weight(b1, B1)), % weight sináptico
+  asserta(weight(b1, B1)), % weight synaptic
   perception(X, Rta).
 
 epoch(0,_) :-
-  writeln('ok').
-epoch(X) :-
-  X \= 0,
-  X is X - 1.
+  write('Epoch summary'),
+  write('Weight: '),
+  weight(w1,W1),
+  writeln(W1),
+  write('Weight synaptic: '),
+  weight(b1,B1),
+  writeln(B1),
+  writeln('Error :'),
+  error(e1,E1),
+  writeln(E1).
+epoch(E) :-
+  E \= 0,
+  data(X,Label),
+  E is E - 1.
 
