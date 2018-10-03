@@ -1,9 +1,3 @@
-% VARIANTES
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 3.a) Listar los animales que tenga almenos dos habitos de alimentacion distintos
-% 3.b) Dado un animal cuantos habitos de reproducion tiene
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % 1. Hacer un programa que permita definir las cuentas a pagar del mes (luz, agua, alquiler,
 % teléfono, cable, supermercado, etc.) de un grupo de personas.
 % A su vez, deberá permitir ingresar el nombre de una de ellas e informar de todos sus gastos.
@@ -72,7 +66,7 @@ menu :-
 
 menu :-
   writeln('adios'),
-  guardar.
+  guardar,
   halt.
 
 pago_mensual(Nombre,Mes,S,C) :-
@@ -125,5 +119,72 @@ buscar(Cod) :-
   tell('./personas-db.pl'),
   listing(persona),
   told.
+
+% 3. Desarrollar un programa que permita definir los hábitos de:
+%      • alimentación (comida, cantidad)
+%      • bebida (bebida, cantidad)
+%      • reproducción (época de reproducción, período de gestación)
+%      • horas de sueño
+%
+% de un conjunto de animales de un Zoo.
+% Dicha información se guardará en una base de datos.
+% El programa, deberá permitir:
+
+% alimentacion(comida, cantidad)
+% bebida(bebida, cantidad)
+% reproduccion(epoca,gestacion)
+% horas_sueno(horas)
+:- dynamic(animal/2).
+
+guardarAnimalesDB :-
+  tell('./animales-db.pl'),
+  listing(animal),
+  told.
+
+abrirAnimalesDB :-
+  retractall(animal(_, _)),
+  consult('./animales-db.pl').
+
+% a. Ingresar el nombre de un animal e informar de todos sus hábitos.
+datos_animal(Animal) :-
+  animal(Animal, Functor),
+  writeln(Functor),
+  retract(animal(Animal, Functor)),
+  datos_animal(Animal).
+datos_animal(_) :-
+  abrirAnimalesDB.
+
+% FIXME
+% b. Ingresar un hábito e informar todos los animales que lo tienen.
+datos_habito(Habito) :-
+  animal(Animal, Habito),
+  retractall(animal(Animal, _)),
+  writeln(Animal),
+  datos_habito(Habito).
+datos_habito(_) :-
+  abrirAnimalesDB.
+
+% FIXME
+% c) Listar los animales que tenga almenos dos habitos de alimentacion distintos
+list_animlaes_habitos() :-
+  animal(Animal, alimentacion(_, _)),
+  list_animlaes_habitos(Animal).
+list_animlaes_habitos(Animal) :-
+  animal(Animal, alimentacion(_, _)),
+  retract(animal(Animal, alimentacion(_, _))),
+  writeln(Animal),
+  list_animlaes_habitos(Animal).
+list_animlaes_habitos(_) :-
+  abrirAnimalesDB.
+
+% d) Dado un animal cuantos habitos de reproducion tiene
+datos_reproduccion(Animal, Count) :-
+  animal(Animal, reproduccion(Epoca, Periodo)),
+  retract(animal(Animal, reproduccion(_, _))),
+  writeln([Animal,Epoca,Periodo]),
+  datos_reproduccion(Animal, C),
+  Count is C + 1.
+datos_reproduccion(_, 0) :-
+  abrirAnimalesDB.
 
 
