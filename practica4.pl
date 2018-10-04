@@ -156,25 +156,26 @@ datos_animal(_) :-
 
 % FIXME
 % b. Ingresar un hábito e informar todos los animales que lo tienen.
-datos_habito(Habito) :-
-  animal(Animal, Habito),
-  retractall(animal(Animal, _)),
-  writeln(Animal),
-  datos_habito(Habito).
-datos_habito(_) :-
-  abrirAnimalesDB.
+find_in_list([H|T], Ele) :-
+  find_in_list(H, T, Ele).
+find_in_list([_|T], Ele) :-
+  find_in_list(T, Ele).
 
-% FIXME
+datos_habito(Habito, Rta) :-
+  datos_habito(Habito, [], Rta).
+datos_habito(Habito, Lista, Rta) :-
+  animal(Animal, Habito),
+  not(find_in_list([Habito|Lista], Animal)),
+  datos_habito(Habito, [Habito|Lista], Rta).
+datos_habito(_, Lista, Lista).
+
 % c) Listar los animales que tenga almenos dos habitos de alimentacion distintos
 list_animlaes_habitos() :-
   animal(Animal, alimentacion(_, _)),
-  list_animlaes_habitos(Animal).
-list_animlaes_habitos(Animal) :-
-  animal(Animal, alimentacion(_, _)),
-  retract(animal(Animal, alimentacion(_, _))),
+  retractall(animal(Animal, alimentacion(_, _))),
   writeln(Animal),
-  list_animlaes_habitos(Animal).
-list_animlaes_habitos(_) :-
+  list_animlaes_habitos().
+list_animlaes_habitos() :-
   abrirAnimalesDB.
 
 % d) Dado un animal cuantos habitos de reproducion tiene

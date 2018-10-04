@@ -389,15 +389,13 @@ intereces_de(Usuario1, Usuario2, Intereces) :-
 
 %  d. Dada una ciudad, obtener una lista con los usuarios que viven en ella (utilizando el predicado findall/3). XXX: porque de laridad 3 ??
 
+find_all_user(Ciudad, Rta) :-
+  find_all_user(Ciudad, [], Rta).
 find_all_user(Ciudad, Lista, Rta) :-
   usuario(_, Usuario, Ciudad),
   not(find_in_list([Usuario|Lista], Usuario)),
   find_all_user(Ciudad, [Usuario|Lista], Rta).
-
 find_all_user(_, Lista, Lista).
-
-find_all_user(Ciudad, Rta) :-
-  find_all_user(Ciudad, [], Rta).
 
 % Para el TP2
 % findall/3
