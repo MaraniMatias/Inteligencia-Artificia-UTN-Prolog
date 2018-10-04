@@ -268,6 +268,71 @@ avg_price_by_autor(Autor, Cost, CountBook) :-
 avg_price_by_autor(_, 0, 0).
 
 
+libreria :-
+  format('~n~t<-oO Libreria ABC Oo->~t~72|~n'),
+  format('Opciones:
+    0  Salir.
+    1  Alta libro.
+    2  Baja libro.
+    3  Consulta.
+    4  Guardar.
+  '),
+  read(OPC),
+  format('Opcion elegida: [~w] ~n', [OPC]),
+  OPC \= 0,
+  libreria_opcion(OPC), nl,
+  libreria.
+
+libreria :-
+  writeln('¿Desea guardar los cambios [s/n]?'),
+  read(OPC),
+  format('Opcion elegida: [~w] ~n', [OPC]),
+  OPC \= n,
+  libreria_opcion(4),
+  halt.
+
+libreria :-
+  writeln('Adios'),
+  halt.
+
+% 1  Alta libro.
+libreria_opcion(1) :-
+  writeln('NOTA: No usar mayuscula.'),
+  writeln('Titulo:'),
+  read(Title),
+  writeln('Autor:'),
+  read(Autor),
+  writeln('Editorial:'),
+  read(Editorial),
+  writeln('Precio:'),
+  read(Price),
+  add_bock(Title, Autor, Editorial, Price).
+
+% 2  Baja libro.
+% libreria_opcion(2) :-
+
+% 3  Consulta.
+% libreria_opcion(3) :-
+
+% 4  Guardar.
+libreria_opcion(4) :-
+  save_libreriaDB,
+  writeln('Guardado con exito...').
+
+add_bock(Title, Autor, Editorial, Price) :-
+  count_bock(Count),
+  ID is Count + 1,
+  assertz(libro(ID, Title, Autor, Editorial, Price)).
+
+% aggregate_all(count, libro(_, _, _, _, _) Count),
+count_bock(Count) :-
+  libro(ID, _, _, _, _),
+  retract(libro(ID, _, _, _, _)),
+  count_bock(C),
+  Count is C + 1.
+count_bock(0) :-
+  open_libreriaDB.
+
 % ------------------------ %
 % Para tener todas la DB cargas desdel el principo
 openAllDB :-
