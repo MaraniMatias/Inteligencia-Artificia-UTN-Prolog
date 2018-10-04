@@ -346,34 +346,30 @@ libreria_option(4) :-
 libreria_option_submenu(3, 1) :-
   writeln('ID del libro:'),
   read(ID),
-  libro(ID, T, A, E, P),
-  show_book(ID, T, A, E, P).
+  show_book(ID, _, _, _, _).
 % 2 Titulo.
 libreria_option_submenu(3, 2) :-
   writeln('Titulo:'),
   read(T),
-  libro(ID, T, A, E, P),
-  show_book(ID, T, A, E, P).
+  show_book(_, T, _, _, _).
 % 3 Autor.
 libreria_option_submenu(3, 3) :-
   writeln('Autor:'),
   read(A),
-  libro(ID, T, A, E, P),
-  show_book(ID, T, A, E, P).
+  show_book(_, _, A, _, _).
 % 4 Editorial.
 libreria_option_submenu(3, 4) :-
   writeln('Editorial:'),
   read(E),
-  libro(ID, T, A, E, P),
-  show_book(ID, T, A, E, P).
+  show_book(_, _, _, E, _).
 % 5 Precio.
 libreria_option_submenu(3, 5) :-
   writeln('Precio:'),
   read(P),
-  libro(ID, T, A, E, P),
-  show_book(ID, T, A, E, P).
+  show_book(_, _, _, _, P).
 
 show_book(ID, T, A, E, P) :-
+  libro(ID, T, A, E, P),
   format('Detalles del libro:
     1 Nro. de libro:  ~w
     2 Titulo:         ~w
