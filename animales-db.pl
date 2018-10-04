@@ -18,3 +18,4 @@ animal(hormiga, horas_sueno(2)).
 
 animal(gato, bebida(agua, 4)).
 animal(caracol, bebida(agua, 0.1)).
+animal(vaca, bebida(leche, 0.1)). % :D

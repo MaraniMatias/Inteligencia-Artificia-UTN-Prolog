@@ -2,7 +2,6 @@
 % teléfono, cable, supermercado, etc.) de un grupo de personas.
 % A su vez, deberá permitir ingresar el nombre de una de ellas e informar de todos sus gastos.
 % calcular gasto mensual promedio por persona
-
 :- dynamic(cuenta/4).
 % cuenta(matias,luz,mes,2000).
 
@@ -100,7 +99,6 @@ lista_x_edad(E,[H|T]) :-
 lista_x_edad(_,[]).
 
 abrir_db_personas :-
-  writeln('Abrir DB...'),
   retractall(persona(_,_,_)),
   consult('./personas-db.pl').
 
@@ -141,7 +139,6 @@ guardarAnimalesDB :-
   told.
 
 abrirAnimalesDB :-
-  writeln('Abrir Animales DB'),
   retractall(animal(_, _)),
   consult('./animales-db.pl').
 
@@ -192,8 +189,7 @@ datos_reproduccion(_, 0) :-
 
 abrirEj4 :-
   retractall(gasto(_, _)),
-  consult('./gastos-db.pl'),
-  writeln('Abrir DB').
+  consult('./gastos-db.pl').
 guardarEj4 :-
   tell('./gastos-db.pl'),
   listing(gasto),
@@ -209,9 +205,45 @@ list_personas_con_gasto(Gasto) :-
 list_personas_con_gasto(_) :-
   abrirEj4.
 
+% FIXME Conosco los echos y fus functores de ante mano?
 % b. Informar las personas que tienen un consumo superior a los $150 en un
 % cierto gasto (dato de entrada).
+% list_personas_gato_mayor_150(Gasto, Rta) :-
 
+% list_personas_gato_mayor_150(Gasto, [Persona|List]) :-
+%   % functor(Gasto,A,B), writeln([Gasto,A,B]),
+%   retractall(gasto(Persona, _)),
+%   gasto(P1, Gasto),
+% list_personas_gato_mayor_150(Gasto, [List]).
 
+get_persona_gato(Gasto, Persona) :-
+  gasto(Persona, Gasto),
+  writeln(Persona),
+  retractall(gasto(Persona, _)),
+  get_persona_gato(_, Persona),
+  fail.
 
+get_persona_gato(_, _) :-
+  abrirEj4.
+
+% FIXME Conosco los echos y fus functores de ante mano?
 % c. Calcular gasto promedio para una determinada persona (dato de entrada).
+% calc_avg_for_person(Persona) :-
+%   gasto(P, Gasto),
+%   P \= Persona,
+%   retractall(gasto(P, _)),
+%   calc_avg_for_person(Persona).
+
+% ------------------------ %
+% Para tener todas la DB cargas desdel el principo
+openAllDB :-
+  writeln('Open all DB...'),
+  abrir,
+  abrir_db_personas,
+  abrirAnimalesDB,
+  abrirEj4.
+?- openAllDB.
+
+% ?- functor(T,N,3), T =.. List.
+% ?- functor(T, tel, 3), gasto(matias,T).
+%
