@@ -433,7 +433,69 @@ add_ingredientes([ingrediente(Ing, Cant)|List]) :-
   add_ingredientes(List).
 add_ingredientes([]).
 
+pertenece(Ele, [Ele|_]).
+pertenece(Ele, [_|List]) :-
+  pertenece(Ele, List).
 
+recetas_con_ingretiente() :-
+  writeln('Ingrediente:'), read(Ing),
+  writeln('Cantidad:'), read(Cant),
+  recetas_con_ingretiente(Ing, Cant).
+recetas_con_ingretiente(Ing, Cant) :-
+  receta(Cod, Nombre, Ingredientes),
+  pertenece(ingrediente(Ing, Cant), Ingredientes),
+  writeln([Cod, Nombre, Ingredientes]),
+  retract(receta(Cod, _, _)),
+  fail.
+recetas_con_ingretiente(_, _) :-
+  abrir_recetasDB.
+
+recetas_con_ingretientes() :-
+  writeln('1) Ingrediente:'), read(Ing1),
+  writeln('1) Cantidad:'), read(Cant1),
+  writeln('2) Ingrediente:'), read(Ing2),
+  writeln('2) Cantidad:'), read(Cant2),
+  recetas_con_ingretiente(Ing1, Cant1, Ing2, Cant2).
+
+recetas_con_ingretiente(Ing1, Cant1, Ing2, Cant2) :-
+  receta(Cod, Nombre, Ingredientes),
+  pertenece(ingrediente(Ing1, Cant1), Ingredientes),
+  pertenece(ingrediente(Ing2, Cant2), Ingredientes),
+  writeln([Cod, Nombre, Ingredientes]),
+  retract(receta(Cod, _, _)),
+  fail.
+recetas_con_ingretiente(_, _, _, _) :-
+  abrir_recetasDB.
+
+recetas_para_hacer() :-
+  writeln('Ingrediente:'), read(Ing),
+  writeln('Cantidad:'), read(Cant),
+  recetas_con_ingretiente_menos(Ing, Cant).
+recetas_con_ingretiente_menos(Ing, Cant) :-
+  receta(Cod, Nombre, Ingredientes),
+  pertenece(ingrediente(Ing, _), Ingredientes),
+  format('
+  Detalles de la receta
+  =============================
+  Cod:    ~w
+  Nombre: ~w
+  Ingredientes:
+  ~w
+  -----------------------------
+  ', [Cod, Nombre, Ingredientes]),
+  comprobar_cantidad(Cant, Ingredientes),
+  retract(receta(Cod, _, _)),
+  fail.
+recetas_con_ingretiente_menos(_, _) :-
+  abrir_recetasDB.
+comprobar_cantidad(Cant, [Ingrediente|_]) :-
+  ingrediente(_, IngC) = Ingrediente,
+  IngC =< Cant.
+comprobar_cantidad(Cant, [_|T]) :-
+  comprobar_cantidad(Cant, T).
+comprobar_cantidad(_, []) :-
+  % writeln('No hay recetas :('),
+  fail.
 
 % ------------------------------------------------------------------------ %
 % Para tener todas la DB cargas desdel el principo
