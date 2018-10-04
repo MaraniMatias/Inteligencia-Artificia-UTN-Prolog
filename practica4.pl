@@ -2,7 +2,6 @@
 % teléfono, cable, supermercado, etc.) de un grupo de personas.
 % A su vez, deberá permitir ingresar el nombre de una de ellas e informar de todos sus gastos.
 % calcular gasto mensual promedio por persona
-:- dynamic(cuenta/4).
 % cuenta(matias,luz,mes,2000).
 
 guardar :-
@@ -84,7 +83,6 @@ pago_mensual(_,_,0,0).
 % a. Dada una edad devolver una lista con los nombres que tenga una edad mayor ala dada
 
 % persona(cod,mombre,edad).
-:- dynamic(persona/3).
 
 lista_x_edad(E) :-
   lista_x_edad(E,Rta),
@@ -131,7 +129,6 @@ buscar(Cod) :-
 % bebida(bebida, cantidad)
 % reproduccion(epoca,gestacion)
 % horas_sueno(horas)
-:- dynamic(animal/2).
 
 guardarAnimalesDB :-
   tell('./animales-db.pl'),
@@ -184,9 +181,6 @@ datos_reproduccion(_, 0) :-
 %   gasto(maria, super(coto,500)).
 %   gasto(omar, tel(fijo,telecom,150)).
 %   gasto(maria,tel(movil,personal,100)).
-%
-:- dynamic(gasto/2).
-
 abrirEj4 :-
   retractall(gasto(_, _)),
   consult('./gastos-db.pl').
@@ -245,7 +239,6 @@ get_persona_gato(_, _) :-
 %
 % La base datos debe guardarse en disco.
 % Calcular además el precio promedio de los libros de un determinado autor.
-:- dynamic(libro/5).
 
 open_libreriaDB :-
   retractall(libro(_,_,_,_,_)),
@@ -392,7 +385,6 @@ add_book(Title, Autor, Editorial, Price) :-
   assertz(libro(ID, Title, Autor, Editorial, Price)),
   save_libreriaDB.
 
-% aggregate_all(count, libro(_, _, _, _, _) Count),
 count_book(Count) :-
   libro(ID, _, _, _, _),
   retract(libro(ID, _, _, _, _)),
@@ -410,19 +402,50 @@ count_book(0) :-
 %       • Cantidad
 % A su vez, permitir ingresar dos (2) ingredientes e informar de todas las
 % recetas (Código y Nombre) que poseen ambos ingredientes.
+%
 % Por otro lado, para un ingrediente en particular y una cierta cantidad del
-% mismo, determinar aquellas recetas que llevan ese ingrediente y superan
+% mismo, determinar aquellas recetas que llevan ese ingrediente y NO superan
 % dicha cantidad.
+
+abrir_recetasDB :-
+  retractall(receta(_, _, _)),
+  consult('./recetas-db.pl').
+guardar_recetasDB :-
+  tell('./recetas-db.pl'),
+  listing(receta(_, _, _)),
+  told.
+
+add_receta() :-
+  aggregate_all(count, receta(_, _, _), Count),
+  Cod is Count + 1,
+  writeln('Nombre'),
+  read(Nombre),
+  add_ingredientes(List),
+  writeln([Cod, Nombre, List]),
+  assertz(receta(Cod, Nombre, List)),
+  guardar_recetasDB.
+
+add_ingredientes([ingrediente(Ing, Cant)|List]) :-
+  writeln('¿Agregar ingrediente? [s/n]'), read(Opc),
+  Opc \= n,
+  writeln('Ingrediente:'), read(Ing),
+  writeln('Cantidad:'), read(Cant),
+  add_ingredientes(List).
+add_ingredientes([]).
+
+
 
 % ------------------------------------------------------------------------ %
 % Para tener todas la DB cargas desdel el principo
 openAllDB :-
-  writeln('Open all DB...'),
+  write('Open all DB...'),
   abrir,
   abrir_db_personas,
   abrirAnimalesDB,
   abrirEj4,
-  open_libreriaDB.
+  open_libreriaDB,
+  abrir_recetasDB,
+  writeln('OK.').
 ?- openAllDB.
 
 % ?- functor(T,N,3), T =.. List.
