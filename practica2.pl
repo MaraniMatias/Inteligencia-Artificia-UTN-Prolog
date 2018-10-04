@@ -402,8 +402,10 @@ find_all_user(Ciudad, Rta) :-
 % Para el TP2
 % findall/3
 
-% Add a value to the items in the list
-add_value_to_items_list([], _, []).
-add_value_to_items_list([Hw|Tw], Err, [H|T]) :-
-  add_value_to_items_list(Tw, Err, T),
-  H is Hw + Err.
+% Anexo :D
+% Data una lisata y un numero sumarle a todos los elementos de las lista ese numero.
+% add_ele_to_list([1,2], 3, Rta).
+add_ele_to_list([], _, []).
+add_ele_to_list([H1|T1], Ele, [H|T]) :-
+  add_ele_to_list(T1, Ele, T),
+  H is H1 + Ele.
