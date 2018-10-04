@@ -280,7 +280,7 @@ libreria :-
   read(OPC),
   format('Opcion elegida: [~w] ~n', [OPC]),
   OPC \= 0,
-  libreria_opcion(OPC), nl,
+  libreria_option(OPC), nl,
   libreria.
 
 libreria :-
@@ -288,7 +288,7 @@ libreria :-
   read(OPC),
   format('Opcion elegida: [~w] ~n', [OPC]),
   OPC \= n,
-  libreria_opcion(4),
+  libreria_option(4),
   halt.
 
 libreria :-
@@ -296,7 +296,7 @@ libreria :-
   halt.
 
 % 1  Alta libro.
-libreria_opcion(1) :-
+libreria_option(1) :-
   writeln('NOTA: No usar mayuscula.'),
   writeln('Titulo:'),
   read(Title),
@@ -306,31 +306,94 @@ libreria_opcion(1) :-
   read(Editorial),
   writeln('Precio:'),
   read(Price),
-  add_bock(Title, Autor, Editorial, Price).
+  add_book(Title, Autor, Editorial, Price).
 
 % 2  Baja libro.
-% libreria_opcion(2) :-
+libreria_option(2) :-
+  writeln('¿Conoce el ID del libro? [s/n]'),
+  read(OPC),
+  format('Opcion elegida: [~w] ~n', [OPC]),
+  OPC \= n,
+  writeln('ID del libro a borrar:'),
+  read(ID),
+  retract(libro(ID, _, _, _, _)),
+  writeln('Libro borrado.').
+libreria_option(2) :-
+  writeln('[INFO] En el menu consulta puedes obtener el ID.').
 
 % 3  Consulta.
-% libreria_opcion(3) :-
+libreria_option(3) :-
+  format('Por que atributo quieres buscar:
+    0 Salir al menu.
+    1 Nro. de libro (ID).
+    2 Titulo.
+    3 Autor.
+    4 Editorial.
+    5 Precio.
+  '),
+  read(OPC),
+  format('Opcion elegida: [~w] ~n', [OPC]),
+  OPC \= 0,
+  libreria_option_submenu(3, OPC).
+libreria_option(3). % Evita que falle el menu
 
 % 4  Guardar.
-libreria_opcion(4) :-
+libreria_option(4) :-
   save_libreriaDB,
   writeln('Guardado con exito...').
 
-add_bock(Title, Autor, Editorial, Price) :-
-  count_bock(Count),
+% 1 Nro. de libro (ID).
+libreria_option_submenu(3, 1) :-
+  writeln('ID del libro:'),
+  read(ID),
+  libro(ID, T, A, E, P),
+  show_book(ID, T, A, E, P).
+% 2 Titulo.
+libreria_option_submenu(3, 2) :-
+  writeln('Titulo:'),
+  read(T),
+  libro(ID, T, A, E, P),
+  show_book(ID, T, A, E, P).
+% 3 Autor.
+libreria_option_submenu(3, 3) :-
+  writeln('Autor:'),
+  read(A),
+  libro(ID, T, A, E, P),
+  show_book(ID, T, A, E, P).
+% 4 Editorial.
+libreria_option_submenu(3, 4) :-
+  writeln('Editorial:'),
+  read(E),
+  libro(ID, T, A, E, P),
+  show_book(ID, T, A, E, P).
+% 5 Precio.
+libreria_option_submenu(3, 5) :-
+  writeln('Precio:'),
+  read(P),
+  libro(ID, T, A, E, P),
+  show_book(ID, T, A, E, P).
+
+show_book(ID, T, A, E, P) :-
+  format('Detalles del libro:
+    1 Nro. de libro:  ~w
+    2 Titulo:         ~w
+    3 Autor:          ~w
+    4 Editorial:      ~w
+    5 Precio:         ~2f
+  ', [ID, T, A, E, P]).
+
+add_book(Title, Autor, Editorial, Price) :-
+  count_book(Count),
   ID is Count + 1,
   assertz(libro(ID, Title, Autor, Editorial, Price)).
 
 % aggregate_all(count, libro(_, _, _, _, _) Count),
-count_bock(Count) :-
+count_book(Count) :-
   libro(ID, _, _, _, _),
   retract(libro(ID, _, _, _, _)),
-  count_bock(C),
+  count_book(C),
   Count is C + 1.
-count_bock(0) :-
+count_book(0) :-
   open_libreriaDB.
 
 % ------------------------ %
