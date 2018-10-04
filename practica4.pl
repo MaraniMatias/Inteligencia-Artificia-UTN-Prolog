@@ -234,6 +234,40 @@ get_persona_gato(_, _) :-
 %   retractall(gasto(P, _)),
 %   calc_avg_for_person(Persona).
 
+
+% 5. Hacer un programa que permita realizar altas, bajas y consultas a la base
+% de datos de una librería. De cada libro se registran los siguientes datos:
+%   • Nro. de libro (auto numérico)
+%   • Titulo
+%   • Autor
+%   • Editorial
+%   • Precio
+%
+% La base datos debe guardarse en disco.
+% Calcular además el precio promedio de los libros de un determinado autor.
+:- dynamic(libro/5).
+
+open_libreriaDB :-
+  retractall(libro(_,_,_,_,_)),
+  consult('./libreria-db.pl').
+save_libreriaDB :-
+  tell('./libreria-db.pl'),
+  listing(libro),
+  told.
+
+avg_price_by_autor(Autor, AvgCost) :-
+  avg_price_by_autor(Autor, Cost, CountBook),
+  AvgCost is Cost rdiv CountBook,
+  open_libreriaDB.
+avg_price_by_autor(Autor, Cost, CountBook) :-
+  libro(_, _, Autor, _, Price),
+  retract(libro(_, _, Autor, _, Price)),
+  avg_price_by_autor(Autor, C, CB),
+  CountBook is CB + 1,
+  Cost is C + Price.
+avg_price_by_autor(_, 0, 0).
+
+
 % ------------------------ %
 % Para tener todas la DB cargas desdel el principo
 openAllDB :-
@@ -241,7 +275,8 @@ openAllDB :-
   abrir,
   abrir_db_personas,
   abrirAnimalesDB,
-  abrirEj4.
+  abrirEj4,
+  open_libreriaDB.
 ?- openAllDB.
 
 % ?- functor(T,N,3), T =.. List.
