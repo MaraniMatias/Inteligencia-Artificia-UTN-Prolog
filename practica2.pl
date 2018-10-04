@@ -401,3 +401,9 @@ find_all_user(Ciudad, Rta) :-
 
 % Para el TP2
 % findall/3
+
+% Add a value to the items in the list
+add_value_to_items_list([], _, []).
+add_value_to_items_list([Hw|Tw], Err, [H|T]) :-
+  add_value_to_items_list(Tw, Err, T),
+  H is Hw + Err.
