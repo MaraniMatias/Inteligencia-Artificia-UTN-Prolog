@@ -155,13 +155,12 @@ datos_animal(_) :-
   abrirAnimalesDB.
 
 % b. Ingresar un hábito e informar todos los animales que lo tienen.
-% Tomo que tiene que eser exatamente el mismo habito.
-% habito_animal(bebida(agua, 4)).
+% habito_animal(bebida(_, _)).
 habito_animal(Habito) :-
- animal(Animal, Habito),
- writeln([Habito, Animal]),
- retract(animal(Animal, Habito)),
- habito_animal(Habito).
+  animal(Animal, Habito),
+  writeln([Animal, Habito]),
+  retract(animal(Animal, Habito)),
+  fail.
 habito_animal(_) :-
   abrirAnimalesDB.
 
@@ -184,4 +183,35 @@ datos_reproduccion(Animal, Count) :-
 datos_reproduccion(_, 0) :-
   abrirAnimalesDB.
 
+% 4. Ampliar el ejercicio 1 a través del uso de functores. Por ejemplo:
+%   gasto(maria, super(coto,500)).
+%   gasto(omar, tel(fijo,telecom,150)).
+%   gasto(maria,tel(movil,personal,100)).
+%
+:- dynamic(gasto/2).
 
+abrirEj4 :-
+  retractall(gasto(_, _)),
+  consult('./gastos-db.pl'),
+  writeln('Abrir DB').
+guardarEj4 :-
+  tell('./gastos-db.pl'),
+  listing(gasto),
+  told.
+
+% a. Ingresar un gasto (por ej. super) e informar todas las personas que
+% tienen dicho gasto.
+list_personas_con_gasto(Gasto) :-
+  gasto(Persona, Gasto),
+  writeln([Persona, Gasto]),
+  retract(gasto(Persona, _)),
+  fail.
+list_personas_con_gasto(_) :-
+  abrirEj4.
+
+% b. Informar las personas que tienen un consumo superior a los $150 en un
+% cierto gasto (dato de entrada).
+
+
+
+% c. Calcular gasto promedio para una determinada persona (dato de entrada).
