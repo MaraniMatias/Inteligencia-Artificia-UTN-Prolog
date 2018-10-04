@@ -50,7 +50,6 @@ opcion(4) :-
 menu :-
   abrir,
   format('~t<-oO MENU Oo->~t~72|~n~n'),
-  writeln('Ingrese los elementos de una lista y para terminar [].'),
   format('Opciones:
     0  Salir y Guardar.
     1  Agregar cuenta
@@ -142,6 +141,7 @@ guardarAnimalesDB :-
   told.
 
 abrirAnimalesDB :-
+  writeln('Abrir Animales DB'),
   retractall(animal(_, _)),
   consult('./animales-db.pl').
 
@@ -154,20 +154,16 @@ datos_animal(Animal) :-
 datos_animal(_) :-
   abrirAnimalesDB.
 
-% FIXME
 % b. Ingresar un hábito e informar todos los animales que lo tienen.
-find_in_list([H|T], Ele) :-
-  find_in_list(H, T, Ele).
-find_in_list([_|T], Ele) :-
-  find_in_list(T, Ele).
-
-datos_habito(Habito, Rta) :-
-  datos_habito(Habito, [], Rta).
-datos_habito(Habito, Lista, Rta) :-
-  animal(Animal, Habito),
-  not(find_in_list([Habito|Lista], Animal)),
-  datos_habito(Habito, [Habito|Lista], Rta).
-datos_habito(_, Lista, Lista).
+% Tomo que tiene que eser exatamente el mismo habito.
+% habito_animal(bebida(agua, 4)).
+habito_animal(Habito) :-
+ animal(Animal, Habito),
+ writeln([Habito, Animal]),
+ retract(animal(Animal, Habito)),
+ habito_animal(Habito).
+habito_animal(_) :-
+  abrirAnimalesDB.
 
 % c) Listar los animales que tenga almenos dos habitos de alimentacion distintos
 list_animlaes_habitos() :-
@@ -178,7 +174,7 @@ list_animlaes_habitos() :-
 list_animlaes_habitos() :-
   abrirAnimalesDB.
 
-% d) Dado un animal cuantos habitos de reproducion tiene
+% d) Dado un animal cuantos habitos de reproduccion tiene
 datos_reproduccion(Animal, Count) :-
   animal(Animal, reproduccion(Epoca, Periodo)),
   retract(animal(Animal, reproduccion(_, _))),
