@@ -5,13 +5,13 @@
 % cuenta(matias,luz,mes,2000).
 
 guardar :-
-  tell('./cuentas-db.pl'),
+  tell('./db/cuentas-db.pl'),
   listing(cuenta),
   told.
 
 abrir :-
   retractall(cuenta(_,_,_,_)),
-  consult('./cuentas-db.pl').
+  consult('./db/cuentas-db.pl').
 
 % Listar cuentas a pagar por una persona
 opcion(1) :-
@@ -98,7 +98,7 @@ lista_x_edad(_,[]).
 
 abrir_db_personas :-
   retractall(persona(_,_,_)),
-  consult('./personas-db.pl').
+  consult('./db/personas-db.pl').
 
 buscar(Cod) :-
   abrir_db_personas,
@@ -111,7 +111,7 @@ buscar(Cod) :-
   writeln('Edad:'),
   read(Edad),
   assertz(persona(Cod,Nombre,Edad)),
-  tell('./personas-db.pl'),
+  tell('./db/personas-db.pl'),
   listing(persona),
   told.
 
@@ -131,13 +131,13 @@ buscar(Cod) :-
 % horas_sueno(horas)
 
 guardarAnimalesDB :-
-  tell('./animales-db.pl'),
+  tell('./db/animales-db.pl'),
   listing(animal),
   told.
 
 abrirAnimalesDB :-
   retractall(animal(_, _)),
-  consult('./animales-db.pl').
+  consult('./db/animales-db.pl').
 
 % a. Ingresar el nombre de un animal e informar de todos sus hábitos.
 datos_animal(Animal) :-
@@ -183,9 +183,9 @@ datos_reproduccion(_, 0) :-
 %   gasto(maria,tel(movil,personal,100)).
 abrirEj4 :-
   retractall(gasto(_, _)),
-  consult('./gastos-db.pl').
+  consult('./db/gastos-db.pl').
 guardarEj4 :-
-  tell('./gastos-db.pl'),
+  tell('./db/gastos-db.pl'),
   listing(gasto),
   told.
 
@@ -263,9 +263,9 @@ calc_avg_for_person(_, 0, 0) :-
 
 open_libreriaDB :-
   retractall(libro(_,_,_,_,_)),
-  consult('./libreria-db.pl').
+  consult('./db/libreria-db.pl').
 save_libreriaDB :-
-  tell('./libreria-db.pl'),
+  tell('./db/libreria-db.pl'),
   listing(libro),
   told.
 
@@ -430,9 +430,9 @@ count_book(0) :-
 
 abrir_recetasDB :-
   retractall(receta(_, _, _)),
-  consult('./recetas-db.pl').
+  consult('./db/recetas-db.pl').
 guardar_recetasDB :-
-  tell('./recetas-db.pl'),
+  tell('./db/recetas-db.pl'),
   listing(receta(_, _, _)),
   told.
 

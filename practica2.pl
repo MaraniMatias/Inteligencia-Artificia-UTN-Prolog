@@ -357,7 +357,7 @@ visito(Persona, Ciudad) :-
 %   usuario(idUsuario, nombre, localidad).
 %   intereses(idUsuario, [lista intereses]).
 % Importar hechos :D
-?- ['./UTNook.pl'].
+?- ['./db/UTNook.pl'].
 
 %  Construir un programa en PROLOG que permita:
 intereses_de(Usuario, Intereces) :-
