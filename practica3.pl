@@ -48,9 +48,9 @@ transformar(C, [H|T]) :-
   transformar(C1, T).
 transformar(P, [P]).
 
-% TODO
+% TODO:XXX
 % 6. Hacer un programa que transforme un número entero a binario.
-% TODO
+% TODO:XXX
 % 7. Hacer un reconocedor de palabras de la forma a n b n .
 
 % 8. Ingresar una cadena y un carácter, luego informar la cantidad de veces
@@ -77,3 +77,7 @@ contar(C, L, Cont) :-
 % cada una de las vocales (a, e, i, o, u) y la cantidad de veces que
 % aparece cualquier consonante.
 
+
+% TODO
+% 10. Dada una cadena extraer las vocales y las consonantes,
+% devolverlas en dos listas
