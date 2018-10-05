@@ -199,34 +199,55 @@ list_personas_con_gasto(Gasto) :-
 list_personas_con_gasto(_) :-
   abrirEj4.
 
-% FIXME Conosco los echos y fus functores de ante mano?
+% XXX:Nota Conosco los echos, aridad  y fus functores de ante mano?
 % b. Informar las personas que tienen un consumo superior a los $150 en un
 % cierto gasto (dato de entrada).
-% list_personas_gato_mayor_150(Gasto, Rta) :-
+list_personas_gato_mayor_150(Gasto) :-
+  % functor(Gasto, A, B), writeln([Gasto, A, B]),
+  gasto(Persona, Gasto),
+  get_cost(Gasto, Cost),
+  Cost > 150,
+  writeln(Persona),
+  retract(gasto(Persona, Gasto)),
+  fail.
+list_personas_gato_mayor_150(_) :-
+  abrirEj4.
 
-% list_personas_gato_mayor_150(Gasto, [Persona|List]) :-
-%   % functor(Gasto,A,B), writeln([Gasto,A,B]),
-%   retractall(gasto(Persona, _)),
-%   gasto(P1, Gasto),
-% list_personas_gato_mayor_150(Gasto, [List]).
+get_cost(Gasto, Cost) :-
+  luz(_, Cost) = Gasto.
+get_cost(Gasto, Cost) :-
+  gas(_, Cost) = Gasto.
+get_cost(Gasto, Cost) :-
+  super(_, Cost) = Gasto.
+get_cost(Gasto, Cost) :-
+  tel(_, _, Cost) = Gasto.
 
-get_persona_gato(Gasto, Persona) :-
+get_persona_gasto(Gasto, Persona) :-
   gasto(Persona, Gasto),
   writeln(Persona),
   retractall(gasto(Persona, _)),
-  get_persona_gato(_, Persona),
+  get_persona_gasto(_, Persona),
   fail.
 
-get_persona_gato(_, _) :-
+get_persona_gasto(_, _) :-
   abrirEj4.
 
-% FIXME Conosco los echos y fus functores de ante mano?
+% XXX:Nota Conosco los echos y fus functores de ante mano?
 % c. Calcular gasto promedio para una determinada persona (dato de entrada).
-% calc_avg_for_person(Persona) :-
-%   gasto(P, Gasto),
-%   P \= Persona,
-%   retractall(gasto(P, _)),
-%   calc_avg_for_person(Persona).
+calc_avg_for_person(Persona) :-
+  calc_avg_for_person(Persona, Cost, Count),
+  Avg is Cost rdiv Count,
+  format('~w gasta en promedio ~4f', [Persona, Avg]).
+
+calc_avg_for_person(Persona, Cost, Length) :-
+  gasto(Persona, Gasto),
+  get_cost(Gasto, Cost1),
+  retractall(gasto(Persona, Gasto)),
+  calc_avg_for_person(Persona, Cost2, Length1),
+  Cost is Cost2 + Cost1,
+  Length is Length1 + 1.
+calc_avg_for_person(_, 0, 0) :-
+  abrirEj4.
 
 
 % 5. Hacer un programa que permita realizar altas, bajas y consultas a la base
