@@ -98,6 +98,21 @@ contar_vocales(Cadena, Count) :-
   sub_atom(Cadena, 1, R, _, SubCadena),
   contar_vocales(SubCadena, Count).
 
-% TODO
 % 10. Dada una cadena extraer las vocales y las consonantes,
 % devolverlas en dos listas
+ej_10 :-
+  write('Cadena: '), read(C),
+  extraer_vocales_consonantes(C, Vocales, Consonantes),
+  format('~nVocales: ~w~nConsonates: ~w', [Vocales, Consonantes]).
+
+extraer_vocales_consonantes('', [], []).
+extraer_vocales_consonantes(Cadena, [Vocal|Tv], Consonantes) :-
+  sub_atom(Cadena, 0, 1, R, Vocal),
+  sub_atom(Cadena, 1, R, _, SubCadena),
+  es_vocal(Vocal),
+  extraer_vocales_consonantes(SubCadena, Tv, Consonantes).
+
+extraer_vocales_consonantes(Cadena, Vocales, [Consonante|Tc]) :-
+  sub_atom(Cadena, 0, 1, R, Consonante),
+  sub_atom(Cadena, 1, R, _, SubCadena),
+  extraer_vocales_consonantes(SubCadena, Vocales, Tc).
