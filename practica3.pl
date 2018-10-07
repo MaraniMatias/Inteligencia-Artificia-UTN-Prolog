@@ -72,11 +72,31 @@ contar(C, L, Cont) :-
   sub_atom(C, 1, R, _, C1),
   contar(C1, L, Cont).
 
-% TODO
 % 9. Ingresar una cadena, contar e informar el número de veces que aparece
 % cada una de las vocales (a, e, i, o, u) y la cantidad de veces que
 % aparece cualquier consonante.
+es_vocal('a').
+es_vocal('e').
+es_vocal('i').
+es_vocal('o').
+es_vocal('u').
 
+ej_9 :-
+  write('Cadena: '), read(C),
+  contar_vocales(C, Count),
+  format('~nCantidad de caracteres ~w', [Count]).
+
+contar_vocales('', 0).
+contar_vocales(Cadena, Count) :-
+  sub_atom(Cadena, 0, 1, R, Chart),
+  sub_atom(Cadena, 1, R, _, SubCadena),
+  es_vocal(Chart),
+  contar_vocales(SubCadena, C),
+  Count is C + 1.
+contar_vocales(Cadena, Count) :-
+  sub_atom(Cadena, 0, 1, R, _),
+  sub_atom(Cadena, 1, R, _, SubCadena),
+  contar_vocales(SubCadena, Count).
 
 % TODO
 % 10. Dada una cadena extraer las vocales y las consonantes,
