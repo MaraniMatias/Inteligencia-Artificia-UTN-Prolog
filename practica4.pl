@@ -534,3 +534,7 @@ openAllDB :-
 % ?- functor(T,N,3), T =.. List.
 % ?- functor(T, tel, 3), gasto(matias,T).
 %
+% add(X,Y,Sum):- Sum is X+Y.
+% sum(Xs,Sum):- foldl(add,Xs,0,Sum).
+%
+% ?- sum([1,2,3],S). % S = 6.
