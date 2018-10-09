@@ -407,3 +407,11 @@ add_ele_to_list([], _, []).
 add_ele_to_list([H1|T1], Ele, [H|T]) :-
   add_ele_to_list(T1, Ele, T),
   H is H1 + Ele.
+
+
+make_list_of_ele(0, _, []).
+make_list_of_ele(C, Ele, [Ele|T]) :-
+  C > 0,
+  C1 is C - 1,
+  make_list_of_ele(C1, Ele, T).
+
