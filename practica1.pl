@@ -520,3 +520,9 @@ suma(N,SumPares,SumImpares) :-
   suma(N1, SumPares, SI),
   SumImpares is N + SI.
 
+% Anexo
+pow(_, 0, 1).
+pow(X, Y, Z) :-
+  Y1 is Y - 1,
+  pow(X, Y1, Z1),
+  Z is Z1 * X.
