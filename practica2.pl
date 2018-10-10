@@ -415,3 +415,14 @@ make_list_of_ele(C, Ele, [Ele|T]) :-
   C1 is C - 1,
   make_list_of_ele(C1, Ele, T).
 
+% Dada una lista y una posicion, devolver el elemento que se encuenta en esa posicion.
+get_ele(List, IndexFind, Ele) :-
+  get_ele(List, 0, IndexFind, Ele).
+
+get_ele([], _, _, _) :-
+  fail.
+get_ele([Ele|_], Index, Index, Ele).
+get_ele([_|T], IndexCount, IndexFind, Ele) :-
+  IC is IndexCount + 1,
+  get_ele(T, IC, IndexFind, Ele).
+
