@@ -213,6 +213,13 @@ list_personas_gato_mayor_150(Gasto) :-
 list_personas_gato_mayor_150(_) :-
   abrirEj4.
 
+/*
+get_cost(Gasto, Cost) :-
+  functor(Gasto, F, A),
+  A1 is A - 1,
+  arg(Gasto, A1, Cost).
+*/
+
 get_cost(Gasto, Cost) :-
   luz(_, Cost) = Gasto.
 get_cost(Gasto, Cost) :-
