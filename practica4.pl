@@ -202,6 +202,7 @@ list_personas_con_gasto(_) :-
 % XXX:Nota Conosco los echos, aridad  y fus functores de ante mano?
 % b. Informar las personas que tienen un consumo superior a los $150 en un
 % cierto gasto (dato de entrada).
+% list_personas_gato_mayor_150(tel(_, _, _)).
 list_personas_gato_mayor_150(Gasto) :-
   % functor(Gasto, A, B), writeln([Gasto, A, B]),
   gasto(Persona, Gasto),
@@ -219,15 +220,10 @@ get_cost(Gasto, Cost) :-
   A1 is A - 1,
   arg(Gasto, A1, Cost).
 */
-
-get_cost(Gasto, Cost) :-
-  luz(_, Cost) = Gasto.
-get_cost(Gasto, Cost) :-
-  gas(_, Cost) = Gasto.
-get_cost(Gasto, Cost) :-
-  super(_, Cost) = Gasto.
-get_cost(Gasto, Cost) :-
-  tel(_, _, Cost) = Gasto.
+get_cost(luz(_, Cost), Cost).
+get_cost(gas(_, Cost), Cost).
+get_cost(super(_, Cost), Cost).
+get_cost(tel(_, _, Cost), Cost).
 
 get_persona_gasto(Gasto, Persona) :-
   gasto(Persona, Gasto),
