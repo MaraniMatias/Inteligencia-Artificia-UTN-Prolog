@@ -49,7 +49,8 @@ get_nivel_socio(DNI, Nivel, Rta) :-
 get_nivel_socio(DNI, Nivel, Rta) :-
   asistencia(_, _, _, _),
   get_nivel_socio(DNI, Nivel, Rta).
-get_nivel_socio(_, Nivel, Nivel).
+get_nivel_socio(_, Nivel, Nivel) :-
+  abrirDB.
 
 get_nivel_ejercicios([CodE|T], Nivel, Rta) :-
   ejercicio(CodE, _, NivelE, _, _, _),
@@ -58,3 +59,17 @@ get_nivel_ejercicios([CodE|T], Nivel, Rta) :-
 get_nivel_ejercicios([_|T], Nivel, Rta) :-
   get_nivel_ejercicios(T, Nivel, Rta).
 get_nivel_ejercicios([], Nivel, Nivel).
+
+% 1.b
+recomendar_eje(Nivel, Sexo, Edad) :-
+  ejercicio(Cod, Des, Nivel, Sexo, EdadMin, EdadMax),
+  retract(ejercicio(Cod, _, _, _, _, _)),
+  EdadMin =< Edad,
+  EdadMax >= Edad,
+  writeln(['Cod:',Cod,'Des:',Des]),
+  recomendar_eje(Nivel, Sexo, Edad).
+recomendar_eje(Nivel, Sexo, Edad) :-
+  ejercicio(Cod, _, Nivel, Sexo, _, _),
+  recomendar_eje(Nivel, Sexo, Edad).
+recomendar_eje(_, _, _) :-
+  abrirDB.

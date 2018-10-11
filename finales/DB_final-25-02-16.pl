@@ -20,6 +20,7 @@ ejercicio(e3, eje_3, 3, _, 22, 35).
 ejercicio(e4, eje_4, 3, f, 12, 45).
 ejercicio(e5, eje_5, 3, m, 12, 45).
 ejercicio(e6, eje_6, 4, _, 12, 25).
+ejercicio(e7, eje_7, 3, m, 22, 45).
 % Asistencia(fecha, dni, min_entreno, [cod_ejercicios realizados])
 asistencia('24-12-2018', d1, 120, [e0, e1, e3]).
 asistencia('25-11-2018', d1, 124, [e6, e5]).
