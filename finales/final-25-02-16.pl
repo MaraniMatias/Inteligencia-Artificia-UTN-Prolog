@@ -69,7 +69,25 @@ recomendar_eje(Nivel, Sexo, Edad) :-
   writeln(['Cod:',Cod,'Des:',Des]),
   recomendar_eje(Nivel, Sexo, Edad).
 recomendar_eje(Nivel, Sexo, Edad) :-
-  ejercicio(Cod, _, Nivel, Sexo, _, _),
+  ejercicio(_, _, Nivel, Sexo, _, _),
   recomendar_eje(Nivel, Sexo, Edad).
 recomendar_eje(_, _, _) :-
+  abrirDB.
+
+pertenece([Ele|_], Ele).
+pertenece([_|T], Ele) :-
+  pertenece(T, Ele).
+
+list_socios(Fecha, Cod) :-
+  asistencia(Fecha, DNI, _, Ejercicios),
+  retract(asistencia(Fecha, DNI, _, _)),
+  pertenece(Ejercicios, Cod),
+  socio(DNI, Nombre, _, _),
+  writeln(['Socio:',Nombre]),
+  list_socios(Fecha, Cod).
+
+list_socios(Fecha, Cod) :-
+  asistencia(Fecha, _, _, _),
+  list_socios(Fecha, Cod).
+list_socios(_, _) :-
   abrirDB.

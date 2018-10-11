@@ -23,7 +23,8 @@ ejercicio(e6, eje_6, 4, _, 12, 25).
 ejercicio(e7, eje_7, 3, m, 22, 45).
 % Asistencia(fecha, dni, min_entreno, [cod_ejercicios realizados])
 asistencia('24-12-2018', d1, 120, [e0, e1, e3]).
-asistencia('25-11-2018', d1, 124, [e6, e5]).
+asistencia('25-11-2018', d1, 124, [e6, e5, e2]).
+asistencia('25-11-2018', d2, 124, [e2, e1]).
 % Nivel(cod_nivel, descripcion, cant_hora_desde, cant_hora_hasta)
 nivel(n0, lvl_0, 0, 128).
 nivel(n1, lvl_1, 128, 256).
