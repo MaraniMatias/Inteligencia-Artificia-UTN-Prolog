@@ -116,3 +116,29 @@ extraer_vocales_consonantes(Cadena, Vocales, [Consonante|Tc]) :-
   sub_atom(Cadena, 0, 1, R, Consonante),
   sub_atom(Cadena, 1, R, _, SubCadena),
   extraer_vocales_consonantes(SubCadena, Vocales, Tc).
+
+% 11 ingreser dos cadenas y mostrar la unión en una lista.
+ej_11():-
+  writeln('Cadena 1: '),
+  read(C1),
+  writeln('Cadena 2: '),
+  read(C2),
+  join_cadena(C1, C2, C12),
+  writeln(C12).
+
+join_cadena(C1, C2, L3) :-
+  cadena_to_list(C1, L1),
+  cadena_to_list(C2, L2),
+  join_list(L1, L2, L3).
+
+cadena_to_list(C, [H|T]) :-
+  sub_atom(C, 0, 1, R, H),
+  sub_atom(C, 1, R, _, C1),
+  cadena_to_list(C1, T).
+cadena_to_list('', []).
+
+join_list([], [], []).
+join_list([H|T], List, [H|T2]) :-
+  join_list(T, List, T2).
+join_list([], List, L) :-
+  join_list(List, [], L).
