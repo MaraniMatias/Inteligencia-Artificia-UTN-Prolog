@@ -63,11 +63,11 @@ alergia(04, 'Alergia a la humedad', [
   sintoma_peso(11, 100),
   sintoma_peso(16, 100),
   sintoma_peso(17, 100),
-  sintoma_peso(18, 100),
   sintoma_peso(19, 100),
   sintoma_peso(20, 100),
   sintoma_peso(21, 100),
-  sintoma_peso(22, 100)
+  sintoma_peso(22, 100),
+  sintoma_peso(23, 100)
 ]).
 
 
