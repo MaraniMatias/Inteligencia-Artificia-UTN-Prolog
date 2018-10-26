@@ -2,6 +2,7 @@
 :- dynamic alergia/3.
 :- dynamic sintoma/2.
 
+/**********************************************************************************/
 abrir_db_alergia :-
   retractall(alergia(_, _, _)),
   consult('./DB/alergias.pl').
@@ -11,11 +12,13 @@ abrir_db_sintomas :-
 abrir_db :-
   abrir_db_alergia,
   abrir_db_sintomas.
+/**********************************************************************************/
 
 pertenece(Ele, [Ele|_]).
 pertenece(Ele, [_|T]) :-
   pertenece(Ele, T).
 
+/**********************************************************************************/
 read_to_string(String, WordList) :-
   read_line_to_codes(user_input, Cs),
   atom_codes(String, Cs),
@@ -27,6 +30,7 @@ read_to_string(String, WordList) :-
   % FIXME split_string(S2, ' ', ',', WordList).
   split_string(S2, ' ,', ',', WordList).
 
+/**********************************************************************************/
 find_sintoma_by_word(Word, ID) :-
   sintoma(ID, Sintoma),
   retract(sintoma(ID, Sintoma)),
@@ -43,6 +47,34 @@ search_sintomas([Word|T], [ID| Sintomas]) :-
 search_sintomas([_|T], Sintomas) :-
   search_sintomas(T, Sintomas).
 
+/**********************************************************************************/
+
+pertenece_sintoma_peso(ID, [sintoma_peso(ID, _)|_]).
+pertenece_sintoma_peso(ID, [_|T]) :-
+  pertenece_sintoma_peso(ID, T).
+
+find_sintomas_in_list([], _).
+find_sintomas_in_list([ID|T], ListSintomaPeso) :-
+  pertenece_sintoma_peso(ID, ListSintomaPeso),
+  find_sintomas_in_list(T, ListSintomaPeso).
+
+% ListSintomas, ListAlergias
+% TODO ordenar por prioridad, alergia que tenga mayor chanse de ser la
+% correcta segun los sintomas
+find_alergias([], _) :- fail.
+find_alergias(ListIDSintoma, [ID|Alergias]) :-
+  alergia(ID, _, ListSintomaPeso),
+  retract(alergia(ID, _, _)),
+  find_sintomas_in_list(ListIDSintoma, ListSintomaPeso),
+  find_alergias(ListIDSintoma, Alergias).
+find_alergias(ListIDSintoma, Alergias) :-
+  alergia(_, _, _),
+  find_alergias(ListIDSintoma, Alergias).
+find_alergias(_, []) :-
+  abrir_db_alergia.
+
+/**********************************************************************************/
+
 alergiaSam :-
   % abrir_db,
   % TODO preguntar primero si podes describir los sintomas
@@ -50,7 +82,8 @@ alergiaSam :-
   read_to_string(_, WordList), % TODO limpiar palabras como: tengo, me duele ...
   writeln(WordList),
   % Buscar sintomas en nuesta DB
-  search_sintomas(WordList, ListSintomas), writeln(ListSintomas)
+  search_sintomas(WordList, ListSintomas), writeln(ListSintomas),
+  find_alergias(ListSintomas, ListAlergias), writeln(ListAlergias)
   .
 
 inicio :-
