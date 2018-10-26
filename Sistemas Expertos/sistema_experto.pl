@@ -74,6 +74,38 @@ find_alergias(_, []) :-
   abrir_db_alergia.
 
 /**********************************************************************************/
+% La idea obtener un valor para cada alergia, que tenga mejor proiridad de ser
+
+max_sintoma_peso([], Max, Max).
+max_sintoma_peso([sintoma_peso(_,H)|T], Value, Max) :-
+  H >  Value,
+  max_sintoma_peso(T, H, Max).
+max_sintoma_peso([_|T], Value, Max) :-
+  max_sintoma_peso(T, Value, Max).
+
+% Lista de sintoma pesos para los ID de sintomas
+filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun):-
+  filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun, ListSintomaPeso).
+filter([ID|T], [sintoma_peso(ID, Peso)|T1], [sintoma_peso(ID, Peso)|T2], AuxList) :-
+  filter(T, AuxList, T2).
+filter(List, , [_|T], ListSintomaPesoComun, AuxList) :-
+  filter(List, , T, ListSintomaPesoComun, AuxList).
+filter([], _, [], _).
+
+% Por cada sintoma encontrado dividirlo el peso por el mayor peso y despues sumar los resultados
+get_priority(IDAlergia, ListSintomas, Value) :-
+  alergia(IDAlergia, _, ListSintomaPeso),
+  filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun),
+
+
+
+
+
+sort_by_priorities() :-
+
+
+
+/**********************************************************************************/
 
 alergiaSam :-
   % abrir_db,
