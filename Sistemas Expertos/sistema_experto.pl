@@ -92,14 +92,18 @@ filter(List, [_|T], ListSintomaPesoComun, AuxList) :-
   filter(List, T, ListSintomaPesoComun, AuxList).
 filter([], _, [], _).
 
+make_priority([sintoma_peso(_, Peso)|T], Max, Value) :-
+  V is Peso rdiv Max,
+  make_priority(T, Max, V1),
+  Value is V1 + V.
+make_priority([], _, 0).
+
 % Por cada sintoma encontrado dividirlo el peso por el mayor peso y despues sumar los resultados
 get_priority(IDAlergia, ListSintomas, Value) :-
   alergia(IDAlergia, _, ListSintomaPeso),
   filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun),
-
-
-
-
+  max_sintoma_peso(ListSintomaPesoComun, Max),
+  make_priority(ListSintomaPesoComun, Max, Value).
 
 sort_by_priorities() :-
 
