@@ -86,8 +86,8 @@ max_sintoma_peso([_|T], Value, Max) :-
 % Lista de sintoma pesos para los ID de sintomas
 filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun):-
   filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun, ListSintomaPeso).
-filter([ID|T], [sintoma_peso(ID, Peso)|T1], [sintoma_peso(ID, Peso)|T2], AuxList) :-
-  filter(T, AuxList, T2).
+filter([ID|T], [sintoma_peso(ID, Peso)|_], [sintoma_peso(ID, Peso)|T2], AuxList) :-
+  filter(T, AuxList, T2, AuxList).
 filter(List, , [_|T], ListSintomaPesoComun, AuxList) :-
   filter(List, , T, ListSintomaPesoComun, AuxList).
 filter([], _, [], _).
