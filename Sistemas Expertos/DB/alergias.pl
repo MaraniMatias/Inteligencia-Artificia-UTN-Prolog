@@ -38,7 +38,7 @@ alergia(01, 'Alergia los acaros', [
   sintoma_peso(14, 100),
   sintoma_peso(15, 100),
   sintoma_peso(16, 100),
-  sintoma_peso(17, 100),
+  sintoma_peso(17, 100)
 ]).
 
 % Rinitis alergica
@@ -50,7 +50,7 @@ alergia(03, 'Rinitis alergica', [
   sintoma_peso(12, 100),
   sintoma_peso(13, 100),
   sintoma_peso(17, 100),
-  sintoma_peso(18, 100),
+  sintoma_peso(18, 100)
 ]).
 
 % Alergia a la humedad
