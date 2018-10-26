@@ -88,8 +88,8 @@ filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun):-
   filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun, ListSintomaPeso).
 filter([ID|T], [sintoma_peso(ID, Peso)|_], [sintoma_peso(ID, Peso)|T2], AuxList) :-
   filter(T, AuxList, T2, AuxList).
-filter(List, , [_|T], ListSintomaPesoComun, AuxList) :-
-  filter(List, , T, ListSintomaPesoComun, AuxList).
+filter(List, [_|T], ListSintomaPesoComun, AuxList) :-
+  filter(List, T, ListSintomaPesoComun, AuxList).
 filter([], _, [], _).
 
 % Por cada sintoma encontrado dividirlo el peso por el mayor peso y despues sumar los resultados
