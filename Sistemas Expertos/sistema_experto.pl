@@ -186,7 +186,7 @@ asking_for_sintomas(IDSintoma, _) :-
 % preguntar por cada sintoma no preguntado
 asking_for_sintomas([]).
 asking_for_sintomas([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
-  writeln(['->',IDSintoma, NomSintoma, ListSintomas]),
+  % writeln(['->',IDSintoma, NomSintoma, ListSintomas]),
   sintoma(IDSintoma, NomSintoma),
   asking_for_sintomas(IDSintoma, NomSintoma),
   asking_for_sintomas(ListSintomas).
@@ -207,10 +207,15 @@ abracadabra([_|T]) :-
 
 /**********************************************************************************/
 show_alergia([]).
-show_alergia([alergia_priority(IDAlergia, _)|T]) :-
+show_alergia([alergia_priority(IDAlergia, _), alergia_priority(IDAlergia2, _)|_]) :-
   alergia(IDAlergia, NomAlergia, _),
-  format('Esos sintomas pertenece a ~w~n', [NomAlergia]),
+  alergia(IDAlergia2, NomAlergia2, _),
+  format('Estoy pensando que puede se ~w o ~w~n', [NomAlergia, NomAlergia2]),
   show_alergia(T).
+show_alergia([alergia_priority(IDAlergia, _)|_]) :-
+  alergia(IDAlergia, NomAlergia, _),
+  format('Estoy pensando que puede se ~w~n', [NomAlergia]).
+  % show_alergia(T).
 
 /**********************************************************************************/
 alergiaSam :-
