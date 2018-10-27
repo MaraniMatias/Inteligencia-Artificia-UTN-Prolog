@@ -30,7 +30,7 @@ updata_sintomas_alergia(IDAlergia) :-
 updata_sintomas_alergia(IDAlergia) :-
   retractall(sintomas_alergia(IDAlergia)),
   asserta(sintomas_alergia(IDAlergia)),
-  alergia(IDAlergia, NomAlergia),
+  alergia(IDAlergia, NomAlergia, _),
   format('Estoy pensando que puede ser ~w~n', [NomAlergia]).
 /**********************************************************************************/
 read_to_string(String, WordList) :-
@@ -73,8 +73,6 @@ find_sintomas_in_list([ID|T], ListSintomaPeso) :-
   find_sintomas_in_list(T, ListSintomaPeso).
 
 % ListSintomas, ListAlergias
-% TODO ordenar por prioridad, alergia que tenga mayor chanse de ser la
-% correcta segun los sintomas
 find_alergias([], _) :- fail.
 find_alergias(ListIDSintoma, [ID|Alergias]) :-
   alergia(ID, _, ListSintomaPeso),
@@ -91,13 +89,14 @@ find_alergias(_, []) :-
 % La idea obtener un valor para cada alergia, que tenga mejor proiridad de ser la
 % correcta.
 
-max_sintoma_peso(List, Max) :-
-  max_sintoma_peso(List, 0, Max).
+max_sintoma_peso([sintoma_peso(_, H)|T], Max) :-
+  max_sintoma_peso(T, H, Max).
 max_sintoma_peso([], Max, Max).
 max_sintoma_peso([sintoma_peso(_, H)|T], Value, Max) :-
   H > Value,
   max_sintoma_peso(T, H, Max).
-max_sintoma_peso([_|T], Value, Max) :-
+max_sintoma_peso([sintoma_peso(_, H)|T], Value, Max) :-
+  H =< Value,
   max_sintoma_peso(T, Value, Max).
 
 % Lista de pesos de los sintomas para los ID de sintomas ingresados
@@ -123,7 +122,7 @@ get_priority(IDAlergia, ListSintomas, Value) :-
   make_priority(ListSintomaPesoComun, Max, Value).
 
 get_list_priority([], _, []).
-get_list_priority([ID|T], ListSintomas, [alergia_priority(ID,Priorites)|T1]) :-
+get_list_priority([ID|T], ListSintomas, [alergia_priority(ID, Priorites)|T1]) :-
   get_priority(ID, ListSintomas, Priorites),
   get_list_priority(T, ListSintomas, T1).
 
@@ -133,9 +132,9 @@ sort_by_priorities(ListAlergias, ListSintomas, ListAlergiasNew) :-
 
 sort_by_priorities_aux([], Acc, Acc).
 sort_by_priorities_aux([H|T], Acc, Sorted) :-
-    pivoting(H, T, L1, L2),
-    sort_by_priorities_aux(L1, Acc, Sorted1),
-    sort_by_priorities_aux(L2, [H|Sorted1], Sorted).
+  pivoting(H, T, L1, L2),
+  sort_by_priorities_aux(L1, Acc, Sorted1),
+  sort_by_priorities_aux(L2, [H|Sorted1], Sorted).
 
 pivoting(_, [], [], []).
 pivoting(alergia_priority(ID1, H), [alergia_priority(ID2, X)|T], [alergia_priority(ID2, X)|L], G) :-
@@ -205,7 +204,7 @@ abracadabra([_|T]) :-
 
 /**********************************************************************************/
 show_alergia([]).
-show_alergia([IDAlergia|T]) :-
+show_alergia([alergia_priority(IDAlergia, _)|T]) :-
   alergia(IDAlergia, NomAlergia, _),
   format('Esos sintomas pertenece a ~w~n', [NomAlergia]),
   show_alergia(T).
@@ -221,13 +220,13 @@ alergiaSam :-
   % writeln(ListSintomas),
   assert_sintoma_confirmado(ListSintomas), % Crea los hechos que indican los sintomas fonfirmados
   find_alergias(ListSintomas, ListAlergias),
-  writeln(ListAlergias),
+  % writeln(ListAlergias),
   sort_by_priorities(ListAlergias, ListSintomas, ListAlergiasPriorites),
-  writeln(ListAlergiasPriorites),
+  % writeln(ListAlergiasPriorites),
   show_alergia(ListAlergiasPriorites),
-  writeln('Vamos a tratar de averiguar de que alergia se trata'),
-  abracadabra(ListAlergiasPriorites)
-  .
+  % TODO Verificar si realmete es necesarios preguntrt
+  writeln('Te are unas preguntas para averiguar de que alergia se trata.'),
+  abracadabra(ListAlergiasPriorites).
 
 inicio :- start.
 start :-
