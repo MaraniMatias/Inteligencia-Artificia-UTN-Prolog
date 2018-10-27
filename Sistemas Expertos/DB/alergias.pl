@@ -13,16 +13,16 @@
 % Estornudos, Congestión nasal y picor, Irritabilidad, Tos, asma,
 % Dolor de cabeza, Fatiga, Pitidos en el pecho
 alergia(00, 'Alergia al polen', [
-  sintoma_peso(01, 100),
-  sintoma_peso(02, 100),
-  sintoma_peso(03, 100),
-  sintoma_peso(04, 100),
-  sintoma_peso(05, 100),
-  sintoma_peso(06, 100),
-  sintoma_peso(07, 100),
-  sintoma_peso(08, 100),
-  sintoma_peso(09, 100),
-  sintoma_peso(10, 100)
+  sintoma_peso(01, 10),
+  sintoma_peso(02, 10),
+  sintoma_peso(03, 10),
+  sintoma_peso(04, 10),
+  sintoma_peso(05, 10),
+  sintoma_peso(06, 10),
+  sintoma_peso(07, 10),
+  sintoma_peso(08, 10),
+  sintoma_peso(09, 10),
+  sintoma_peso(10, 10)
 ]).
 
 % Alergia acaros:
@@ -30,27 +30,27 @@ alergia(00, 'Alergia al polen', [
 % problemas respiratorios, picor de ojos, enrojecimiento de ojos,
 % lagrimeo, picazón de la piel
 alergia(01, 'Alergia los acaros', [
-  sintoma_peso(02, 100),
-  sintoma_peso(05, 100),
-  sintoma_peso(08, 100),
-  sintoma_peso(12, 100),
-  sintoma_peso(13, 100),
-  sintoma_peso(14, 100),
-  sintoma_peso(15, 100),
-  sintoma_peso(16, 100),
-  sintoma_peso(17, 100)
+  sintoma_peso(02, 10),
+  sintoma_peso(05, 25),
+  sintoma_peso(08, 1),
+  sintoma_peso(12, 1),
+  sintoma_peso(13, 1),
+  sintoma_peso(14, 1),
+  sintoma_peso(15, 11),
+  sintoma_peso(16, 30),
+  sintoma_peso(17, 20)
 ]).
 
 % Rinitis alergica
 % congestion,secreción nasal,estornudos
 % Lagrimeo, enrojecimiento y picor de ojos.
 alergia(03, 'Rinitis alergica', [
-  sintoma_peso(05, 100),
-  sintoma_peso(08, 100),
-  sintoma_peso(12, 100),
-  sintoma_peso(13, 100),
-  sintoma_peso(17, 100),
-  sintoma_peso(18, 100)
+  sintoma_peso(05, 15),
+  sintoma_peso(08, 20),
+  sintoma_peso(12, 5),
+  sintoma_peso(13, 30),
+  sintoma_peso(17, 15),
+  sintoma_peso(18, 15)
 ]).
 
 % Alergia a la humedad
@@ -59,15 +59,15 @@ alergia(03, 'Rinitis alergica', [
 % asma, tos, silbidos
 % escozor y enrojecimiento en nariz, garganta y ojos
 alergia(04, 'Alergia a la humedad', [
-  sintoma_peso(01, 100),
-  sintoma_peso(11, 100),
-  sintoma_peso(16, 100),
-  sintoma_peso(17, 100),
-  sintoma_peso(19, 100),
-  sintoma_peso(20, 100),
-  sintoma_peso(21, 100),
-  sintoma_peso(22, 100),
-  sintoma_peso(23, 100)
+  sintoma_peso(01, 25),
+  sintoma_peso(11, 5),
+  sintoma_peso(16, 10),
+  sintoma_peso(17, 10),
+  sintoma_peso(19, 20),
+  sintoma_peso(20, 10),
+  sintoma_peso(21, 10),
+  sintoma_peso(22, 5),
+  sintoma_peso(23, 5)
 ]).
 
 
