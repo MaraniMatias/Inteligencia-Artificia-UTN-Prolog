@@ -1,23 +1,37 @@
 % TODO: algo mas parecido a eli
+:- protocola('log_sistema_experto.log').
 :- dynamic alergia/3.
 :- dynamic sintoma/2.
+:- dynamic sintomas_alergia/1.
+:- dynamic sintoma_confirmado/2.
 
 /**********************************************************************************/
-abrir_db_alergia :-
+open_db_alergia :-
   retractall(alergia(_, _, _)),
   consult('./DB/alergias.pl').
-abrir_db_sintomas :-
+open_db_sintomas :-
   retractall(sintoma(_, _)),
   consult('./DB/sintomas.pl').
-abrir_db :-
-  abrir_db_alergia,
-  abrir_db_sintomas.
+open_db :-
+  open_db_alergia,
+  open_db_sintomas.
 /**********************************************************************************/
 
-pertenece(Ele, [Ele|_]).
-pertenece(Ele, [_|T]) :-
-  pertenece(Ele, T).
+assert_sintoma_confirmado([]).
+assert_sintoma_confirmado([IDSintoma|T]) :-
+  assert_sintoma_confirmado(si, IDSintoma),
+  assert_sintoma_confirmado(T).
+assert_sintoma_confirmado(Tiene, IDSintoma) :-
+  assertz(sintoma_confirmado(Tiene, IDSintoma)).
 
+updata_sintomas_alergia(IDAlergia) :-
+  sintomas_alergia(_),
+  asserta(sintomas_alergia(IDAlergia)).
+updata_sintomas_alergia(IDAlergia) :-
+  retractall(sintomas_alergia(IDAlergia)),
+  asserta(sintomas_alergia(IDAlergia)),
+  alergia(IDAlergia, NomAlergia),
+  format('Estoy pensando que puede ser ~w~n', [NomAlergia]).
 /**********************************************************************************/
 read_to_string(String, WordList) :-
   read_line_to_codes(user_input, Cs),
@@ -41,7 +55,7 @@ find_sintoma_by_word(Word, ID) :-
 
 search_sintomas([], []).
 search_sintomas([Word|T], [ID| Sintomas]) :-
-  abrir_db_sintomas,
+  open_db_sintomas,
   Word \= '', Word \= "",
   find_sintoma_by_word(Word, ID),
   search_sintomas(T, Sintomas).
@@ -49,7 +63,6 @@ search_sintomas([_|T], Sintomas) :-
   search_sintomas(T, Sintomas).
 
 /**********************************************************************************/
-
 pertenece_sintoma_peso(ID, [sintoma_peso(ID, _)|_]).
 pertenece_sintoma_peso(ID, [_|T]) :-
   pertenece_sintoma_peso(ID, T).
@@ -72,7 +85,7 @@ find_alergias(ListIDSintoma, Alergias) :-
   alergia(_, _, _),
   find_alergias(ListIDSintoma, Alergias).
 find_alergias(_, []) :-
-  abrir_db_alergia.
+  open_db_alergia.
 
 /**********************************************************************************/
 % La idea obtener un valor para cada alergia, que tenga mejor proiridad de ser la
@@ -131,33 +144,105 @@ pivoting(alergia_priority(ID1, H), [alergia_priority(ID2, X)|T], [alergia_priori
 pivoting(alergia_priority(ID1, H), [alergia_priority(ID2, X)|T], L, [alergia_priority(ID2, X)|G]) :-
   X > H,
   pivoting(alergia_priority(ID1, H), T, L, G).
-/**********************************************************************************/
 
+/**********************************************************************************/
+% Preguntar por cada sintoma que tiene la enfermedad que no fueron se sabe si la
+% persona los tiene
+
+tiene('si'          , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('poco'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('algo'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('puede'       , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('puede ser'   , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('creo'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('bastante'    , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+
+no_tiene('no'       , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+no_tiene('no creo'  , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+no_tiene('nada'     , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+
+resolve_answer(Rta, IDSintoma) :-
+  tiene(Rta, IDSintoma).
+resolve_answer(Rta, IDSintoma) :-
+  no_tiene(Rta, IDSintoma),
+  fail.
+
+% En caso de no tener pregunta previas
+asking_for_sintomas(IDSintoma, NomSintoma) :-
+  not(sintoma_confirmado(si, IDSintoma)),
+  not(sintoma_confirmado(no, IDSintoma)),
+  format('Tienes ~w ?~n', [NomSintoma]), % TODO tratar de que sea más personal
+  read(Rta),
+  string_lower(Rta, String),
+  resolve_answer(String, IDSintoma).
+% En caso de haberlo preguntado
+asking_for_sintomas(IDSintoma, _) :-
+  sintoma_confirmado(si, IDSintoma).
+asking_for_sintomas(IDSintoma, _) :-
+  sintoma_confirmado(no, IDSintoma),
+  fail.
+
+% preguntar por cada sintoma no preguntado
+asking_for_sintomas([]).
+asking_for_sintomas([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
+  sintoma(IDSintoma, NomSintoma),
+  asking_for_sintomas(IDSintoma, NomSintoma),
+  asking_for_sintomas(ListSintomas).
+
+abracadabra([]) :-
+  sintomas_alergia(IDAlergia),
+  alergia(IDAlergia, NomAlergia, _),
+  format('Esos sintomas se corresponde con ~w~n', [NomAlergia]).
+abracadabra([]) :-
+  writeln('No se que decirte esos sintomas no corresponde con niguna alergias.').
+abracadabra([alergia_priority(IDAlergia, _)|T]) :-
+  alergia(IDAlergia, _, ListSintomas),
+  asking_for_sintomas(ListSintomas),
+  updata_sintomas_alergia(IDAlergia),
+  abracadabra(T).
+abracadabra([_|T]) :-
+  abracadabra(T).
+
+/**********************************************************************************/
+show_alergia([]).
+show_alergia([IDAlergia|T]) :-
+  alergia(IDAlergia, NomAlergia, _),
+  format('Esos sintomas pertenece a ~w~n', [NomAlergia]),
+  show_alergia(T).
+
+/**********************************************************************************/
 alergiaSam :-
-  % abrir_db,
+  % open_db,
   % TODO preguntar primero si podes describir los sintomas
   writeln('Contame que sintomas tenes, (Separados por coma)'),
   read_to_string(_, WordList), % TODO limpiar palabras como: tengo, me duele ...
   writeln(WordList),
   search_sintomas(WordList, ListSintomas), % Buscar sintomas en nuesta DB
-  writeln(ListSintomas),
+  % writeln(ListSintomas),
+  assert_sintoma_confirmado(ListSintomas), % Crea los hechos que indican los sintomas fonfirmados
   find_alergias(ListSintomas, ListAlergias),
   writeln(ListAlergias),
   sort_by_priorities(ListAlergias, ListSintomas, ListAlergiasPriorites),
-  writeln(ListAlergiasPriorites)
+  writeln(ListAlergiasPriorites),
+  show_alergia(ListAlergiasPriorites),
+  writeln('Vamos a tratar de averiguar de que alergia se trata'),
+  abracadabra(ListAlergiasPriorites)
   .
 
-inicio :-
-  abrir_db,
+inicio :- start.
+start :-
+  open_db,
+  retractall(tiene_sintoma(_)),
+  retractall(no_tiene_sintoma(_)),
   writeln('VERSION v0 BASTANTE TONTA :P'),
   writeln('Buen día!, Soy Alergia-Sam'),
-  writeln('Estaré ayudándote para poder descubrir tus alergias.'),
+  writeln('Estaré ayudándote a descubrir tus alergias.'),
   % writeln('Empezamos? S/n'),
   % read(OPC),
   % OPC \= 'n', OPC \= 'N',
   alergiaSam.
 
-inicio :-
+start :-
   writeln('Ups, que mal!'),
   writeln('Nos veremos la próxima!').
-% :- inicio.
+% :- start.

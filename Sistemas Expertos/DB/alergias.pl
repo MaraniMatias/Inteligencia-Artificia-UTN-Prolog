@@ -1,8 +1,9 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % alergia(ID, 'Nombre Humano', [SintomaPaso,...]).
 % sintoma_pesos(sintomaID, Peso)
 % sintoma(ID, '')
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Sintomas para testear 12,13,17
 
 % FIXME: Dedonde salio ?
 % alergia(plantas, [estornudo, tos, ampollas, granos], [60, 20, 15, 5]).
