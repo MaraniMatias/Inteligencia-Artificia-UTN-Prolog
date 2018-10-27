@@ -1,13 +1,13 @@
 % TODO: algo mas parecido a eli
 :- protocola('log_sistema_experto.log').
-:- dynamic alergia/3.
+:- dynamic alergia/4.
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
 :- dynamic sintoma_confirmado/2.
 
 /**********************************************************************************/
 open_db_alergia :-
-  retractall(alergia(_, _, _)),
+  retractall(alergia(_, _, _, _)),
   consult('./DB/alergias.pl').
 open_db_sintomas :-
   retractall(sintoma(_, _)),
@@ -30,7 +30,7 @@ updata_sintomas_alergia(IDAlergia) :-
 updata_sintomas_alergia(IDAlergia) :-
   retractall(sintomas_alergia(IDAlergia)),
   asserta(sintomas_alergia(IDAlergia)),
-  alergia(IDAlergia, NomAlergia, _),
+  alergia(IDAlergia, NomAlergia, _, _),
   format('Estoy pensando que puede ser ~w~n', [NomAlergia]).
 /**********************************************************************************/
 read_to_string(String, WordList) :-
@@ -76,12 +76,12 @@ find_sintomas_in_list([ID|T], ListSintomaPeso) :-
 % ListSintomas, ListAlergias
 find_alergias([], _) :- fail.
 find_alergias(ListIDSintoma, [ID|Alergias]) :-
-  alergia(ID, _, ListSintomaPeso),
-  retract(alergia(ID, _, _)),
+  alergia(ID, _, ListSintomaPeso, _),
+  retract(alergia(ID, _, _, _)),
   find_sintomas_in_list(ListIDSintoma, ListSintomaPeso),
   find_alergias(ListIDSintoma, Alergias).
 find_alergias(ListIDSintoma, Alergias) :-
-  alergia(_, _, _),
+  alergia(_, _, _, _),
   find_alergias(ListIDSintoma, Alergias).
 find_alergias(_, []) :-
   open_db_alergia.
@@ -117,7 +117,7 @@ make_priority([], _, 0).
 
 % Por cada sintoma encontrado dividirlo el peso por el mayor peso y despues sumar los resultados
 get_priority(IDAlergia, ListSintomas, Value) :-
-  alergia(IDAlergia, _, ListSintomaPeso),
+  alergia(IDAlergia, _, ListSintomaPeso, _),
   filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun),
   max_sintoma_peso(ListSintomaPesoComun, Max),
   make_priority(ListSintomaPesoComun, Max, Value).
@@ -131,6 +131,7 @@ sort_by_priorities(ListAlergias, ListSintomas, ListAlergiasNew) :-
   get_list_priority(ListAlergias, ListSintomas, ListAlergiasPriority),
   sort_by_priorities_aux(ListAlergiasPriority, [], ListAlergiasNew).
 
+% Ordena una liasta de mayor a menor
 sort_by_priorities_aux([], Acc, Acc).
 sort_by_priorities_aux([H|T], Acc, Sorted) :-
   pivoting(H, T, L1, L2),
@@ -170,7 +171,9 @@ resolve_answer(Rta, IDSintoma) :-
   no_tiene(Rta, IDSintoma),
   fail.
 resolve_answer(_, IDSintoma) :-
-  writeln('Podiras limitarte a constar con si o no, gracias'),
+  not(sintoma_confirmado(si, IDSintoma)),
+  not(sintoma_confirmado(no, IDSintoma)),
+  writeln('Podaras limitarte a constar con si o no, gracias'),
   sintoma(IDSintoma, NomSintoma),
   format('Tienes ~w?~n', [NomSintoma]), % TODO tratar de que sea más personal
   read_to_string(String, _),
@@ -190,7 +193,7 @@ asking_for_sintomas(IDSintoma, _) :-
   sintoma_confirmado(no, IDSintoma),
   fail.
 
-% preguntar por cada sintoma no preguntado
+% preguntar por cada síntoma no preguntado
 asking_for_sintomas([]).
 asking_for_sintomas([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
   % writeln(['->',IDSintoma, NomSintoma, ListSintomas]),
@@ -200,12 +203,12 @@ asking_for_sintomas([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
 
 abracadabra([]) :-
   sintomas_alergia(IDAlergia),
-  alergia(IDAlergia, NomAlergia, _),
-  format('Esos sintomas se corresponde con ~w~n', [NomAlergia]).
+  alergia(IDAlergia, NomAlergia, _, _),
+  format('Esos síntomas se corresponde con ~w~n', [NomAlergia]).
 abracadabra([]) :-
-  writeln('No se que decirte esos sintomas no corresponde con niguna alergias.').
+  writeln('No se que decirte esos síntomas no corresponde con ninguna alergias.').
 abracadabra([alergia_priority(IDAlergia, _)|T]) :-
-  alergia(IDAlergia, _, ListSintomas),
+  alergia(IDAlergia, _, ListSintomas, _),
   asking_for_sintomas(ListSintomas),
   updata_sintomas_alergia(IDAlergia),
   abracadabra(T).
@@ -215,20 +218,39 @@ abracadabra([_|T]) :-
 /**********************************************************************************/
 show_alergia([]).
 show_alergia([alergia_priority(IDAlergia, _), alergia_priority(IDAlergia2, _)|_]) :-
-  alergia(IDAlergia, NomAlergia, _),
-  alergia(IDAlergia2, NomAlergia2, _),
+  alergia(IDAlergia, NomAlergia, _, _),
+  alergia(IDAlergia2, NomAlergia2, _, _),
   format('Estoy pensando que puede se ~w o ~w~n', [NomAlergia, NomAlergia2]).
   % show_alergia(T).
 show_alergia([alergia_priority(IDAlergia, _)|_]) :-
-  alergia(IDAlergia, NomAlergia, _),
+  alergia(IDAlergia, NomAlergia, _, _),
   format('Estoy pensando que puede se ~w~n', [NomAlergia]).
   % show_alergia(T).
 
 /**********************************************************************************/
+sort_by_priorities(ListAlergias, ListAlergiasPriorites) :-
+  sort_by_priorities_aux(ListAlergias, [], ListAlergiasPriorites).
+
+find_all_alergias([alergia_priority(ID, Priority)|Alergias]) :-
+  alergia(ID, _, _, Priority),
+  retract(alergia(ID, _, _, _)),
+  find_all_alergias(Alergias).
+find_all_alergias([]) :-
+    open_db_alergia.
+
+/**********************************************************************************/
+conoce_sintomas('Si').
+conoce_sintomas('si').
+conoce_sintomas('si puedo').
+conoce_sintomas('puedo nombrarlos').
+conoce_sintomas('puedo decírtelos').
+% Inicio
 alergiaSam :-
-  % open_db,
-  % TODO preguntar primero si podes describir los sintomas
-  writeln('Contame que sintomas tenes, (Separados por coma)'),
+  writeln('Conoces algún síntoma? O necesitas ayuda para describirlos?'),
+  read_to_string(String, _),
+  conoce_sintomas(String),
+  % TODO preguntar primero si podes describir los síntomas
+  writeln('Contarme que síntomas tienes, (Separados por coma)'),
   read_to_string(_, WordList), % TODO limpiar palabras como: tengo, me duele ...
   % writeln(WordList),
   search_sintomas(WordList, ListSintomas), % Buscar sintomas en nuesta DB
@@ -240,7 +262,12 @@ alergiaSam :-
   % writeln(ListAlergiasPriorites),
   show_alergia(ListAlergiasPriorites),
   % TODO Verificar si realmete es necesarios preguntar
-  writeln('Te are unas preguntas para averiguar de que alergia se trata.'),
+  writeln('Te haré unas preguntas para averiguar de que alergia se trata.'),
+  abracadabra(ListAlergiasPriorites).
+alergiaSam :-
+  find_all_alergias(ListAlergias),
+  sort_by_priorities(ListAlergias, ListAlergiasPriorites),
+  writeln('Te haré unas preguntas.'),
   abracadabra(ListAlergiasPriorites).
 
 inicio :- start.

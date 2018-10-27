@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% alergia(ID, 'Nombre Humano', [SintomaPaso,...]).
+% alergia(ID, 'Nombre Humano', [SintomaPaso,...], prioridad).
 % sintoma_pesos(sintomaID, Peso)
 % sintoma(ID, '')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -24,23 +24,24 @@ alergia(00, 'Alergia al polen', [
   sintoma_peso(08, 10),
   sintoma_peso(09, 10),
   sintoma_peso(10, 10)
-]).
+], 90).
 
 % Alergia acaros:
 % rinitis alérgica, secreción nasal, picor nasal, estornudos,
 % problemas respiratorios, picor de ojos, enrojecimiento de ojos,
 % lagrimeo, picazón de la piel
 alergia(01, 'Alergia los acaros', [
-  sintoma_peso(02, 10),
-  sintoma_peso(05, 25),
-  sintoma_peso(08, 1),
-  sintoma_peso(12, 1),
-  sintoma_peso(13, 1),
-  sintoma_peso(14, 1),
-  sintoma_peso(15, 11),
-  sintoma_peso(16, 30),
-  sintoma_peso(17, 20)
-]).
+  sintoma_peso(02, 20),
+  sintoma_peso(05, 10),
+  sintoma_peso(08, 5),
+  sintoma_peso(12, 5),
+  sintoma_peso(13, 5),
+  sintoma_peso(14, 5),
+  sintoma_peso(15, 20),
+  sintoma_peso(16, 20),
+  sintoma_peso(17, 5),
+  sintoma_peso(18, 5)
+], 100).
 
 % Rinitis alergica
 % congestion,secreción nasal,estornudos
@@ -52,7 +53,7 @@ alergia(03, 'Rinitis alergica', [
   sintoma_peso(13, 30),
   sintoma_peso(17, 15),
   sintoma_peso(18, 15)
-]).
+], 0).
 
 % Alergia a la humedad
 % rinitis alérgica
@@ -69,7 +70,7 @@ alergia(04, 'Alergia a la humedad', [
   sintoma_peso(21, 10),
   sintoma_peso(22, 5),
   sintoma_peso(23, 5)
-]).
+], 0).
 
 
 /*

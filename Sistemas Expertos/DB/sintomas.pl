@@ -19,12 +19,12 @@ sintoma(11, 'congestión nasal').
 % 08 - picor de ojos
 % 05 - estornudos
 % 02 - picor nasal
+% XX - rinitis alérgica
 sintoma(12, 'enrojecimiento de ojos').
 sintoma(13, 'lagrimeo').
 sintoma(14, 'picazón de la piel').
 sintoma(14, 'picazón de piel').
 sintoma(15, 'problemas respiratorios').
-sintoma(16, 'rinitis alérgica'). % Inflamación de la mucosa de las fosas nasales.
 sintoma(17, 'secreción nasal').
 
 % Rinitis alergica
