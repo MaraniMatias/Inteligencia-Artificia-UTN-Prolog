@@ -63,10 +63,10 @@ punto_1(_, _) :-
   abrirDB_medicamentos.
 
 punto_2(ListMedicamentos) :-
-  write('Componente 1: '), read(C1),
-  write('Cantidad: '), read(C1_cant),
-  write('Componente 2: '), read(C2),
-  write('Cantidad: '), read(C2_cant),
+  writeln('Componente 1: '), read(C1),
+  writeln('Cantidad: '), read(C1_cant),
+  writeln('Componente 2: '), read(C2),
+  writeln('Cantidad: '), read(C2_cant),
   buscar_componente(C1, C1_cant, ListMediC1),
   buscar_componente(C2, C2_cant, ListMediC2),
   ele_comun(ListMediC1, ListMediC2, ListMedicamentos).
