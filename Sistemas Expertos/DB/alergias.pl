@@ -24,7 +24,7 @@ alergia(00, 'Alergia al polen', [
   sintoma_peso(08, 10),
   sintoma_peso(09, 10),
   sintoma_peso(10, 10)
-], 90).
+], 95).
 
 % Alergia acaros:
 % rinitis alérgica, secreción nasal, picor nasal, estornudos,
@@ -41,7 +41,7 @@ alergia(01, 'Alergia los acaros', [
   sintoma_peso(16, 20),
   sintoma_peso(17, 5),
   sintoma_peso(18, 5)
-], 100).
+], 90).
 
 % Rinitis alergica
 % congestion,secreción nasal,estornudos
@@ -72,27 +72,49 @@ alergia(04, 'Alergia a la humedad', [
   sintoma_peso(23, 5)
 ], 0).
 
+% alergia gatos
+% congestión nasal, secreción nasal, pérdida olfativa,
+% problemas respiratorios, fatiga, escozor, lagrimeo,
+% enrojecimiento de ojos
+alergia(06, 'Alergia gatos', [
+  sintoma_peso(06, 10),
+  sintoma_peso(11, 10),
+  sintoma_peso(12, 10),
+  sintoma_peso(13, 10),
+  sintoma_peso(15, 10),
+  sintoma_peso(17, 10),
+  sintoma_peso(24, 10),
+  sintoma_peso(25, 20)
+], 70).
+
+% Alergia perros
+% congestión nasal, secreción nasal, estornudos, silbidos, lagrimeo,
+% enrojecimiento de ojos, picor de ojos,
+alergia(07, 'Alergia perros', [
+  sintoma_peso(05, 20),
+  sintoma_peso(08, 10),
+  sintoma_peso(11, 10),
+  sintoma_peso(12, 10),
+  sintoma_peso(13, 20),
+  sintoma_peso(17, 10),
+  sintoma_peso(20, 20)
+], 70).
+
+% Alergia al sol
+% Erupciones, Eccemas, Urticaria, Enrojecimiento
+% Inflamación, Picor, Ampollas, Descamación
+alergia(08, 'Alergia al sol', [
+  sintoma_peso(26, 20),
+  sintoma_peso(27, 10),
+  sintoma_peso(28, 10),
+  sintoma_peso(29, 10),
+  sintoma_peso(30, 20),
+  sintoma_peso(31, 10),
+  sintoma_peso(32, 20)
+  sintoma_peso(33, 10)
+], 0).
 
 /*
-alergia gatos
-congestión nasal, secreción nasal, pérdida olfativa, problemas respiratorios
-fatiga
-escozor, lagrimeo y enrojecimiento de ojos
-
-alergia perros
-congestión nasal, secreción nasal, estornudos y silbidos.
-Lagrimeo, enrojecimiento y picor de ojos.
-
-alergia al sol
-Erupciones
-Eccemas
-Urticaria
-Enrojecimiento
-Inflamación
-Picor
-Ampollas
-Descamación
-
 conjuntivitis alérgica
 Enrojecimiento de los ojos, Picor o sensación de ardor.
 Inflamación de la conjuntiva o mucosa conjuntival.
