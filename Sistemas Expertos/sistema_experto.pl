@@ -152,6 +152,7 @@ pivoting(alergia_priority(ID1, H), [alergia_priority(ID2, X)|T], L, [alergia_pri
 tiene('s'         , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 tiene('si'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 tiene('poco'      , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('apenas'    , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 tiene('algo'      , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 tiene('puede'     , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 tiene('puede ser' , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
@@ -168,12 +169,18 @@ resolve_answer(Rta, IDSintoma) :-
 resolve_answer(Rta, IDSintoma) :-
   no_tiene(Rta, IDSintoma),
   fail.
+resolve_answer(_, IDSintoma) :-
+  writeln('Podiras limitarte a constar con si o no, gracias'),
+  sintoma(IDSintoma, NomSintoma),
+  format('Tienes ~w?~n', [NomSintoma]), % TODO tratar de que sea más personal
+  read_to_string(String, _),
+  resolve_answer(String, IDSintoma).
 
 % En caso de no tener pregunta previas
 asking_for_sintomas(IDSintoma, NomSintoma) :-
   not(sintoma_confirmado(si, IDSintoma)),
   not(sintoma_confirmado(no, IDSintoma)),
-  format('Tienes ~w ?~n', [NomSintoma]), % TODO tratar de que sea más personal
+  format('Tienes ~w?~n', [NomSintoma]), % TODO tratar de que sea más personal
   read_to_string(String, _),
   resolve_answer(String, IDSintoma).
 % En caso de haberlo preguntado
@@ -210,8 +217,8 @@ show_alergia([]).
 show_alergia([alergia_priority(IDAlergia, _), alergia_priority(IDAlergia2, _)|_]) :-
   alergia(IDAlergia, NomAlergia, _),
   alergia(IDAlergia2, NomAlergia2, _),
-  format('Estoy pensando que puede se ~w o ~w~n', [NomAlergia, NomAlergia2]),
-  show_alergia(T).
+  format('Estoy pensando que puede se ~w o ~w~n', [NomAlergia, NomAlergia2]).
+  % show_alergia(T).
 show_alergia([alergia_priority(IDAlergia, _)|_]) :-
   alergia(IDAlergia, NomAlergia, _),
   format('Estoy pensando que puede se ~w~n', [NomAlergia]).
