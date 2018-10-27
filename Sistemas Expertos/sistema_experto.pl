@@ -28,6 +28,7 @@ read_to_string(String, WordList) :-
   % TODO remplazar asentos por vocal sin acentos
   % tambien hacer esto en sintomas :D
   % FIXME split_string(S2, ' ', ',', WordList).
+  % FIXME picor de ojos, lo separa mal
   split_string(S2, ' ,', ',', WordList).
 
 /**********************************************************************************/
@@ -79,7 +80,6 @@ find_alergias(_, []) :-
 
 max_sintoma_peso(List, Max) :-
   max_sintoma_peso(List, 0, Max).
-
 max_sintoma_peso([], Max, Max).
 max_sintoma_peso([sintoma_peso(_, H)|T], Value, Max) :-
   H > Value,
@@ -87,8 +87,8 @@ max_sintoma_peso([sintoma_peso(_, H)|T], Value, Max) :-
 max_sintoma_peso([_|T], Value, Max) :-
   max_sintoma_peso(T, Value, Max).
 
-% Lista de sintoma pesos para los ID de sintomas
-filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun):-
+% Lista de pesos de los sintomas para los ID de sintomas ingresados
+filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun) :-
   filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun, ListSintomaPeso).
 filter([ID|T], [sintoma_peso(ID, Peso)|_], [sintoma_peso(ID, Peso)|T2], AuxList) :-
   filter(T, AuxList, T2, AuxList).
@@ -114,7 +114,6 @@ get_list_priority([ID|T], ListSintomas, [alergia_priority(ID,Priorites)|T1]) :-
   get_priority(ID, ListSintomas, Priorites),
   get_list_priority(T, ListSintomas, T1).
 
-% FIXME Error con mas de una alergia
 sort_by_priorities(ListAlergias, ListSintomas, ListAlergiasNew) :-
   get_list_priority(ListAlergias, ListSintomas, ListAlergiasPriority),
   sort_by_priorities_aux(ListAlergiasPriority, [], ListAlergiasNew).
@@ -126,12 +125,12 @@ sort_by_priorities_aux([H|T], Acc, Sorted) :-
     sort_by_priorities_aux(L2, [H|Sorted1], Sorted).
 
 pivoting(_, [], [], []).
-pivoting(alergia_priority(_, H), [alergia_priority(_, X)|T], [alergia_priority(_, X)|L], G) :-
+pivoting(alergia_priority(ID1, H), [alergia_priority(ID2, X)|T], [alergia_priority(ID2, X)|L], G) :-
   X =< H,
-  pivoting(alergia_priority(_, H), T, L, G).
-pivoting(alergia_priority(_, H), [alergia_priority(_, X)|T], L, [alergia_priority(_, X)|G]) :-
+  pivoting(alergia_priority(ID1, H), T, L, G).
+pivoting(alergia_priority(ID1, H), [alergia_priority(ID2, X)|T], L, [alergia_priority(ID2, X)|G]) :-
   X > H,
-  pivoting(alergia_priority(_, H), T, L, G).
+  pivoting(alergia_priority(ID1, H), T, L, G).
 /**********************************************************************************/
 
 alergiaSam :-
@@ -139,9 +138,9 @@ alergiaSam :-
   % TODO preguntar primero si podes describir los sintomas
   writeln('Contame que sintomas tenes, (Separados por coma)'),
   read_to_string(_, WordList), % TODO limpiar palabras como: tengo, me duele ...
-  % writeln(WordList),
+  writeln(WordList),
   search_sintomas(WordList, ListSintomas), % Buscar sintomas en nuesta DB
-  % writeln(ListSintomas),
+  writeln(ListSintomas),
   find_alergias(ListSintomas, ListAlergias),
   writeln(ListAlergias),
   sort_by_priorities(ListAlergias, ListSintomas, ListAlergiasPriorites),
