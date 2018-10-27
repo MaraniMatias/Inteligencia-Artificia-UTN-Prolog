@@ -114,20 +114,36 @@ alergia(08, 'Alergia al sol', [
   sintoma_peso(33, 10)
 ], 0).
 
-/*
-conjuntivitis alérgica
-Enrojecimiento de los ojos, Picor o sensación de ardor.
-Inflamación de la conjuntiva o mucosa conjuntival.
-Incremento del lagrimeo o secreción acuosa.
-Mayor sensibilidad a la luz.
+% Conjuntivitis alérgica
+% Enrojecimiento de los ojos, Picor o sensación de ardor.
+% Inflamación de la conjuntiva o mucosa conjuntival.
+% Incremento del lagrimeo o secreción acuosa.
+% Mayor sensibilidad a la luz.
+alergia(09, 'Conjuntivitis alérgica', [
+  sintoma_peso(12, 20),
+  sintoma_peso(31, 10),
+  sintoma_peso(34, 20),
+  sintoma_peso(35, 20),
+  sintoma_peso(36, 20),
+  sintoma_peso(37, 10)
+], 0).
 
-alergia a picaduras:
-respiración sibilante, asma, tos
-opresión de garganta
-dolor de estómago
-vómitos
-diarrea
-urticaria
-inflamación
-*/
+% Alergia a picaduras
+% respiración sibilante, asma, tos
+% opresión de garganta
+% dolor de estómago
+% vómitos
+% diarrea
+% urticaria
+% inflamación
+alergia(10, 'Alergia a picaduras', [
+  sintoma_peso(01, 20),
+  sintoma_peso(19, 20),
+  sintoma_peso(28, 20),
+  sintoma_peso(29, 10),
+  sintoma_peso(37, 20),
+  sintoma_peso(38, 10),
+  sintoma_peso(39, 20),
+  sintoma_peso(40, 20)
+], 60).
 

@@ -22,6 +22,7 @@ sintoma(11, 'congestión nasal').
 % 02 - picor nasal
 % XX - rinitis alérgica
 sintoma(12, 'enrojecimiento de ojos').
+sintoma(12, 'enrojecimiento de los ojos').
 sintoma(13, 'lagrimeo').
 sintoma(14, 'picazón de la piel').
 sintoma(14, 'picazón de piel').
@@ -76,3 +77,23 @@ sintoma(30, 'presencia de ronchas').
 sintoma(31, 'picor').
 sintoma(32, 'ampollas').
 sintoma(33, 'descamación').
+
+
+% Conjuntivitis alérgica
+% 12 - enrojecimiento de los ojos,
+% 31 - picor,
+sintoma(34, 'inflamación de la conjuntiva,').
+sintoma(35, 'mucosa conjuntival,').
+sintoma(36, 'incremento del lagrimeo,').
+sintoma(37, 'mayor sensibilidad a la luz,').
+
+% Alergia a picaduras
+% opresión de garganta
+% 01 - asma,
+% 19 - tos
+% 28 - urticaria
+% 29 - inflamación
+sintoma(37, 'respiración sibilante').
+sintoma(38, 'dolor de estómago').
+sintoma(39, 'vómitos').
+sintoma(40, 'diarrea').
