@@ -110,7 +110,7 @@ alergia(08, 'Alergia al sol', [
   sintoma_peso(29, 10),
   sintoma_peso(30, 20),
   sintoma_peso(31, 10),
-  sintoma_peso(32, 20)
+  sintoma_peso(32, 20),
   sintoma_peso(33, 10)
 ], 0).
 
@@ -141,9 +141,9 @@ alergia(10, 'Alergia a picaduras', [
   sintoma_peso(19, 20),
   sintoma_peso(28, 20),
   sintoma_peso(29, 10),
-  sintoma_peso(37, 20),
-  sintoma_peso(38, 10),
-  sintoma_peso(39, 20),
-  sintoma_peso(40, 20)
+  sintoma_peso(38, 20),
+  sintoma_peso(39, 10),
+  sintoma_peso(40, 20),
+  sintoma_peso(41, 20)
 ], 60).
 

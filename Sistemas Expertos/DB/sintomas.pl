@@ -93,7 +93,7 @@ sintoma(37, 'mayor sensibilidad a la luz').
 % 19 - tos
 % 28 - urticaria
 % 29 - inflamación
-sintoma(37, 'respiración sibilante').
-sintoma(38, 'dolor de estómago').
-sintoma(39, 'vómitos').
-sintoma(40, 'diarrea').
+sintoma(38, 'respiración sibilante').
+sintoma(39, 'dolor de estómago').
+sintoma(40, 'vómitos').
+sintoma(41, 'diarrea').

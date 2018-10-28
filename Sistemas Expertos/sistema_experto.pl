@@ -15,8 +15,8 @@ open_db_sintomas :-
 open_db :-
   open_db_alergia,
   open_db_sintomas.
-/**********************************************************************************/
 
+/**********************************************************************************/
 assert_sintoma_confirmado([]).
 assert_sintoma_confirmado([IDSintoma|T]) :-
   assert_sintoma_confirmado(si, IDSintoma),
@@ -24,14 +24,19 @@ assert_sintoma_confirmado([IDSintoma|T]) :-
 assert_sintoma_confirmado(Tiene, IDSintoma) :-
   assertz(sintoma_confirmado(Tiene, IDSintoma)).
 
-updata_sintomas_alergia(IDAlergia) :-
+update_sintomas_alergia(IDAlergia, _) :-
   sintomas_alergia(_),
+  retractall(sintomas_alergia(_)),
   asserta(sintomas_alergia(IDAlergia)).
-updata_sintomas_alergia(IDAlergia) :-
-  retractall(sintomas_alergia(IDAlergia)),
+update_sintomas_alergia(IDAlergia, []) :-
+  retractall(sintomas_alergia(_)),
+  asserta(sintomas_alergia(IDAlergia)).
+update_sintomas_alergia(IDAlergia, _) :-
+  retractall(sintomas_alergia(_)),
   asserta(sintomas_alergia(IDAlergia)),
   alergia(IDAlergia, NomAlergia, _, _),
   format('Estoy pensando que puede ser ~w~n', [NomAlergia]).
+
 /**********************************************************************************/
 read_to_string(String, WordList) :-
   read_line_to_codes(user_input, Cs),
@@ -150,20 +155,21 @@ pivoting(alergia_priority(ID1, H), [alergia_priority(ID2, X)|T], L, [alergia_pri
 % Preguntar por cada sintoma que tiene la enfermedad que no fueron se sabe si la
 % persona los tiene
 
-tiene('s'         , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('si'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('poco'      , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('apenas'    , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('algo'      , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('puede'     , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('puede ser' , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('creo'      , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('bastante'  , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('s'           , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('si'          , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('poco'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('apenas'      , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('algo'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('puede'       , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('puede ser'   , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('creo'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('creo que si' , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('bastante'    , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 
-no_tiene('n'      , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
-no_tiene('no'     , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
-no_tiene('no creo', IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
-no_tiene('nada'   , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+no_tiene('n'        , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+no_tiene('no'       , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+no_tiene('no creo'  , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+no_tiene('nada'     , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
 
 resolve_answer(Rta, IDSintoma) :-
   tiene(Rta, IDSintoma).
@@ -210,7 +216,7 @@ abracadabra([]) :-
 abracadabra([alergia_priority(IDAlergia, _)|T]) :-
   alergia(IDAlergia, _, ListSintomas, _),
   asking_for_sintomas(ListSintomas),
-  updata_sintomas_alergia(IDAlergia),
+  update_sintomas_alergia(IDAlergia, T),
   abracadabra(T).
 abracadabra([_|T]) :-
   abracadabra(T).
@@ -220,11 +226,11 @@ show_alergia([]).
 show_alergia([alergia_priority(IDAlergia, _), alergia_priority(IDAlergia2, _)|_]) :-
   alergia(IDAlergia, NomAlergia, _, _),
   alergia(IDAlergia2, NomAlergia2, _, _),
-  format('Estoy pensando que puede se ~w o ~w~n', [NomAlergia, NomAlergia2]).
+  format('Estoy pensando que puede ser ~w o ~w~n', [NomAlergia, NomAlergia2]).
   % show_alergia(T).
 show_alergia([alergia_priority(IDAlergia, _)|_]) :-
   alergia(IDAlergia, NomAlergia, _, _),
-  format('Estoy pensando que puede se ~w~n', [NomAlergia]).
+  format('Estoy pensando que puede ser ~w~n', [NomAlergia]).
   % show_alergia(T).
 
 /**********************************************************************************/
@@ -244,7 +250,9 @@ conoce_sintomas('si').
 conoce_sintomas('si puedo').
 conoce_sintomas('puedo nombrarlos').
 conoce_sintomas('puedo decírtelos').
-% Inicio
+
+%% Preguntamos si cono sintomas
+% Con testo con si
 alergiaSam :-
   writeln('Conoces algún síntoma? O necesitas ayuda para describirlos?'),
   read_to_string(String, _),
@@ -252,11 +260,9 @@ alergiaSam :-
 
   writeln('Contame que síntomas tienes.'),
   read_to_string(_, WordList), % TODO limpiar palabras como: tengo, me duele ...
-  % writeln(WordList),
   % Buscar sintomas en nuesta DB
   search_sintomas(WordList, ListSintomas),
-  % writeln(ListSintomas),
-  % Crea los hechos que indican los sintomas fonfirmados
+  % Crea los hechos que indican los sintomas confirmados
   assert_sintoma_confirmado(ListSintomas),
   find_alergias(ListSintomas, ListAlergias),
   % writeln(ListAlergias),
@@ -267,6 +273,11 @@ alergiaSam :-
   % TODO Verificar si realmente es necesarios preguntar
   writeln('Te haré unas preguntas para averiguar de que alergia se trata.'),
   abracadabra(ListAlergiasPriorites).
+
+%TODO Contesto con sintomas
+% alergiaSam :-
+
+% Constesto no
 alergiaSam :-
   writeln('Bonísimo, ningún problema.'),
   find_all_alergias(ListAlergias),
@@ -290,4 +301,4 @@ start :-
 start :-
   writeln('Ups, que mal!'),
   writeln('Nos veremos la próxima!').
-% :- start.
+:- start.
