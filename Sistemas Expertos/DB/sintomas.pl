@@ -12,7 +12,8 @@ sintoma(07, 'irritabilidad').
 sintoma(08, 'picor de ojos').
 sintoma(08, 'picor en los ojos').
 sintoma(08, 'picazón de ojos').
-sintoma(09, 'pitidos en el pecho').
+% sintoma(09, 'pitidos en el pecho').
+sintoma(09, 'goteo nasal').
 sintoma(10, 'sensación de arenilla en los ojos').
 sintoma(11, 'congestión nasal').
 

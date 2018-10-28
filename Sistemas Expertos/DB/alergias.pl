@@ -16,14 +16,15 @@
 alergia(00, 'Alergia al polen', [
   sintoma_peso(01, 10),
   sintoma_peso(02, 10),
-  sintoma_peso(03, 10),
-  sintoma_peso(04, 10),
-  sintoma_peso(05, 10),
-  sintoma_peso(06, 10),
-  sintoma_peso(07, 10),
+  sintoma_peso(03, 11),
+  sintoma_peso(04, 3),
+  sintoma_peso(05, 12),
+  sintoma_peso(06, 3),
+  sintoma_peso(07, 6),
   sintoma_peso(08, 10),
-  sintoma_peso(09, 10),
-  sintoma_peso(10, 10)
+  sintoma_peso(09, 12),
+  sintoma_peso(10, 3),
+  sintoma_peso(11, 10)
 ], 95).
 
 % Alergia ácaros:
