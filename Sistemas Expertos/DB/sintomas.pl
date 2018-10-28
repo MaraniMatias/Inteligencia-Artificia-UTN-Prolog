@@ -27,10 +27,12 @@ sintoma(12, 'enrojecimiento de los ojos').
 sintoma(13, 'lagrimeo').
 sintoma(14, 'picazón de la piel').
 sintoma(14, 'picazón de piel').
-sintoma(15, 'problemas respiratorios').
+% sintoma(15, 'problemas respiratorios').
 sintoma(17, 'secreción nasal').
 
 % Rinitis alérgica
+% 04 - dolor de cabeza
+% 02 - picazon nasal
 % 05 - estornudos
 % 08 - picor de ojos
 % 12 - enrojecimiento de ojos

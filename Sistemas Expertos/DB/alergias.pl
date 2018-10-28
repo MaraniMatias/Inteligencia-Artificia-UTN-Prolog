@@ -32,15 +32,14 @@ alergia(00, 'Alergia al polen', [
 % problemas respiratorios, picor de ojos, enrojecimiento de ojos,
 % lagrimeo, picazón de la piel
 alergia(01, 'Alergia los ácaros', [
+  sintoma_peso(14, 30),
+  sintoma_peso(05, 20),
   sintoma_peso(02, 20),
-  sintoma_peso(05, 10),
-  sintoma_peso(08, 5),
+  sintoma_peso(08, 10),
+  sintoma_peso(13, 6),
   sintoma_peso(12, 5),
-  sintoma_peso(13, 5),
-  sintoma_peso(14, 5),
-  sintoma_peso(15, 20),
-  sintoma_peso(16, 20),
   sintoma_peso(17, 5),
+  % sintoma_peso(15, 20),
   sintoma_peso(18, 5)
 ], 90).
 
@@ -48,12 +47,14 @@ alergia(01, 'Alergia los ácaros', [
 % congestion,secreción nasal,estornudos
 % Lagrimeo, enrojecimiento y picor de ojos.
 alergia(03, 'Rinitis alérgica', [
-  sintoma_peso(05, 15),
-  sintoma_peso(08, 20),
-  sintoma_peso(12, 5),
-  sintoma_peso(13, 30),
-  sintoma_peso(17, 15),
+  sintoma_peso(17, 30),
+  sintoma_peso(05, 20),
   sintoma_peso(18, 15)
+  sintoma_peso(02, 15),
+  sintoma_peso(04, 5),
+  sintoma_peso(08, 5),
+  sintoma_peso(12, 5),
+  sintoma_peso(13, 5)
 ], 0).
 
 % Alergia a la humedad
@@ -82,7 +83,7 @@ alergia(06, 'Alergia gatos', [
   sintoma_peso(11, 10),
   sintoma_peso(12, 10),
   sintoma_peso(13, 10),
-  sintoma_peso(15, 10),
+  % sintoma_peso(15, 10),
   sintoma_peso(17, 10),
   sintoma_peso(24, 10),
   sintoma_peso(25, 20)
