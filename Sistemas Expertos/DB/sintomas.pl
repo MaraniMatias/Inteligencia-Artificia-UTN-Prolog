@@ -67,30 +67,29 @@ sintoma(24, 'pérdida olfativa').
 % sintoma(25, 'escozor').
 
 % Alergia al sol
-sintoma(26, 'erupciones').
-sintoma(27, 'eccemas').
-sintoma(28, 'urticaria').
-sintoma(29, 'inflamación').
+% sintoma(26, 'erupciones').
+% sintoma(27, 'eccemas').
+% sintoma(28, 'urticaria').
+sintoma(29, 'inflamación en piel').
 sintoma(30, 'presencia de ronchas').
-sintoma(31, 'picor').
+sintoma(31, 'picor en la piel').
 sintoma(32, 'ampollas').
 sintoma(33, 'descamación').
 
 % Conjuntivitis alérgica
 % 12 - enrojecimiento de los ojos,
-% 31 - picor,
+% 08 - picor en ojos,
 sintoma(34, 'inflamación de la conjuntiva').
-sintoma(35, 'mucosa conjuntiva').
+% sintoma(35, 'mucosa conjuntiva').
 sintoma(36, 'incremento del lagrimeo').
 sintoma(37, 'mayor sensibilidad a la luz').
 
 % Alergia a picaduras
-% opresión de garganta
 % 01 - asma,
 % 19 - tos
-% 28 - urticaria
+% 28 - roncha en la piel
 % 29 - inflamación
-sintoma(38, 'respiración sibilante').
+sintoma(38, 'dificultad para respirar').
 sintoma(39, 'dolor de estómago').
 sintoma(40, 'vómitos').
 sintoma(41, 'diarrea').

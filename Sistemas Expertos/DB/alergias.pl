@@ -104,13 +104,10 @@ alergia(06, 'Alergia animales', [
 % Erupciones, Eccemas, Urticaria, Enrojecimiento
 % Inflamación, Picor, Ampollas, Descamación
 alergia(08, 'Alergia al sol', [
-  sintoma_peso(26, 20),
-  sintoma_peso(27, 10),
-  sintoma_peso(28, 10),
-  sintoma_peso(29, 10),
-  sintoma_peso(30, 20),
-  sintoma_peso(31, 10),
-  sintoma_peso(32, 20),
+  sintoma_peso(30, 30),
+  sintoma_peso(31, 30),
+  sintoma_peso(29, 20),
+  sintoma_peso(32, 10),
   sintoma_peso(33, 10)
 ], 0).
 
@@ -120,12 +117,11 @@ alergia(08, 'Alergia al sol', [
 % Incremento del lagrimeo o secreción acuosa.
 % Mayor sensibilidad a la luz.
 alergia(09, 'Conjuntivitis alérgica', [
-  sintoma_peso(12, 20),
-  sintoma_peso(31, 10),
-  sintoma_peso(34, 20),
-  sintoma_peso(35, 20),
+  sintoma_peso(12, 30),
+  sintoma_peso(08, 30),
   sintoma_peso(36, 20),
-  sintoma_peso(37, 10)
+  sintoma_peso(37, 10),
+  sintoma_peso(34, 10)
 ], 0).
 
 % Alergia a picaduras
@@ -137,13 +133,11 @@ alergia(09, 'Conjuntivitis alérgica', [
 % urticaria
 % inflamación
 alergia(10, 'Alergia a picaduras', [
-  sintoma_peso(01, 20),
-  sintoma_peso(19, 20),
-  sintoma_peso(28, 20),
-  sintoma_peso(29, 10),
-  sintoma_peso(38, 20),
-  sintoma_peso(39, 10),
-  sintoma_peso(40, 20),
-  sintoma_peso(41, 20)
+  sintoma_peso(39, 25),
+  sintoma_peso(40, 25),
+  sintoma_peso(41, 20),
+  sintoma_peso(01, 10),
+  sintoma_peso(28, 10),
+  sintoma_peso(38, 10)
 ], 60).
 
