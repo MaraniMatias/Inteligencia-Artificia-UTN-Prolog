@@ -47,32 +47,24 @@ sintoma(17, 'secreción nasal').
 % FIXME garganta y ojos
 % 01 - asma
 % 11 - congestión nasal
-% 16 - rinitis alérgica
+% XX - rinitis alérgica
 % 17 - secreción nasal
 sintoma(19, 'tos').
-sintoma(20, 'silbidos').
-sintoma(21, 'escozor en nariz').
+% sintoma(20, 'silbidos').
+sintoma(21, 'sequedad nasal').
 sintoma(22, 'enrojecimiento en nariz').
-sintoma(23, 'garganta').
+% sintoma(23, 'garganta').
 
-% Alergia gatos
-% 06 - fatiga,
-% 11 - congestión nasal,
-% 12 - enrojecimiento de ojos
-% 13 - lagrimeo,
-% 15 - problemas respiratorios,
-% 17 - secreción nasal,
-sintoma(24, 'pérdida olfativa').
-sintoma(25, 'escozor').
-
-% Alergia perros
-% 11 - congestión nasal,
-% 12 - enrojecimiento de ojos
-% 13 - lagrimeo,
-% 17 - secreción nasal,
+% Alergia animales
 % 05 - estornudos
-% 20 - silbidos,
-% 08 - picor de ojos,
+% 06 - fatiga
+% 11 - congestión nasal
+% 12 - enrojecimiento de ojos
+% 13 - lagrimeo
+% 15 - problemas respiratorios
+% 17 - secreción nasal
+sintoma(24, 'pérdida olfativa').
+% sintoma(25, 'escozor').
 
 % Alergia al sol
 sintoma(26, 'erupciones').
@@ -83,7 +75,6 @@ sintoma(30, 'presencia de ronchas').
 sintoma(31, 'picor').
 sintoma(32, 'ampollas').
 sintoma(33, 'descamación').
-
 
 % Conjuntivitis alérgica
 % 12 - enrojecimiento de los ojos,

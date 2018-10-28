@@ -67,42 +67,37 @@ alergia(03, 'Rinitis alérgica', [
 % escozor y enrojecimiento en nariz, garganta y ojos
 alergia(04, 'Alergia a la humedad', [
   sintoma_peso(01, 25),
-  sintoma_peso(11, 5),
-  sintoma_peso(16, 10),
-  sintoma_peso(17, 10),
   sintoma_peso(19, 20),
-  sintoma_peso(20, 10),
-  sintoma_peso(21, 10),
-  sintoma_peso(22, 5),
-  sintoma_peso(23, 5)
+  sintoma_peso(11, 5),
+  sintoma_peso(16, 6),
+  sintoma_peso(17, 6),
+  sintoma_peso(21, 6),
+  sintoma_peso(22, 6),
+  sintoma_peso(17, 6)
+  sintoma_peso(05, 15),
+  sintoma_peso(11, 10),
+  sintoma_peso(01, 5),
+  sintoma_peso(02, 5),
+  % sintoma_peso(04, 5),
+  % sintoma_peso(08, 5),
+  % sintoma_peso(12, 5),
+  % sintoma_peso(13, 5),
 ], 0).
 
 % alergia gatos
 % congestión nasal, secreción nasal, pérdida olfativa,
 % problemas respiratorios, fatiga, escozor, lagrimeo,
 % enrojecimiento de ojos
-alergia(06, 'Alergia gatos', [
-  sintoma_peso(06, 10),
-  sintoma_peso(11, 10),
-  sintoma_peso(12, 10),
-  sintoma_peso(13, 10),
-  % sintoma_peso(15, 10),
-  sintoma_peso(17, 10),
-  sintoma_peso(24, 10),
-  sintoma_peso(25, 20)
-], 70).
-
-% Alergia perros
-% congestión nasal, secreción nasal, estornudos, silbidos, lagrimeo,
-% enrojecimiento de ojos, picor de ojos,
-alergia(07, 'Alergia perros', [
+alergia(06, 'Alergia animales', [
   sintoma_peso(05, 20),
-  sintoma_peso(08, 10),
-  sintoma_peso(11, 10),
-  sintoma_peso(12, 10),
-  sintoma_peso(13, 20),
+  sintoma_peso(11, 20),
+  sintoma_peso(12, 15),
+  sintoma_peso(13, 10),
   sintoma_peso(17, 10),
-  sintoma_peso(20, 20)
+  sintoma_peso(21, 5),
+  sintoma_peso(24, 5),
+  sintoma_peso(06, 5)
+  % sintoma_peso(15, 10),
 ], 70).
 
 % Alergia al sol
