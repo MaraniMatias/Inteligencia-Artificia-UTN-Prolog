@@ -31,14 +31,17 @@ sintoma(14, 'picazón de piel').
 sintoma(17, 'secreción nasal').
 
 % Rinitis alérgica
+% 01 - asma
 % 04 - dolor de cabeza
+% 06 - fatiga
 % 02 - picazon nasal
 % 05 - estornudos
 % 08 - picor de ojos
+% 11 - congestión nasal
 % 12 - enrojecimiento de ojos
 % 13 - lagrimeo
 % 17 - secreción nasal
-sintoma(18, 'congestion').
+% sintoma(18, 'congestion').
 
 % Alergia a la humedad
 % FIXME garganta y ojos

@@ -32,29 +32,32 @@ alergia(00, 'Alergia al polen', [
 % problemas respiratorios, picor de ojos, enrojecimiento de ojos,
 % lagrimeo, picazón de la piel
 alergia(01, 'Alergia los ácaros', [
-  sintoma_peso(14, 30),
-  sintoma_peso(05, 20),
-  sintoma_peso(02, 20),
+  sintoma_peso(01, 10),
+  sintoma_peso(02, 15),
+  sintoma_peso(05, 15),
   sintoma_peso(08, 10),
-  sintoma_peso(13, 6),
+  sintoma_peso(11, 10),
   sintoma_peso(12, 5),
-  sintoma_peso(17, 5),
+  sintoma_peso(13, 5),
+  sintoma_peso(14, 25),
+  sintoma_peso(17, 5)
   % sintoma_peso(15, 20),
-  sintoma_peso(18, 5)
+  % sintoma_peso(18, 5)
 ], 90).
 
 % Rinitis alérgica
 % congestion,secreción nasal,estornudos
 % Lagrimeo, enrojecimiento y picor de ojos.
 alergia(03, 'Rinitis alérgica', [
-  sintoma_peso(17, 30),
-  sintoma_peso(05, 20),
-  sintoma_peso(18, 15)
-  sintoma_peso(02, 15),
+  sintoma_peso(01, 10),
+  sintoma_peso(02, 10),
   sintoma_peso(04, 5),
+  sintoma_peso(05, 20),
   sintoma_peso(08, 5),
+  sintoma_peso(11, 15),
   sintoma_peso(12, 5),
-  sintoma_peso(13, 5)
+  sintoma_peso(13, 5),
+  sintoma_peso(17, 30)
 ], 0).
 
 % Alergia a la humedad
