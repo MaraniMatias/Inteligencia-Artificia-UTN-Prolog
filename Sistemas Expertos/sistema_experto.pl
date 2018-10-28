@@ -249,22 +249,26 @@ alergiaSam :-
   writeln('Conoces algún síntoma? O necesitas ayuda para describirlos?'),
   read_to_string(String, _),
   conoce_sintomas(String),
-  % TODO preguntar primero si podes describir los síntomas
-  writeln('Contarme que síntomas tienes, (Separados por coma)'),
+
+  writeln('Contame que síntomas tienes.'),
   read_to_string(_, WordList), % TODO limpiar palabras como: tengo, me duele ...
   % writeln(WordList),
-  search_sintomas(WordList, ListSintomas), % Buscar sintomas en nuesta DB
+  % Buscar sintomas en nuesta DB
+  search_sintomas(WordList, ListSintomas),
   % writeln(ListSintomas),
-  assert_sintoma_confirmado(ListSintomas), % Crea los hechos que indican los sintomas fonfirmados
+  % Crea los hechos que indican los sintomas fonfirmados
+  assert_sintoma_confirmado(ListSintomas),
   find_alergias(ListSintomas, ListAlergias),
   % writeln(ListAlergias),
   sort_by_priorities(ListAlergias, ListSintomas, ListAlergiasPriorites),
   % writeln(ListAlergiasPriorites),
   show_alergia(ListAlergiasPriorites),
-  % TODO Verificar si realmete es necesarios preguntar
+
+  % TODO Verificar si realmente es necesarios preguntar
   writeln('Te haré unas preguntas para averiguar de que alergia se trata.'),
   abracadabra(ListAlergiasPriorites).
 alergiaSam :-
+  writeln('Bonísimo, ningún problema.'),
   find_all_alergias(ListAlergias),
   sort_by_priorities(ListAlergias, ListAlergiasPriorites),
   writeln('Te haré unas preguntas.'),

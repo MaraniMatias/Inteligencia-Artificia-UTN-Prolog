@@ -16,7 +16,7 @@ sintoma(09, 'pitidos en el pecho').
 sintoma(10, 'sensación de arenilla en los ojos').
 sintoma(11, 'congestión nasal').
 
-% Acaros
+% Ácaros
 % 08 - picor de ojos
 % 05 - estornudos
 % 02 - picor nasal
@@ -29,7 +29,7 @@ sintoma(14, 'picazón de piel').
 sintoma(15, 'problemas respiratorios').
 sintoma(17, 'secreción nasal').
 
-% Rinitis alergica
+% Rinitis alérgica
 % 05 - estornudos
 % 08 - picor de ojos
 % 12 - enrojecimiento de ojos
@@ -82,10 +82,10 @@ sintoma(33, 'descamación').
 % Conjuntivitis alérgica
 % 12 - enrojecimiento de los ojos,
 % 31 - picor,
-sintoma(34, 'inflamación de la conjuntiva,').
-sintoma(35, 'mucosa conjuntival,').
-sintoma(36, 'incremento del lagrimeo,').
-sintoma(37, 'mayor sensibilidad a la luz,').
+sintoma(34, 'inflamación de la conjuntiva').
+sintoma(35, 'mucosa conjuntiva').
+sintoma(36, 'incremento del lagrimeo').
+sintoma(37, 'mayor sensibilidad a la luz').
 
 % Alergia a picaduras
 % opresión de garganta

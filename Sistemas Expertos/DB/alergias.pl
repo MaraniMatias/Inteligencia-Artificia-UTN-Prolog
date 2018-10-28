@@ -26,11 +26,11 @@ alergia(00, 'Alergia al polen', [
   sintoma_peso(10, 10)
 ], 95).
 
-% Alergia acaros:
+% Alergia ácaros:
 % rinitis alérgica, secreción nasal, picor nasal, estornudos,
 % problemas respiratorios, picor de ojos, enrojecimiento de ojos,
 % lagrimeo, picazón de la piel
-alergia(01, 'Alergia los acaros', [
+alergia(01, 'Alergia los ácaros', [
   sintoma_peso(02, 20),
   sintoma_peso(05, 10),
   sintoma_peso(08, 5),
@@ -43,10 +43,10 @@ alergia(01, 'Alergia los acaros', [
   sintoma_peso(18, 5)
 ], 90).
 
-% Rinitis alergica
+% Rinitis alérgica
 % congestion,secreción nasal,estornudos
 % Lagrimeo, enrojecimiento y picor de ojos.
-alergia(03, 'Rinitis alergica', [
+alergia(03, 'Rinitis alérgica', [
   sintoma_peso(05, 15),
   sintoma_peso(08, 20),
   sintoma_peso(12, 5),
