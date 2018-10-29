@@ -181,7 +181,7 @@ resolve_answer(_, IDSintoma) :-
   not(sintoma_confirmado(no, IDSintoma)),
   writeln('Podaras limitarte a constar con si o no, gracias'),
   sintoma(IDSintoma, NomSintoma),
-  format('Tienes ~w?~n', [NomSintoma]), % TODO tratar de que sea más personal
+  format('Tienes ~w?~n', [NomSintoma]),
   read_to_string(String, _),
   resolve_answer(String, IDSintoma).
 
@@ -189,7 +189,7 @@ resolve_answer(_, IDSintoma) :-
 asking_for_sintomas(IDSintoma, NomSintoma) :-
   not(sintoma_confirmado(si, IDSintoma)),
   not(sintoma_confirmado(no, IDSintoma)),
-  format('Tienes ~w?~n', [NomSintoma]), % TODO tratar de que sea más personal
+  format('Tienes ~w?~n', [NomSintoma]),
   read_to_string(String, _),
   resolve_answer(String, IDSintoma).
 % En caso de haberlo preguntado
@@ -248,21 +248,47 @@ find_all_alergias([]) :-
 conoce_sintomas('Si').
 conoce_sintomas('si').
 conoce_sintomas('si puedo').
+conoce_sintomas('si conozco').
+conoce_sintomas('conozco').
 conoce_sintomas('puedo nombrarlos').
 conoce_sintomas('puedo decírtelos').
 
-%% Preguntamos si cono sintomas
-% Con testo con si
+answer_yer_or_no('SI').
+answer_yer_or_no('si').
+answer_yer_or_no('creo').
+answer_yer_or_no('NO').
+answer_yer_or_no('no').
+answer_yer_or_no('no se').
+
+answer_yer_or_no(S, WL) :-
+  read_to_string(S, WL),
+  answer_yer_or_no(S).
+answer_yer_or_no(S, WL) :-
+  writeln('No estoy seguro de entenderte, podrás decir si o no.'),
+  answer_yer_or_no(S, WL).
+
+answer_control_ask(String, _, siConoceSintoma) :-
+  conoce_sintomas(String).
+answer_control_ask(_, WordList, ListSintomas) :-
+  % Buscar síntomas en nuestra DB
+  search_sintomas(WordList, ListSintomas),
+  ListSintomas \= [].
+answer_control_ask(_, _, noConoceSintoma).
+
+%% Preguntamos si conoce los síntomas y pregunta genérica
 alergiaSam :-
   writeln('Conoces algún síntoma? O necesitas ayuda para describirlos?'),
-  read_to_string(String, _),
-  conoce_sintomas(String),
+  read_to_string(String, WordList),
+  answer_control_ask(String, WordList, Rta),
+  % writeln(Rta),
+  % Rta -> Si o No
+  % Rta -> [...]
+  % Rta -> []
+  alergiaSam(Rta).
 
-  writeln('Contame que síntomas tienes.'),
-  read_to_string(_, WordList), % TODO limpiar palabras como: tengo, me duele ...
-  % Buscar sintomas en nuesta DB
-  search_sintomas(WordList, ListSintomas),
-  % Crea los hechos que indican los sintomas confirmados
+% Contesto Con síntomas
+alergiaSam(ListSintomas) :-
+  % Crea los hechos que indican los síntomas confirmados
   assert_sintoma_confirmado(ListSintomas),
   find_alergias(ListSintomas, ListAlergias),
   % writeln(ListAlergias),
@@ -270,27 +296,34 @@ alergiaSam :-
   % writeln(ListAlergiasPriorites),
   show_alergia(ListAlergiasPriorites),
 
-  % TODO Verificar si realmente es necesarios preguntar
   writeln('Te haré unas preguntas para averiguar de que alergia se trata.'),
+  writeln('Algún familiar con antecedentes?'),
+  answer_yer_or_no(_, _),
+  writeln('Bien.'),
   abracadabra(ListAlergiasPriorites).
 
-%TODO Contesto con sintomas
-% alergiaSam :-
-
-% Constesto no
-alergiaSam :-
-  writeln('Bonísimo, ningún problema.'),
+% Contesto NO
+alergiaSam(noConoceSintoma) :-
+  writeln('Buen, ningún problema.'),
   find_all_alergias(ListAlergias),
   sort_by_priorities(ListAlergias, ListAlergiasPriorites),
   writeln('Te haré unas preguntas.'),
   abracadabra(ListAlergiasPriorites).
+
+% Contesto SI
+alergiaSam(siConoceSintoma) :-
+  writeln('Cuéntame que síntomas tienes.'),
+  read_to_string(_, WordList), % TODO limpiar palabras como: tengo, me duele ...
+  % Buscar síntomas en nuestra DB
+  search_sintomas(WordList, ListSintomas),
+  alergiaSam(ListSintomas).
 
 inicio :- start.
 start :-
   open_db,
   retractall(sintomas_alergia(_)),
   retractall(sintoma_confirmado(_, _)),
-  writeln('VERSION v0 BASTANTE TONTA :P'),
+  writeln('VERSION v1'),
   writeln('Buen día!, Soy Alergia-Sam'),
   writeln('Estaré ayudándote a descubrir tus alergias.'),
   % writeln('Empezamos? S/n'),
@@ -301,4 +334,4 @@ start :-
 start :-
   writeln('Ups, que mal!'),
   writeln('Nos veremos la próxima!').
-:- start.
+% :- start.

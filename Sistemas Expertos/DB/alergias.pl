@@ -67,21 +67,13 @@ alergia(03, 'Rinitis alérgica', [
 % escozor y enrojecimiento en nariz, garganta y ojos
 alergia(04, 'Alergia a la humedad', [
   sintoma_peso(01, 25),
-  sintoma_peso(19, 20),
-  sintoma_peso(11, 5),
-  sintoma_peso(16, 6),
-  sintoma_peso(17, 6),
-  sintoma_peso(21, 6),
-  sintoma_peso(22, 6),
-  sintoma_peso(17, 6)
+  sintoma_peso(02, 5),
   sintoma_peso(05, 15),
   sintoma_peso(11, 10),
-  sintoma_peso(01, 5),
-  sintoma_peso(02, 5),
-  % sintoma_peso(04, 5),
-  % sintoma_peso(08, 5),
-  % sintoma_peso(12, 5),
-  % sintoma_peso(13, 5),
+  sintoma_peso(17, 6),
+  sintoma_peso(19, 23),
+  sintoma_peso(21, 6),
+  sintoma_peso(22, 6)
 ], 0).
 
 % alergia gatos
