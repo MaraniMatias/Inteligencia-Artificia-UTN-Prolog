@@ -26,9 +26,10 @@ export default {
   name: 'app',
   data() {
     return {
+      sendingMsg: false,
       participants: [
         {
-          id: 'AlergiaSam',
+          id: 'alergia_sam',
           name: 'AlergiaSam',
           imageUrl: 'https://avatars3.githubusercontent.com/u/1915989?s=230&v=4',
         },
@@ -37,9 +38,7 @@ export default {
       // `name` is the user name, `id` is used to establish the author of a message,
       // `imageUrl` is supposed to be the user avatar.
       titleImageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png',
-      messageList: [
-        { type: 'text', author: 'AlergiaSam', data: { text: 'No.' } },
-      ], // the list of the messages to show, can be paginated and adjusted dynamically
+      messageList: [],
       newMessagesCount: 0,
       isChatOpen: true,
       showTypingIndicator: '', // when set to a value matching the participant.id it shows the typing indicator for the specific user
@@ -73,21 +72,46 @@ export default {
     };
   },
   methods: {
+    axios(url) {
+      return axios.get(`${URL_BASE}${url}`)
+        .then((resp) => {
+          return resp.data.message;
+          console.log(resp.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     sendMessage(text) {
       if (text.length > 0) {
         this.newMessagesCount = this.isChatOpen ?
           this.newMessagesCount :
           this.newMessagesCount + 1;
-        this.onMessageWasSent({
-          author: 'support',
+        this.messageList = [...this.messageList, {
+          author: 'alergia_sam',
           type: 'text',
           data: { text },
-        });
+        }];
       }
     },
     onMessageWasSent(message) {
-      // called when the user sends a message
-      this.messageList = [...this.messageList, message];
+      if (!this.sendingMsg) {
+        console.log(message);
+        this.sendingMsg = true;
+        // called when the user sends a message
+        this.messageList = [...this.messageList, message];
+
+        this.axios(`/send/${message.data.text}`)
+          .then((msg) => {
+            this.sendMessage(msg);
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+          .finally(() => {
+            this.sendingMsg = false;
+          });
+      }
     },
     openChat() {
       // called when the user clicks on the fab button to open the chat
@@ -100,17 +124,12 @@ export default {
     },
   },
   created() {
-    axios.get(`${URL_BASE}/hello/matias`)
-      .then((response) => {
-        // handle success
-        console.log(response.data);
+    this.axios('/start')
+      .then((msg) => {
+        this.sendMessage(msg);
       })
       .catch((error) => {
-        // handle error
-        console.log(error);
-      })
-      .then(() => {
-        // always executed
+        console.error(error);
       });
   },
 };

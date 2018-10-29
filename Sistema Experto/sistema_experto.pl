@@ -1,6 +1,6 @@
 % TODO: algo mas parecido a eli
 :- protocola('log_sistema_experto.log').
-:- writeln('VERSION v1.2'),
+:- writeln('VERSION v1.2').
 :- dynamic alergia/4.
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.

@@ -1,4 +1,5 @@
 % pack_install(arouter).
+:- ['sistema_experto.pl'].
 :- use_module(library(http/thread_httpd)).
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/http_json)).
@@ -6,15 +7,34 @@
 :- use_module(library(http/json)).
 :- use_module(library(arouter)).
 
-:- route_get(/, handle_hello('AlergiaSam')).
-:- route_get(hello/Name, handle_hello(Name)).
-handle_hello(Name):-
+
+/******************************************************************/
+hendle_generic :-
   cors_enable,
   format('Content-Type: application/json~n'),
   format('Server: nginx/1.10.3~n'),
-  format('Access-Control-Allow-Origin: *~n~n'),
+  format('Version: 0.1.0~n'),
+  format('Access-Control-Allow-Origin: *~n~n').
+
+resp_json(Message) :-
+  hendle_generic,
+  json_write_dict(current_output, point{message:Message}).
+/******************************************************************/
+:- route_get(/, handle_hello('AlergiaSam')).
+
+handle_hello(Name) :-
+  hendle_generic,
   json_write_dict(current_output, point{x:1,y:2,name:Name}).
-  % reply_json_dict(point{x:1,y:2,name:Name}, []).
+
+/******************************************************************/
+:- route_get(start, handle_start).
+handle_start :- resp_json('hola, soy alergiaSam').
+
+/******************************************************************/
+:- route_get(send/Message, handle_send(Message)).
+handle_send(Message) :-  resp_json(Message).
+
+/******************************************************************/
 
 :- http_server(route, [port(8008)]).
 
