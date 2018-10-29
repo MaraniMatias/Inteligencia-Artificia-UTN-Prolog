@@ -1,6 +1,6 @@
 % TODO: algo mas parecido a eli
 :- protocola('log_sistema_experto.log').
-:- writeln('VERSION v1.1'),
+:- writeln('VERSION v1.2'),
 :- dynamic alergia/4.
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
@@ -42,6 +42,7 @@ update_sintomas_alergia(IDAlergia, _) :-
 read_to_string(String, WordList) :-
   read_line_to_codes(user_input, Cs),
   atom_codes(String, Cs),
+  %String \= '',
   % atomic_list_concat(AtomList, ' ', String),
   atomic_list_concat(_, ' ', String),
   string_lower(String, S2),
@@ -50,6 +51,8 @@ read_to_string(String, WordList) :-
   % FIXME split_string(S2, ' ', ',', WordList).
   % FIXME picor de ojos, lo separa mal
   split_string(S2, ' ,', ',', WordList).
+%read_to_string(String, WordList) :-
+%  read_to_string(String, WordList).
 
 /**********************************************************************************/
 find_sintoma_by_word(Word, ID) :-
@@ -278,14 +281,19 @@ answer_control_ask(_, _, noConoceSintoma).
 
 %% Preguntamos si conoce los síntomas y pregunta genérica
 alergiaSam :-
+  writeln('Buen día!, Soy Alergia-Sam'),
+  writeln('Estaré ayudándote a descubrir tus alergias.'),
   writeln('Conoces algún síntoma? O necesitas ayuda para describirlos?'),
   read_to_string(String, WordList),
+  String \= 'Salir',
   answer_control_ask(String, WordList, Rta),
   % writeln(Rta),
   % Rta -> Si o No
   % Rta -> [...]
   % Rta -> []
-  alergiaSam(Rta).
+  alergiaSam(Rta),
+  format('Adios, que tengas un buen dia.~n~n').
+  %alergiaSam.
 
 % Contesto Con síntomas
 alergiaSam(ListSintomas) :-
@@ -323,8 +331,6 @@ start :-
   open_db,
   retractall(sintomas_alergia(_)),
   retractall(sintoma_confirmado(_, _)),
-  writeln('Buen día!, Soy Alergia-Sam'),
-  writeln('Estaré ayudándote a descubrir tus alergias.'),
   alergiaSam.
 
 start :-
