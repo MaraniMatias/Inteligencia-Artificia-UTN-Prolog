@@ -2,3 +2,5 @@
 /**/old/**/*
 *.~
 *.log
+
+/Sistema Experto/public/node_modules/**/*.*
