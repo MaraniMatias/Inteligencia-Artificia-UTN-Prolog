@@ -1,5 +1,6 @@
 % TODO: algo mas parecido a eli
 :- protocola('log_sistema_experto.log').
+:- writeln('VERSION v1.1'),
 :- dynamic alergia/4.
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
@@ -62,7 +63,7 @@ find_sintoma_by_word(Word, ID) :-
   open_db_sintomas.
 search_sintomas([Word|T], [ID| Sintomas]) :-
   open_db_sintomas,
-  Word \= '', Word \= "",
+  Word \= '', Word \= "", Word \= "y",
   find_sintoma_by_word(Word, ID),
   search_sintomas(T, Sintomas).
 search_sintomas([_|T], Sintomas) :-
@@ -295,7 +296,6 @@ alergiaSam(ListSintomas) :-
   sort_by_priorities(ListAlergias, ListSintomas, ListAlergiasPriorites),
   % writeln(ListAlergiasPriorites),
   show_alergia(ListAlergiasPriorites),
-
   writeln('Te haré unas preguntas para averiguar de que alergia se trata.'),
   writeln('Algún familiar con antecedentes?'),
   answer_yer_or_no(_, _),
@@ -323,12 +323,8 @@ start :-
   open_db,
   retractall(sintomas_alergia(_)),
   retractall(sintoma_confirmado(_, _)),
-  writeln('VERSION v1'),
   writeln('Buen día!, Soy Alergia-Sam'),
   writeln('Estaré ayudándote a descubrir tus alergias.'),
-  % writeln('Empezamos? S/n'),
-  % read_to_string(String, _),
-  % String \= 'n', String \= 'N',
   alergiaSam.
 
 start :-
