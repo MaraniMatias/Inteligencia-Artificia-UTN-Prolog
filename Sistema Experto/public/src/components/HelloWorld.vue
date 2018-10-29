@@ -26,6 +26,7 @@ export default {
   name: 'app',
   data() {
     return {
+      nextAPI: '',
       sendingMsg: false,
       participants: [
         {
@@ -73,10 +74,10 @@ export default {
   },
   methods: {
     axios(url) {
-      return axios.get(`${URL_BASE}${url}`)
+      return axios.get(`${URL_BASE}/send/${this.nextAPI}${url}`)
         .then((resp) => {
-          return resp.data.message;
           console.log(resp.data);
+          return resp.data;
         })
         .catch((error) => {
           console.error(error);
@@ -94,16 +95,17 @@ export default {
         }];
       }
     },
-    onMessageWasSent(message) {
+    onMessageWasSent(text) {
       if (!this.sendingMsg) {
-        console.log(message);
+        console.log(text);
         this.sendingMsg = true;
         // called when the user sends a message
-        this.messageList = [...this.messageList, message];
+        this.messageList = [...this.messageList, text];
 
-        this.axios(`/send/${message.data.text}`)
-          .then((msg) => {
-            this.sendMessage(msg);
+        this.axios(`/${text.data.text}`)
+          .then(({ message, next }) => {
+            this.nextAPI = next || this.nextAPI;
+            this.sendMessage(message);
           })
           .catch((error) => {
             console.error(error);
@@ -124,9 +126,10 @@ export default {
     },
   },
   created() {
-    this.axios('/start')
-      .then((data) => {
-        data.forEach((msg) => {
+    this.axios('start')
+      .then(({ message, next }) => {
+        this.nextAPI = next || this.nextAPI;
+        message.forEach((msg) => {
           this.sendMessage(msg);
         });
       })

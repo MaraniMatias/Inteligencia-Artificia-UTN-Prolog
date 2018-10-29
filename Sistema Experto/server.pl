@@ -16,6 +16,12 @@ hendle_generic :-
   format('Version: 0.1.0~n'),
   format('Access-Control-Allow-Origin: *~n~n').
 
+resp_json(Message, Next) :-
+  hendle_generic,
+  json_write_dict(current_output, point{message:Message, next:Next}).
+resp_json(Message, _) :-
+  hendle_generic,
+  json_write_dict(current_output, point{message:Message}).
 resp_json(Message) :-
   hendle_generic,
   json_write_dict(current_output, point{message:Message}).
@@ -26,18 +32,24 @@ handle_hello(Name) :-
   hendle_generic,
   json_write_dict(current_output, point{x:1,y:2,name:Name}).
 
+:- route_get(send/Message, handle_send(Message)).
+handle_send(Message) :-  resp_json(Message).
+
 /******************************************************************/
-:- route_get(start, handle_start).
+:- route_get(send/start, handle_start).
 handle_start :- 
   resp_json([
   'hola, soy alergiaSam', 
   'Estaré ayudándote a descubrir tus alergias.',
   'Conoces algún síntoma? O necesitas ayuda para describirlos?'
-  ]).
+  ], answer_control_ask).
 
 /******************************************************************/
-:- route_get(send/Message, handle_send(Message)).
-handle_send(Message) :-  resp_json(Message).
+:- route_get(send/answer_control_ask/Message, handle_answer_control_ask(Message)).
+handle_answer_control_ask(String) :-  
+  split_string(String, ' ,', ',', WordList),
+  answer_control_ask(String, WordList, Rta),
+  resp_json(Rta).
 
 /******************************************************************/
 
