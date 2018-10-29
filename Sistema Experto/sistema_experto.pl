@@ -316,6 +316,9 @@ alergiaSam(noConoceSintoma) :-
   find_all_alergias(ListAlergias),
   sort_by_priorities(ListAlergias, ListAlergiasPriorites),
   writeln('Te haré unas preguntas.'),
+  writeln('Algún familiar con antecedentes?'),
+  answer_yes_or_no(_, _),
+  writeln('Bien.'),
   abracadabra(ListAlergiasPriorites).
 
 % Contesto SI
