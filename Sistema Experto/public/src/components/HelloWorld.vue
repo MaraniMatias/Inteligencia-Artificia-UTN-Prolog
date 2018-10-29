@@ -103,11 +103,19 @@ export default {
         this.messageList = [...this.messageList, text];
 
         this.axios(`/${text.data.text}`)
-          .then(({ message, next }) => {
+          .then(({ message, next, meta }) => {
             this.nextAPI = next || this.nextAPI;
-            message.forEach((msg) => {
-              this.sendMessage(msg);
-            });
+            if (typeof meta !== 'undefined') {
+              if (typeof meta.nomSintoma !== 'undefined') {
+                // "meta": {"idSintoma":2, "nomSintoma":"picor nasal"},
+                this.sendMessage(message[0].replace('~w', meta.nomSintoma.toUpperCase()));
+                this.nextAPI = `${next}/${meta.idSintoma}`;
+              }
+            } else {
+              message.forEach((msg) => {
+                this.sendMessage(msg);
+              });
+            }
           })
           .catch((error) => {
             console.error(error);
@@ -143,5 +151,10 @@ export default {
 </script>
 
 <style>
-
+.sc-message--text > p {
+  margin: 0px;
+}
+.sc-message--content.received .sc-message--text {
+  margin: 0px !important;
+}
 </style>

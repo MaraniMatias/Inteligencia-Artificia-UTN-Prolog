@@ -44,6 +44,7 @@ handle_send(Message) :-  resp_json(Message).
 :- route_get(send/start, handle_start).
 handle_start :-
   retractall(list_alergias_priorites(_)),
+  open_db,
   resp_json([
   'hola, soy alergiaSam',
   'Estaré ayudándote a descubrir tus alergias.',
@@ -111,14 +112,14 @@ server_show_alergia([alergia_priority(IDAlergia, _), alergia_priority(IDAlergia2
   alergia(IDAlergia, NomAlergia, _, _),
   alergia(IDAlergia2, NomAlergia2, _, _),
   resp_json([
-    'Estoy pensando en dos opciones', NomAlergia, NomAlergia2,
+    'Estoy pensando en dos opciones...', NomAlergia, NomAlergia2,
     'Te haré unas preguntas para averiguar de que alergia se trata.',
     'Algún familiar con antecedentes?'
   ], abracadabra).
 server_show_alergia([alergia_priority(IDAlergia, _)|_]) :-
   alergia(IDAlergia, NomAlergia, _, _),
   resp_json([
-    'Estoy pensando que puede ser', NomAlergia,
+    'Estoy pensando que puede ser...', NomAlergia,
     'Te haré unas preguntas para averiguar de que alergia se trata.',
     'Algún familiar con antecedentes?'
   ], abracadabra).
@@ -135,63 +136,74 @@ handle_abracadabra(_) :-
 /******************************************************************/
 server_abracadabra :-
   list_alergias_priorites(ListAlergiasPriorites),
-  % resp_json(ListAlergiasPriorites, abracadabra).
+  server_abracadabra_aux(ListAlergiasPriorites).
+
+server_abracadabra_aux([]) :-
+  sintomas_alergia(IDAlergia),
+  alergia(IDAlergia, NomAlergia, _, _),
   resp_json([
-    'PErfe'
-  ], find_sintomas_in_list).
+    'Esos síntomas se corresponde con...',
+    NomAlergia
+  ], start).
+server_abracadabra_aux([]) :-
+  resp_json([
+    'No se que decirte esos síntomas no corresponde con ninguna alergias.'
+  ], start).
+server_abracadabra_aux([alergia_priority(IDAlergia, _)|T]) :-
+  alergia(IDAlergia, _, ListSintomas, _),
+  server_asking_for_sintomas(ListSintomas).
+  % update_sintomas_alergia(IDAlergia, T), % TODO ver respuetas line 35
+  % server_abracadabra_aux(T).
+% server_abracadabra_aux([_|T]) :-
+  % server_abracadabra_aux(T).
+% TODO Ojo con las alergias???
 
+/******************************************************************/
+% preguntar por cada síntoma no preguntado
+server_asking_for_sintomas([]).
+server_asking_for_sintomas([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
+  sintoma(IDSintoma, NomSintoma),
+  server_asking_for_sintomas(IDSintoma, NomSintoma). % TODO en construcion
+  % server_asking_for_sintomas(ListSintomas).
+server_asking_for_sintomas([_|ListSintomas]) :-
+  server_asking_for_sintomas(ListSintomas).
 
+% En caso de no tener pregunta previas
+server_asking_for_sintomas(IDSintoma, NomSintoma) :-
+  not(sintoma_confirmado(si, IDSintoma)),
+  not(sintoma_confirmado(no, IDSintoma)),
+  retractall(sintoma(IDSintoma, _)),
+  resp_json(['Tienes ~w?'], server_resolve_answer, point{
+    nomSintoma: NomSintoma,
+    idSintoma: IDSintoma
+  }).
+  %read_to_string(String, _),
+  %resolve_answer(String, IDSintoma). % TODO
+
+% En caso de haberlo preguntado
+server_asking_for_sintomas(IDSintoma, _) :-
+  sintoma_confirmado(si, IDSintoma).
+server_asking_for_sintomas(IDSintoma, _) :-
+  sintoma_confirmado(no, IDSintoma),
+  fail.
+
+:- route_get(send/server_resolve_answer/ID/Msg, handle_server_resolve_answer(Msg,ID)).
+
+handle_server_resolve_answer(Msg, IDSintoma) :-
+  % atom_string(MsgA, Msg),
+  % atom_string(IDA, IDSintoma),
+  % answer_yes_or_no(Msg),
+  tiene(Rta, IDSintoma),
+  server_abracadabra.
+  %resp_json(['si',Msg, IDSintoma]).
+handle_server_resolve_answer(Msg, IDSintoma) :-
+  % atom_string(MsgA, Msg),
+  % atom_string(IDA, IDSintoma),
+  % answer_yes_or_no(Msg),
+  no_tiene(Rta, IDSintoma),
+  server_abracadabra.
+  % resp_json(['No',Msg, IDSintoma]).
 
 
 /******************************************************************/
 :- http_server(route, [port(8008)]).
-
-/*
-server(Port) :-
-  http_server(http_dispatch, [port(Port)]).
-:- server(8008).
-
-:- http_handler(/, say_hi, []).
-
-say_hi(_Request) :-
-        format('Content-type: text/plain~n~n'),
-        format('Hello ~w~n', [_Request]).
-reply(Request) :-
-  http_parameters(Request,
-    [ title(Title),
-      name(Name),
-      age(Age)
-    ],
-    [attribute_declarations(param)]).
-
-param(title, [optional(true)]).
-param(name,  [length >= 2 ]).
-param(age,   [integer]).
-*/
-/*
-:- dynamic(known/2).
-open_notify_url('http://api.open-notify.org/iss-now.json').
-%! iss_data(-Data) is det.
-%  get JSON ISS location data from open notify api and read in as dict
-iss_data(Data) :-
-    open_notify_url(URL),
-    setup_call_cleanup(
-        http_open(URL, In, [request_header('Accept'='application/json')]),
-        json_read_dict(In, Data),
-        close(In)
-    ).
-
-%! cached_iss_data(-Data) is det.
-%  get cached data, else make a fresh request, useful during development.
-cached_iss_data(Data) :-
-    known(data, Data) ;
-    iss_data(Data),
-    assert(known(data, Data)).
-
-%! iss_location(+Data, -Lat, -Long) is det.
-%  extract the latitude and longitude from the data.
-iss_location(Data, Lat, Long) :-
-    Position = Data.get(iss_position),
-    Lat = Position.get(latitude),
-    Long = Position.get(longitude).
-*/
