@@ -106,9 +106,11 @@ export default {
           .then(({ message, next, meta }) => {
             this.nextAPI = next || this.nextAPI;
             if (typeof meta !== 'undefined') {
+              if (typeof meta.replace !== 'undefined') {
+                this.sendMessage(message[0].replace('~w', meta.replace.toUpperCase()));
+              }
               if (typeof meta.nomSintoma !== 'undefined') {
                 // "meta": {"idSintoma":2, "nomSintoma":"picor nasal"},
-                this.sendMessage(message[0].replace('~w', meta.nomSintoma.toUpperCase()));
                 this.nextAPI = `${next}/${meta.idSintoma}`;
               }
             } else {
@@ -151,10 +153,14 @@ export default {
 </script>
 
 <style>
-.sc-message--text > p {
-  margin: 0px;
-}
-.sc-message--content.received .sc-message--text {
-  margin: 0px !important;
-}
+  .sc-message--text > p {
+    margin: 0px;
+  }
+  .sc-message--content.received .sc-message--text {
+    margin: 0px !important;
+  }
+  .sc-header {
+    padding: 0px !important;
+    min-height: 45px !important;
+  }
 </style>

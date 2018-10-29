@@ -142,9 +142,8 @@ server_abracadabra_aux([]) :-
   sintomas_alergia(IDAlergia),
   alergia(IDAlergia, NomAlergia, _, _),
   resp_json([
-    'Esos síntomas se corresponde con...',
-    NomAlergia
-  ], start).
+    'Esos síntomas se corresponde con ~w'
+  ], start, point{replace: NomAlergia}).
 server_abracadabra_aux([]) :-
   resp_json([
     'No se que decirte esos síntomas no corresponde con ninguna alergias.'
@@ -157,53 +156,67 @@ server_abracadabra_aux([alergia_priority(IDAlergia, _)|T]) :-
 % server_abracadabra_aux([_|T]) :-
   % server_abracadabra_aux(T).
 % TODO Ojo con las alergias???
+server_abracadabra_aux([_|T]) :-
+  retract(list_alergias_priorites(ListAlergiasPriorites)),
+  asserta(list_alergias_priorites(T)),
+  resp_json([
+    'lineas 163'
+  ], start).
 
 /******************************************************************/
 % preguntar por cada síntoma no preguntado
-server_asking_for_sintomas([]).
+server_asking_for_sintomas([]) :-
+  open_db_sintomas,
+  resp_json([
+  'lineas 171'
+  ], start).
 server_asking_for_sintomas([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
   sintoma(IDSintoma, NomSintoma),
-  server_asking_for_sintomas(IDSintoma, NomSintoma). % TODO en construcion
-  % server_asking_for_sintomas(ListSintomas).
+  server_asking_for_sintomas(IDSintoma). % TODO en construcion
 server_asking_for_sintomas([_|ListSintomas]) :-
   server_asking_for_sintomas(ListSintomas).
 
 % En caso de no tener pregunta previas
-server_asking_for_sintomas(IDSintoma, NomSintoma) :-
+server_asking_for_sintomas(IDSintoma) :-
   not(sintoma_confirmado(si, IDSintoma)),
   not(sintoma_confirmado(no, IDSintoma)),
+  sintoma(IDSintoma, NomSintoma),
   retractall(sintoma(IDSintoma, _)),
   resp_json(['Tienes ~w?'], server_resolve_answer, point{
+    replace: NomSintoma,
     nomSintoma: NomSintoma,
     idSintoma: IDSintoma
   }).
-  %read_to_string(String, _),
-  %resolve_answer(String, IDSintoma). % TODO
 
 % En caso de haberlo preguntado
-server_asking_for_sintomas(IDSintoma, _) :-
-  sintoma_confirmado(si, IDSintoma).
-server_asking_for_sintomas(IDSintoma, _) :-
+server_asking_for_sintomas(IDSintoma) :-
+  sintoma_confirmado(si, IDSintoma),
+  retractall(sintoma(IDSintoma, _)),
+  server_abracadabra.
+server_asking_for_sintomas(IDSintoma) :-
   sintoma_confirmado(no, IDSintoma),
-  fail.
+  server_abracadabra.
 
-:- route_get(send/server_resolve_answer/ID/Msg, handle_server_resolve_answer(Msg,ID)).
+:- route_get(send/server_resolve_answer/ID/Msg, handle_server_resolve_answer(Msg, ID)).
 
 handle_server_resolve_answer(Msg, IDSintoma) :-
-  % atom_string(MsgA, Msg),
-  % atom_string(IDA, IDSintoma),
-  % answer_yes_or_no(Msg),
-  tiene(Rta, IDSintoma),
+  tiene(Msg, IDSintoma),
+  % retractall(sintoma(IDSintoma, _)),
   server_abracadabra.
-  %resp_json(['si',Msg, IDSintoma]).
 handle_server_resolve_answer(Msg, IDSintoma) :-
-  % atom_string(MsgA, Msg),
-  % atom_string(IDA, IDSintoma),
-  % answer_yes_or_no(Msg),
-  no_tiene(Rta, IDSintoma),
+  no_tiene(Msg, IDSintoma),
+  % retractall(sintoma(IDSintoma, _)),
   server_abracadabra.
-  % resp_json(['No',Msg, IDSintoma]).
-
+/*
+handle_server_resolve_answer(_, IDSintoma) :-
+  sintoma(IDSintoma, NomSintoma),
+  resp_json(['Podrias contestas si o no, tienes ~w?'],
+  server_resolve_answer, point{
+    replace: NomSintoma,
+    nomSintoma: NomSintoma,
+    idSintoma: IDSintoma
+  }).
+*/
 
 /******************************************************************/
 :- http_server(route, [port(8008)]).
