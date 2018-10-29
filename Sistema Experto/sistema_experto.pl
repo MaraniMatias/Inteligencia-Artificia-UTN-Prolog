@@ -1,6 +1,6 @@
 % TODO: algo mas parecido a eli
 :- protocola('log_sistema_experto.log').
-:- writeln('VERSION v1.2').
+:- writeln('VERSION v1.3').
 :- dynamic alergia/4.
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
@@ -257,19 +257,19 @@ conoce_sintomas('conozco').
 conoce_sintomas('puedo nombrarlos').
 conoce_sintomas('puedo decírtelos').
 
-answer_yer_or_no('SI').
-answer_yer_or_no('si').
-answer_yer_or_no('creo').
-answer_yer_or_no('NO').
-answer_yer_or_no('no').
-answer_yer_or_no('no se').
+answer_yes_or_no('SI').
+answer_yes_or_no('si').
+answer_yes_or_no('creo').
+answer_yes_or_no('NO').
+answer_yes_or_no('no').
+answer_yes_or_no('no se').
 
-answer_yer_or_no(S, WL) :-
+answer_yes_or_no(S, WL) :-
   read_to_string(S, WL),
-  answer_yer_or_no(S).
-answer_yer_or_no(S, WL) :-
+  answer_yes_or_no(S).
+answer_yes_or_no(S, WL) :-
   writeln('No estoy seguro de entenderte, podrás decir si o no.'),
-  answer_yer_or_no(S, WL).
+  answer_yes_or_no(S, WL).
 
 answer_control_ask(String, _, siConoceSintoma) :-
   conoce_sintomas(String).
@@ -306,13 +306,13 @@ alergiaSam(ListSintomas) :-
   show_alergia(ListAlergiasPriorites),
   writeln('Te haré unas preguntas para averiguar de que alergia se trata.'),
   writeln('Algún familiar con antecedentes?'),
-  answer_yer_or_no(_, _),
+  answer_yes_or_no(_, _),
   writeln('Bien.'),
   abracadabra(ListAlergiasPriorites).
 
 % Contesto NO
 alergiaSam(noConoceSintoma) :-
-  writeln('Buen, ningún problema.'),
+  writeln('Bien, ningún problema.'),
   find_all_alergias(ListAlergias),
   sort_by_priorities(ListAlergias, ListAlergiasPriorites),
   writeln('Te haré unas preguntas.'),

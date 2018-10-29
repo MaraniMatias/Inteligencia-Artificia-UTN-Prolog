@@ -105,7 +105,9 @@ export default {
         this.axios(`/${text.data.text}`)
           .then(({ message, next }) => {
             this.nextAPI = next || this.nextAPI;
-            this.sendMessage(message);
+            message.forEach((msg) => {
+              this.sendMessage(msg);
+            });
           })
           .catch((error) => {
             console.error(error);
