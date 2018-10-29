@@ -28,7 +28,12 @@ handle_hello(Name) :-
 
 /******************************************************************/
 :- route_get(start, handle_start).
-handle_start :- resp_json('hola, soy alergiaSam').
+handle_start :- 
+  resp_json([
+  'hola, soy alergiaSam', 
+  'Estaré ayudándote a descubrir tus alergias.',
+  'Conoces algún síntoma? O necesitas ayuda para describirlos?'
+  ]).
 
 /******************************************************************/
 :- route_get(send/Message, handle_send(Message)).

@@ -125,8 +125,10 @@ export default {
   },
   created() {
     this.axios('/start')
-      .then((msg) => {
-        this.sendMessage(msg);
+      .then((data) => {
+        data.forEach((msg) => {
+          this.sendMessage(msg);
+        });
       })
       .catch((error) => {
         console.error(error);
