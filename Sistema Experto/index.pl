@@ -8,6 +8,13 @@
 :- use_module(library(http/json)).
 :- use_module(library(arouter)).
 
+/******************************************************************/
+rest_all :-
+  retractall(list_alergias_priorites(_)),
+  retractall(sintomas_alergia(_)),
+  retractall(sintoma_confirmado(_, _)),
+  open_db_alergia,
+  open_db_sintomas.
 
 /******************************************************************/
 hendle_generic :-
@@ -27,7 +34,7 @@ resp_json(Message, Next) :-
 resp_json(Message) :-
   hendle_generic,
   json_write_dict(current_output, point{message:Message}).
-resp_answer_yes_or_no(Next) :-
+resp_yes_or_no(Next) :-
   resp_json([
     'Esperaba "Si" o "No"'
   ], Next).
@@ -43,8 +50,7 @@ handle_hello(Name) :-
 :- route_get(send/start, handle_start).
 :- route_get(send/start/_, handle_start).
 handle_start :-
-  retractall(list_alergias_priorites(_)),
-  open_db,
+  rest_all,
   resp_json([
   'hola, soy alergiaSam',
   'Estaré ayudándote a descubrir tus alergias.',
@@ -54,10 +60,26 @@ handle_start :-
 
 /******************************************************************/
 :- route_get(send/answer_control_ask/Message, handle_answer_control_ask(Message)).
+
+yes_or_no(si).
+yes_or_no('SI').
+yes_or_no('Si').
+yes_or_no('creo').
+yes_or_no(no).
+yes_or_no('NO').
+yes_or_no('No').
+yes_or_no('no se').
+yes_or_no(X) :-
+  atom_string(X, S),
+  yes_or_no(S).
+
 handle_answer_control_ask(String) :-
+  yes_or_no(String),
   split_string(String, ' ,', ',', WordList),
   answer_control_ask(String, WordList, Rta),
   server_alergiaSam(Rta).
+handle_answer_control_ask(_) :-
+  resp_yes_or_no(no_conoce_sintoma).
   % resp_json(['Adios, que tengas un buen dia.']).
 
 /******************************************************************/
@@ -66,34 +88,28 @@ server_alergiaSam(noConoceSintoma) :-
   resp_json([
     'Bien, ningún problema.',
     'Te haré unas preguntas.',
-    'Comenzamos ?'
+    'Algún familiar con antecedentes?'
   ], no_conoce_sintoma).
-
-:- route_get(send/no_conoce_sintoma/Message, handle_no_conoce_sintoma(Message)).
-
-answer_yes('si').
-answer_yes('Si').
-answer_yes('SI').
-answer_yes('Dale').
-
-handle_no_conoce_sintoma(String) :-
-  answer_yes(String),
-  find_all_alergias(ListAlergias),
-  sort_by_priorities(ListAlergias, ListAlergiasPriorites),
-  asserta(list_alergias_priorites(ListAlergiasPriorites)),
-  server_abracadabra.
-
-handle_no_conoce_sintoma(_) :-
-  resp_json([
-    'Esperaba un "SI"'
-  ], no_conoce_sintoma ).
-
-/******************************************************************/
 % Contesto SI
 server_alergiaSam(siConoceSintoma) :-
   resp_json(['Cuéntame que síntomas tienes.'], si_conoce_sintoma).
 
+:- route_get(send/no_conoce_sintoma/Message, handle_no_conoce_sintoma(Message)).
 :- route_get(send/si_conoce_sintoma/Message, handle_si_conoce_sintoma(Message)).
+
+/******************************************************************/
+% Contesto NO
+handle_no_conoce_sintoma(String) :-
+  yes_or_no(String),
+  find_all_alergias(ListAlergias),
+  sort_by_priorities(ListAlergias, ListAlergiasPriorites),
+  asserta(list_alergias_priorites(ListAlergiasPriorites)),
+  server_abracadabra.
+handle_no_conoce_sintoma(_) :-
+  resp_yes_or_no(no_conoce_sintoma).
+
+/******************************************************************/
+% Contesto SI
 handle_si_conoce_sintoma(String) :-
   split_string(String, ' ,', ',', WordList),
   % Buscar síntomas en nuestra DB
@@ -129,10 +145,10 @@ server_show_alergia([alergia_priority(IDAlergia, _)|_]) :-
 :- route_get(send/abracadabra/Msg, handle_abracadabra(Msg)).
 
 handle_abracadabra(Msg) :-
-  answer_yes_or_no(Msg),
+  yes_or_no(Msg),
   server_abracadabra.
 handle_abracadabra(_) :-
-  resp_answer_yes_or_no(abracadabra).
+  resp_yes_or_no(abracadabra).
 
 /******************************************************************/
 server_abracadabra :-
@@ -144,7 +160,7 @@ server_abracadabra_aux([]) :-
   alergia(IDAlergia, NomAlergia, _, _),
   resp_json([
     'Esos síntomas se corresponde con ~w'
-  ], end, point{replace: NomAlergia}).
+  ], end, point{replace: [NomAlergia]}).
 server_abracadabra_aux([]) :-
   resp_json([
     'No se que decirte esos síntomas no corresponde con ninguna alergias.'
@@ -185,6 +201,7 @@ server_asking_for_sintomas(IDSintoma) :-
 % En caso de haberlo preguntado
 server_asking_for_sintomas(IDSintoma) :-
   sintoma_confirmado(si, IDSintoma),
+  retractall(sintoma(IDSintoma, _)),
   server_abracadabra.
 server_asking_for_sintomas(IDSintoma) :-
   sintoma_confirmado(no, IDSintoma),
@@ -194,9 +211,11 @@ server_asking_for_sintomas(IDSintoma) :-
 
 handle_server_resolve_answer(Msg, IDSintoma) :-
   tiene(Msg, IDSintoma),
+  retractall(sintoma(IDSintoma, _)),
   server_abracadabra.
 handle_server_resolve_answer(Msg, IDSintoma) :-
   no_tiene(Msg, IDSintoma),
+  retractall(sintoma(IDSintoma, _)),
   list_alergias_priorites([_|T]),
   retractall(sintomas_alergia(_)),
   retractall(list_alergias_priorites(_)),

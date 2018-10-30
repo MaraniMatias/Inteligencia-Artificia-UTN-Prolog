@@ -44,10 +44,10 @@ sintoma(17, 'secreción nasal').
 % sintoma(18, 'congestion').
 
 % Alergia a la humedad
-% FIXME garganta y ojos
 % 01 - asma
+% 02 - picor nasal.
+% 05 - estornudos
 % 11 - congestión nasal
-% XX - rinitis alérgica
 % 17 - secreción nasal
 sintoma(19, 'tos').
 % sintoma(20, 'silbidos').

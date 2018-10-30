@@ -3,7 +3,7 @@
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
 :- dynamic sintoma_confirmado/2.
-verision('v1.7').
+verision('v1.8').
 
 /**********************************************************************************/
 open_db_alergia :-
@@ -256,11 +256,13 @@ conoce_sintomas('conozco').
 conoce_sintomas('puedo nombrarlos').
 conoce_sintomas('puedo decírtelos').
 
+answer_yes_or_no(si).
 answer_yes_or_no('SI').
-answer_yes_or_no('si').
+answer_yes_or_no('Si').
 answer_yes_or_no('creo').
+answer_yes_or_no(no).
 answer_yes_or_no('NO').
-answer_yes_or_no('no').
+answer_yes_or_no('No').
 answer_yes_or_no('no se').
 
 answer_yes_or_no(S, WL) :-
@@ -291,7 +293,7 @@ alergiaSam :-
   % Rta -> [...]
   % Rta -> []
   alergiaSam(Rta),
-  format('Hu! mira que hora es!!, me tengo que ir.~nAdios, que tengas un buen dia.~n~n').
+  format('~nHu! mira que hora es!!, me tengo que ir.~nAdios, que tengas un buen dia.~n~n').
   % alergiaSam.
 
 % Contesto Con síntomas
