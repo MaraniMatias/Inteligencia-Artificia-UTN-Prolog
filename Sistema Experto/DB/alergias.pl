@@ -117,7 +117,8 @@ alergia(09, 'Conjuntivitis alérgica', [
 ], 0).
 
 % Alergia a picaduras
-% respiración sibilante, asma, tos
+% respiración sibilante
+% asma
 % opresión de garganta
 % dolor de estómago
 % vómitos

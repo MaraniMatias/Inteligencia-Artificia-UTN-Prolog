@@ -86,7 +86,6 @@ sintoma(37, 'mayor sensibilidad a la luz').
 
 % Alergia a picaduras
 % 01 - asma,
-% 19 - tos
 % 28 - roncha en la piel
 % 29 - inflamación
 sintoma(38, 'dificultad para respirar').
