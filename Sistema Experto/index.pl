@@ -106,6 +106,7 @@ handle_si_conoce_sintoma(String) :-
   % writeln(ListAlergias),
   sort_by_priorities(ListAlergias, ListSintomas, ListAlergiasPriorites),
   % writeln(ListAlergiasPriorites),
+  retractall(list_alergias_priorites(_)),
   asserta(list_alergias_priorites(ListAlergiasPriorites)),
   server_show_alergia(ListAlergiasPriorites).
 
@@ -194,35 +195,37 @@ server_asking_for_sintomas(IDSintoma) :-
   server_abracadabra.
 server_asking_for_sintomas(IDSintoma) :-
   sintoma_confirmado(no, IDSintoma),
-
-  list_alergias_priorites([alergia_priority(IDAlergia, _)|T]),
-  retractall(sintomas_alergia(_)),
-  asserta(sintomas_alergia(IDAlergia)),
-  retract(list_alergias_priorites(_)),
-  asserta(list_alergias_priorites(T)),
-  open_db_sintomas,
   server_abracadabra.
 
 :- route_get(send/server_resolve_answer/ID/Msg, handle_server_resolve_answer(Msg, ID)).
 
 handle_server_resolve_answer(Msg, IDSintoma) :-
   tiene(Msg, IDSintoma),
-  % retractall(sintoma(IDSintoma, _)),
   server_abracadabra.
 handle_server_resolve_answer(Msg, IDSintoma) :-
   no_tiene(Msg, IDSintoma),
-  % retractall(sintoma(IDSintoma, _)),
+  list_alergias_priorites([alergia_priority(IDAlergia, _)|T]),
+  retractall(sintomas_alergia(_)),
+  asserta(sintomas_alergia(IDAlergia)),
+  retractall(list_alergias_priorites(_)),
+  asserta(list_alergias_priorites(T)),
+  open_db_sintomas,
   server_abracadabra.
 
 handle_server_resolve_answer(_, IDSintoma) :-
-  % sintoma(IDSintoma, NomSintoma),
-  % resp_json(['Podrias contestas si o no, tienes ~w?'],
-  resp_json(['Podrias contestas si o no, gracias'],
+  resp_json(['Podrias contestar si o no, gracias'],
   server_resolve_answer, point{
-    % replace: NomSintoma,
-    % nomSintoma: NomSintoma,
     idSintoma: IDSintoma
   }).
+
+/******************************************************************/
+:- route_get(send/end/_, handle_end).
+
+handle_end :-
+  resp_json([
+    'Hu! mira que hora es!!, me tengo que ir.',
+    'Adios, que tengas un buen dia.'
+  ], start).
 
 /******************************************************************/
 :- http_server(route, [port(8008)]).

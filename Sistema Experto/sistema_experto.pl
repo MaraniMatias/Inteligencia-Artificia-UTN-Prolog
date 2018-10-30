@@ -3,7 +3,7 @@
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
 :- dynamic sintoma_confirmado/2.
-verision('v1.5').
+verision('v1.6').
 
 /**********************************************************************************/
 open_db_alergia :-
@@ -291,8 +291,8 @@ alergiaSam :-
   % Rta -> [...]
   % Rta -> []
   alergiaSam(Rta),
-  format('Adios, que tengas un buen dia.~n~n').
-  %alergiaSam.
+  format('Hu! mira que hora es!!, me tengo que ir.~nAdios, que tengas un buen dia.~n~n').
+  % alergiaSam.
 
 % Contesto Con síntomas
 alergiaSam(ListSintomas) :-
