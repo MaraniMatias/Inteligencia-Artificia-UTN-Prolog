@@ -76,15 +76,16 @@ sintoma(33, 'descamación').
 % Conjuntivitis alérgica
 % 08 - picor en ojos,
 % 12 - enrojecimiento de los ojos,
+% 13 - lagrimeo
 sintoma(34, 'inflamación de la conjuntiva').
 % sintoma(35, 'mucosa conjuntiva').
-sintoma(36, 'incremento del lagrimeo').
+% sintoma(36, 'incremento del lagrimeo').
 sintoma(37, 'mayor sensibilidad a la luz').
 
 % Alergia a picaduras
 % 01 - asma,
 % 28 - roncha en la piel
-% 29 - inflamación
+% 29 - inflamación en piel
 sintoma(38, 'dificultad para respirar').
 sintoma(39, 'dolor de estómago').
 sintoma(40, 'vómitos').

@@ -3,7 +3,7 @@
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
 :- dynamic sintoma_confirmado/2.
-verision('v2.00').
+verision('v2.01').
 
 /**********************************************************************************/
 open_db_alergia :-
@@ -177,16 +177,17 @@ pivoting(alergia_priority(ID1, H), [alergia_priority(ID2, X)|T], L, [alergia_pri
 % Preguntar por cada síntoma que tiene la alergia que no fueron preguntados.
 
 % Como no restringimos entre si o no, tenemos una lista de hechos equivalentes.
-tiene('s'           , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('si'          , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('poco'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('apenas'      , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('algo'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('puede'       , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('puede ser'   , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('creo'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('creo que si' , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('bastante'    , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('s'               , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('si'              , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('poco'            , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('apenas'          , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('algo'            , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('puede'           , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('puede ser'       , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('creo'            , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('creo que si'     , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('bastante'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('todo el tiempo'  , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 
 no_tiene('n'        , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
 no_tiene('no'       , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
@@ -260,7 +261,7 @@ abracadabra([]) :-
   format('Algunos de esos síntomas se corresponde con ~w
   seria mejor hacer unos estudios personalmente.', [NomAlergia]).
 abracadabra([]) :-
-  writeln('No se que decirte esos síntomas no corresponde con ninguna alergias.').
+  writeln('No se que decirte esos síntomas no corresponde con NINGUNA alergias.').
 % Bueno, en realidad acá :D
 abracadabra([alergia_priority(IDAlergia, _)|T]) :-
   alergia(IDAlergia, _, ListSintomas, _),
