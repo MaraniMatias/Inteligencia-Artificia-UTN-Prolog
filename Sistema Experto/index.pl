@@ -220,7 +220,7 @@ handle_server_resolve_answer(Msg, IDSintoma) :-
   retractall(sintomas_alergia(_)),
   retractall(list_alergias_priorites(_)),
   asserta(list_alergias_priorites(T)),
-  open_db_sintomas,
+  % open_db_sintomas,
   server_abracadabra.
 
 handle_server_resolve_answer(_, IDSintoma) :-

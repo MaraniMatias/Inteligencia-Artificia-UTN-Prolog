@@ -12,16 +12,16 @@ sintoma(07, 'irritabilidad').
 sintoma(08, 'picor de ojos').
 sintoma(08, 'picor en los ojos').
 sintoma(08, 'picazón de ojos').
-% sintoma(09, 'pitidos en el pecho').
 sintoma(09, 'goteo nasal').
 sintoma(10, 'sensación de arenilla en los ojos').
 sintoma(11, 'congestión nasal').
 
 % Ácaros
-% 08 - picor de ojos
-% 05 - estornudos
+% 01 - asma
 % 02 - picor nasal
-% XX - rinitis alérgica
+% 05 - estornudos
+% 08 - picor de ojos
+% 11 - congestión nasal
 sintoma(12, 'enrojecimiento de ojos').
 sintoma(12, 'enrojecimiento de los ojos').
 sintoma(13, 'lagrimeo').
@@ -32,16 +32,15 @@ sintoma(17, 'secreción nasal').
 
 % Rinitis alérgica
 % 01 - asma
-% 04 - dolor de cabeza
-% 06 - fatiga
 % 02 - picazon nasal
+% 04 - dolor de cabeza
 % 05 - estornudos
 % 08 - picor de ojos
 % 11 - congestión nasal
 % 12 - enrojecimiento de ojos
 % 13 - lagrimeo
 % 17 - secreción nasal
-% sintoma(18, 'congestion').
+% 18 - congestion
 
 % Alergia a la humedad
 % 01 - asma
@@ -67,9 +66,8 @@ sintoma(24, 'pérdida olfativa').
 % sintoma(25, 'escozor').
 
 % Alergia al sol
-% sintoma(26, 'erupciones').
-% sintoma(27, 'eccemas').
-% sintoma(28, 'urticaria').
+% 27 - eccemas
+sintoma(28, 'roncha en la piel').
 sintoma(29, 'inflamación en piel').
 sintoma(30, 'presencia de ronchas').
 sintoma(31, 'picor en la piel').
@@ -77,8 +75,8 @@ sintoma(32, 'ampollas').
 sintoma(33, 'descamación').
 
 % Conjuntivitis alérgica
-% 12 - enrojecimiento de los ojos,
 % 08 - picor en ojos,
+% 12 - enrojecimiento de los ojos,
 sintoma(34, 'inflamación de la conjuntiva').
 % sintoma(35, 'mucosa conjuntiva').
 sintoma(36, 'incremento del lagrimeo').

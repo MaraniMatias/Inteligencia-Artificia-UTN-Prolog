@@ -41,8 +41,6 @@ alergia(01, 'Alergia los ácaros', [
   sintoma_peso(13, 5),
   sintoma_peso(14, 25),
   sintoma_peso(17, 5)
-  % sintoma_peso(15, 20),
-  % sintoma_peso(18, 5)
 ], 90).
 
 % Rinitis alérgica
@@ -76,31 +74,32 @@ alergia(04, 'Alergia a la humedad', [
   sintoma_peso(22, 6)
 ], 0).
 
-% alergia gatos
+% alergia animales
 % congestión nasal, secreción nasal, pérdida olfativa,
 % problemas respiratorios, fatiga, escozor, lagrimeo,
 % enrojecimiento de ojos
 alergia(06, 'Alergia animales', [
-  sintoma_peso(05, 20),
+  sintoma_peso(05, 25),
+  sintoma_peso(06, 5),
   sintoma_peso(11, 20),
   sintoma_peso(12, 15),
   sintoma_peso(13, 10),
+  sintoma_peso(15, 5),
   sintoma_peso(17, 10),
   sintoma_peso(21, 5),
-  sintoma_peso(24, 5),
-  sintoma_peso(06, 5)
-  % sintoma_peso(15, 10),
+  sintoma_peso(24, 5)
 ], 70).
 
 % Alergia al sol
 % Erupciones, Eccemas, Urticaria, Enrojecimiento
 % Inflamación, Picor, Ampollas, Descamación
 alergia(08, 'Alergia al sol', [
+  sintoma_peso(28, 5),
+  sintoma_peso(29, 20),
   sintoma_peso(30, 30),
   sintoma_peso(31, 30),
-  sintoma_peso(29, 20),
   sintoma_peso(32, 10),
-  sintoma_peso(33, 10)
+  sintoma_peso(33, 5)
 ], 0).
 
 % Conjuntivitis alérgica
@@ -109,28 +108,28 @@ alergia(08, 'Alergia al sol', [
 % Incremento del lagrimeo o secreción acuosa.
 % Mayor sensibilidad a la luz.
 alergia(09, 'Conjuntivitis alérgica', [
-  sintoma_peso(12, 30),
   sintoma_peso(08, 30),
+  sintoma_peso(12, 30),
+  sintoma_peso(34, 10),
   sintoma_peso(36, 20),
-  sintoma_peso(37, 10),
-  sintoma_peso(34, 10)
+  sintoma_peso(37, 10)
 ], 0).
 
 % Alergia a picaduras
-% respiración sibilante
 % asma
-% opresión de garganta
+% dificultad para respirar
 % dolor de estómago
 % vómitos
 % diarrea
-% urticaria
 % inflamación
+% roncha en la piel
 alergia(10, 'Alergia a picaduras', [
-  sintoma_peso(39, 25),
-  sintoma_peso(40, 25),
-  sintoma_peso(41, 20),
   sintoma_peso(01, 10),
   sintoma_peso(28, 10),
-  sintoma_peso(38, 10)
+  sintoma_peso(29, 5),
+  sintoma_peso(38, 5),
+  sintoma_peso(39, 25),
+  sintoma_peso(40, 25),
+  sintoma_peso(41, 20)
 ], 60).
 
