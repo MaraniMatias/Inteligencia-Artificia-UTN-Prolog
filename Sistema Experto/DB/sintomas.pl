@@ -27,6 +27,7 @@ sintoma(12, 'enrojecimiento de los ojos').
 sintoma(13, 'lagrimeo').
 sintoma(14, 'picazón de la piel').
 sintoma(14, 'picazón de piel').
+sintoma(14, 'picazón en la piel').
 % sintoma(15, 'problemas respiratorios').
 sintoma(17, 'secreción nasal').
 
@@ -40,7 +41,6 @@ sintoma(17, 'secreción nasal').
 % 12 - enrojecimiento de ojos
 % 13 - lagrimeo
 % 17 - secreción nasal
-% 18 - congestion
 
 % Alergia a la humedad
 % 01 - asma
