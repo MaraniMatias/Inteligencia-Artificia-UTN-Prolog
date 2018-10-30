@@ -1,9 +1,9 @@
 :- protocola('log_sistema_experto.log').
-:- writeln('VERSION v1.4').
 :- dynamic alergia/4.
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
 :- dynamic sintoma_confirmado/2.
+verision('v1.5').
 
 /**********************************************************************************/
 open_db_alergia :-
@@ -330,6 +330,8 @@ alergiaSam(siConoceSintoma) :-
 
 inicio :- start.
 start :-
+  verision(V),
+  format('VERSION ~w', [V]),
   open_db,
   retractall(sintomas_alergia(_)),
   retractall(sintoma_confirmado(_, _)),

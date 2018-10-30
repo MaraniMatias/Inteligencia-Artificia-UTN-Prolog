@@ -108,8 +108,10 @@ export default {
             if (typeof meta !== 'undefined') {
               if (typeof meta.replace !== 'undefined') {
                 this.sendMessage(message[0].replace('~w', meta.replace.toUpperCase()));
+              } else {
+                this.sendMessage(message[0]);
               }
-              if (typeof meta.nomSintoma !== 'undefined') {
+              if (typeof meta.idSintoma !== 'undefined') {
                 // "meta": {"idSintoma":2, "nomSintoma":"picor nasal"},
                 this.nextAPI = `${next}/${meta.idSintoma}`;
               }

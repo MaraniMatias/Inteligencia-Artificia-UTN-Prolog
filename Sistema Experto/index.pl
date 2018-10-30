@@ -12,9 +12,10 @@
 /******************************************************************/
 hendle_generic :-
   cors_enable,
+  verision(V),
   format('Content-Type: application/json~n'),
   format('Server: nginx/1.10.3~n'),
-  format('Version: 0.1.0~n'),
+  format('Version: ~w~n', [V]),
   format('Access-Control-Allow-Origin: *~n~n').
 
 resp_json(Message, Next, Meta) :-
@@ -42,6 +43,7 @@ handle_send(Message) :-  resp_json(Message).
 
 /******************************************************************/
 :- route_get(send/start, handle_start).
+:- route_get(send/start/_, handle_start).
 handle_start :-
   retractall(list_alergias_priorites(_)),
   open_db,
@@ -67,7 +69,7 @@ server_alergiaSam(noConoceSintoma) :-
     'Bien, ningún problema.',
     'Te haré unas preguntas.',
     'Comenzamos ?'
-  ], no_conoce_sintoma ).
+  ], no_conoce_sintoma).
 
 :- route_get(send/no_conoce_sintoma/Message, handle_no_conoce_sintoma(Message)).
 
@@ -143,35 +145,32 @@ server_abracadabra_aux([]) :-
   alergia(IDAlergia, NomAlergia, _, _),
   resp_json([
     'Esos síntomas se corresponde con ~w'
-  ], start, point{replace: NomAlergia}).
+  ], end, point{replace: NomAlergia}).
 server_abracadabra_aux([]) :-
   resp_json([
     'No se que decirte esos síntomas no corresponde con ninguna alergias.'
-  ], start).
-server_abracadabra_aux([alergia_priority(IDAlergia, _)|T]) :-
+  ], end).
+server_abracadabra_aux([alergia_priority(IDAlergia, _)|_]) :-
   alergia(IDAlergia, _, ListSintomas, _),
   server_asking_for_sintomas(ListSintomas).
   % update_sintomas_alergia(IDAlergia, T), % TODO ver respuetas line 35
   % server_abracadabra_aux(T).
 % server_abracadabra_aux([_|T]) :-
   % server_abracadabra_aux(T).
-% TODO Ojo con las alergias???
-server_abracadabra_aux([_|T]) :-
-  retract(list_alergias_priorites(ListAlergiasPriorites)),
-  asserta(list_alergias_priorites(T)),
-  resp_json([
-    'lineas 163'
-  ], start).
 
 /******************************************************************/
 % preguntar por cada síntoma no preguntado
 server_asking_for_sintomas([]) :-
   open_db_sintomas,
-  resp_json([
-  'lineas 171'
-  ], start).
-server_asking_for_sintomas([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
-  sintoma(IDSintoma, NomSintoma),
+  list_alergias_priorites([alergia_priority(IDAlergia, _)|T]),
+  retractall(sintomas_alergia(_)),
+  asserta(sintomas_alergia(IDAlergia)),
+  retract(list_alergias_priorites(_)),
+  asserta(list_alergias_priorites(T)),
+  % resp_json(['lineas 171'], start).
+  server_abracadabra.
+server_asking_for_sintomas([sintoma_peso(IDSintoma, _)|_]) :-
+  sintoma(IDSintoma, _),
   server_asking_for_sintomas(IDSintoma). % TODO en construcion
 server_asking_for_sintomas([_|ListSintomas]) :-
   server_asking_for_sintomas(ListSintomas).
@@ -195,6 +194,8 @@ server_asking_for_sintomas(IDSintoma) :-
   server_abracadabra.
 server_asking_for_sintomas(IDSintoma) :-
   sintoma_confirmado(no, IDSintoma),
+  retract(list_alergias_priorites([_|T])),
+  asserta(list_alergias_priorites(T)),
   server_abracadabra.
 
 :- route_get(send/server_resolve_answer/ID/Msg, handle_server_resolve_answer(Msg, ID)).
@@ -207,16 +208,16 @@ handle_server_resolve_answer(Msg, IDSintoma) :-
   no_tiene(Msg, IDSintoma),
   % retractall(sintoma(IDSintoma, _)),
   server_abracadabra.
-/*
+
 handle_server_resolve_answer(_, IDSintoma) :-
-  sintoma(IDSintoma, NomSintoma),
-  resp_json(['Podrias contestas si o no, tienes ~w?'],
+  % sintoma(IDSintoma, NomSintoma),
+  % resp_json(['Podrias contestas si o no, tienes ~w?'],
+  resp_json(['Podrias contestas si o no, gracias'],
   server_resolve_answer, point{
-    replace: NomSintoma,
-    nomSintoma: NomSintoma,
+    % replace: NomSintoma,
+    % nomSintoma: NomSintoma,
     idSintoma: IDSintoma
   }).
-*/
 
 /******************************************************************/
 :- http_server(route, [port(8008)]).
