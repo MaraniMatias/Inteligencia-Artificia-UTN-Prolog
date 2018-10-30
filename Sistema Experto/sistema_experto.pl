@@ -3,7 +3,7 @@
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
 :- dynamic sintoma_confirmado/2.
-verision('v1.8').
+verision('v1.10').
 
 /**********************************************************************************/
 open_db_alergia :-
@@ -22,6 +22,7 @@ assert_sintoma_confirmado([IDSintoma|T]) :-
   assert_sintoma_confirmado(si, IDSintoma),
   assert_sintoma_confirmado(T).
 assert_sintoma_confirmado(Tiene, IDSintoma) :-
+  retractall(sintoma(IDSintoma, _)),
   assertz(sintoma_confirmado(Tiene, IDSintoma)).
 
 update_sintomas_alergia(IDAlergia, _) :-
@@ -210,10 +211,25 @@ asking_for_sintomas([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
   asking_for_sintomas(IDSintoma, NomSintoma),
   asking_for_sintomas(ListSintomas).
 
+check([]).
+check([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
+  sintoma_confirmado(si, IDSintoma),
+  check(ListSintomas).
+check([sintoma_peso(IDSintoma, Peso)|ListSintomas]) :-
+  sintoma_confirmado(no, IDSintoma),
+  Peso < 10,
+  check(ListSintomas).
+
+abracadabra([]) :-
+  sintomas_alergia(IDAlergia),
+  alergia(IDAlergia, NomAlergia, ListSintomas, _),
+  check(ListSintomas),
+  format('Esos síntomas se corresponde con ~w~n', [NomAlergia]).
 abracadabra([]) :-
   sintomas_alergia(IDAlergia),
   alergia(IDAlergia, NomAlergia, _, _),
-  format('Esos síntomas se corresponde con ~w~n', [NomAlergia]).
+  format('Algunos de esos síntomas se corresponde con ~w
+  seria mejor hacer unos estudios personalmente.', [NomAlergia]).
 abracadabra([]) :-
   writeln('No se que decirte esos síntomas no corresponde con ninguna alergias.').
 abracadabra([alergia_priority(IDAlergia, _)|T]) :-
@@ -293,7 +309,7 @@ alergiaSam :-
   % Rta -> [...]
   % Rta -> []
   alergiaSam(Rta),
-  format('~nHu! mira que hora es!!, me tengo que ir.~nAdios, que tengas un buen dia.~n~n').
+  format('~nHu! Mira que hora es!!, me tengo que ir.~nAdios, que tengas un buen día.~n~n').
   % alergiaSam.
 
 % Contesto Con síntomas
@@ -306,7 +322,7 @@ alergiaSam(ListSintomas) :-
   % writeln(ListAlergiasPriorites),
   show_alergia(ListAlergiasPriorites),
   writeln('Te haré unas preguntas para averiguar de que alergia se trata.'),
-  writeln('Algún familiar con antecedentes?'),
+  writeln('Algún familiar con antecedente de alergia?'),
   answer_yes_or_no(_, _),
   writeln('Bien.'),
   abracadabra(ListAlergiasPriorites).
@@ -317,7 +333,7 @@ alergiaSam(noConoceSintoma) :-
   find_all_alergias(ListAlergias),
   sort_by_priorities(ListAlergias, ListAlergiasPriorites),
   writeln('Te haré unas preguntas.'),
-  writeln('Algún familiar con antecedentes?'),
+  writeln('Algún familiar con antecedente de alergia?'),
   answer_yes_or_no(_, _),
   writeln('Bien.'),
   abracadabra(ListAlergiasPriorites).

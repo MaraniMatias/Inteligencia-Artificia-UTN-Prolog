@@ -88,7 +88,7 @@ server_alergiaSam(noConoceSintoma) :-
   resp_json([
     'Bien, ningún problema.',
     'Te haré unas preguntas.',
-    'Algún familiar con antecedentes?'
+    'Algún familiar con antecedente de alergia?'
   ], no_conoce_sintoma).
 % Contesto SI
 server_alergiaSam(siConoceSintoma) :-
@@ -157,9 +157,17 @@ server_abracadabra :-
 
 server_abracadabra_aux([]) :-
   sintomas_alergia(IDAlergia),
-  alergia(IDAlergia, NomAlergia, _, _),
+  alergia(IDAlergia, NomAlergia, ListSintomas, _),
+  check(ListSintomas),
   resp_json([
     'Esos síntomas se corresponde con ~w'
+  ], end, point{replace: [NomAlergia]}).
+server_abracadabra_aux([]) :-
+  sintomas_alergia(IDAlergia),
+  alergia(IDAlergia, NomAlergia, _, _),
+  resp_json([
+    'Algunos de eso síntomas se corresponde con ~w',
+    'Necesitamos hacer unos estudios personalmente.'
   ], end, point{replace: [NomAlergia]}).
 server_abracadabra_aux([]) :-
   resp_json([
@@ -224,7 +232,7 @@ handle_server_resolve_answer(Msg, IDSintoma) :-
   server_abracadabra.
 
 handle_server_resolve_answer(_, IDSintoma) :-
-  resp_json(['Podrias contestar si o no, gracias'],
+  resp_json(['Podrías contestar si o no, gracias'],
   server_resolve_answer, point{
     idSintoma: IDSintoma
   }).
@@ -234,8 +242,8 @@ handle_server_resolve_answer(_, IDSintoma) :-
 
 handle_end :-
   resp_json([
-    'Hu! mira que hora es!!, me tengo que ir.',
-    'Adios, que tengas un buen dia.'
+    'Hu! Mira que hora es!!, me tengo que ir.',
+    'Adios, que tengas un buen día.'
   ], start).
 
 /******************************************************************/

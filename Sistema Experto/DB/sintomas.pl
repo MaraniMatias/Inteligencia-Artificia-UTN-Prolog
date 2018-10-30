@@ -66,7 +66,6 @@ sintoma(24, 'pérdida olfativa').
 % sintoma(25, 'escozor').
 
 % Alergia al sol
-% 27 - eccemas
 sintoma(28, 'roncha en la piel').
 sintoma(29, 'inflamación en piel').
 sintoma(30, 'presencia de ronchas').
