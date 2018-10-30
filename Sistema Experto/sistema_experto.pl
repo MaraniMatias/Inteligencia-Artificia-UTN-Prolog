@@ -3,7 +3,7 @@
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
 :- dynamic sintoma_confirmado/2.
-verision('v2.01').
+verision('v2.03').
 
 /**********************************************************************************/
 open_db_alergia :-
@@ -249,6 +249,28 @@ check([sintoma_peso(IDSintoma, Peso)|ListSintomas]) :-
   Peso < 10,
   check(ListSintomas).
 
+/**********************************************************************************/
+% Ordenar síntomas según el peso que le corresponda en la alergia
+sort_sintomas(ListSintomas, ListSintomas2) :-
+  sort_sintomas_aux(ListSintomas, [], ListSintomas2).
+
+% Ordena una lista de mayor a menor.
+sort_sintomas_aux([], Acc, Acc).
+sort_sintomas_aux([H|T], Acc, Sorted) :-
+  pivoting_simtomas(H, T, L1, L2),
+  sort_sintomas_aux(L1, Acc, Sorted1),
+  sort_sintomas_aux(L2, [H|Sorted1], Sorted).
+
+% No es necesario crear otra regla, Pivoting.
+pivoting_simtomas(_, [], [], []).
+pivoting_simtomas(sintoma_peso(ID1, H), [sintoma_peso(ID2, X)|T], [sintoma_peso(ID2, X)|L], G) :-
+  X =< H,
+  pivoting_simtomas(sintoma_peso(ID1, H), T, L, G).
+pivoting_simtomas(sintoma_peso(ID1, H), [sintoma_peso(ID2, X)|T], L, [sintoma_peso(ID2, X)|G]) :-
+  X > H,
+  pivoting_simtomas(sintoma_peso(ID1, H), T, L, G).
+
+/**********************************************************************************/
 % Toda la magia pasa acá :)
 abracadabra([]) :-
   sintomas_alergia(IDAlergia),
@@ -267,7 +289,8 @@ abracadabra([alergia_priority(IDAlergia, _)|T]) :-
   alergia(IDAlergia, _, ListSintomas, _),
   % Para preguntar, no tiene existir 'sintoma_confirmado' con no
   ask_for_alergia(ListSintomas),
-  asking_for_sintomas(ListSintomas),
+  sort_sintomas(ListSintomas, ListSintomas2),
+  asking_for_sintomas(ListSintomas2),
   update_sintomas_alergia(IDAlergia, T),
   abracadabra(T).
 abracadabra([_|T]) :-
