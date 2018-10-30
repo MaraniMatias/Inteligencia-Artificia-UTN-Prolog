@@ -32,13 +32,13 @@ export default {
         {
           id: 'alergia_sam',
           name: 'AlergiaSam',
-          imageUrl: 'https://avatars3.githubusercontent.com/u/1915989?s=230&v=4',
+          imageUrl: './static/img/logo.png',
         },
       ],
       // the list of all the participant of the conversation.
       // `name` is the user name, `id` is used to establish the author of a message,
       // `imageUrl` is supposed to be the user avatar.
-      titleImageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png',
+      titleImageUrl: './static/img/logo2.png',
       messageList: [],
       newMessagesCount: 0,
       isChatOpen: true,
@@ -164,5 +164,8 @@ export default {
   .sc-header {
     padding: 0px !important;
     min-height: 45px !important;
+  }
+  .sc-header--img {
+    max-height: 40px !important;
   }
 </style>

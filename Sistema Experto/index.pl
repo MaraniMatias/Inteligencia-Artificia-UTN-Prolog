@@ -194,8 +194,13 @@ server_asking_for_sintomas(IDSintoma) :-
   server_abracadabra.
 server_asking_for_sintomas(IDSintoma) :-
   sintoma_confirmado(no, IDSintoma),
-  retract(list_alergias_priorites([_|T])),
+
+  list_alergias_priorites([alergia_priority(IDAlergia, _)|T]),
+  retractall(sintomas_alergia(_)),
+  asserta(sintomas_alergia(IDAlergia)),
+  retract(list_alergias_priorites(_)),
   asserta(list_alergias_priorites(T)),
+  open_db_sintomas,
   server_abracadabra.
 
 :- route_get(send/server_resolve_answer/ID/Msg, handle_server_resolve_answer(Msg, ID)).
