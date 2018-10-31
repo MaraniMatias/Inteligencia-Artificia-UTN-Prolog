@@ -22,7 +22,7 @@ welcome :-
   %%                                      %%
   %%  ?- pack_install(arouter).           %%
   %%                                      %%
-  %%  Vercion:  ~w                      %%
+  %%  Vercion:  ~w                     %%
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   ', [V]).
 :- welcome.
