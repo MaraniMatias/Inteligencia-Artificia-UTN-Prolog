@@ -14,7 +14,9 @@ sintoma(08, 'picor en los ojos').
 sintoma(08, 'picazón de ojos').
 sintoma(09, 'goteo nasal').
 sintoma(10, 'sensación de arenilla en los ojos').
+sintoma(10, 'sensacion de arenilla en los ojos').
 sintoma(11, 'congestión nasal').
+sintoma(11, 'congestion nasal').
 
 % Ácaros
 % 01 - asma
@@ -28,9 +30,11 @@ sintoma(13, 'lagrimeo').
 sintoma(14, 'picor en la piel').
 sintoma(14, 'picazón de la piel').
 sintoma(14, 'picazón de piel').
+sintoma(14, 'picazon de piel').
 sintoma(14, 'picazón en la piel').
 % sintoma(15, 'problemas respiratorios').
 sintoma(17, 'secreción nasal').
+sintoma(17, 'secrecion nasal').
 
 % Rinitis alérgica
 % 01 - asma
@@ -64,6 +68,7 @@ sintoma(22, 'enrojecimiento en nariz').
 % 15 - problemas respiratorios
 % 17 - secreción nasal
 sintoma(24, 'pérdida olfativa').
+sintoma(24, 'perdida olfativa').
 % sintoma(25, 'escozor').
 
 % Alergia al sol
@@ -79,6 +84,7 @@ sintoma(33, 'descamación').
 % 12 - enrojecimiento de los ojos,
 % 13 - lagrimeo
 sintoma(34, 'inflamación de la conjuntiva').
+sintoma(34, 'inflamacion de la conjuntiva').
 % sintoma(35, 'mucosa conjuntiva').
 % sintoma(36, 'incremento del lagrimeo').
 sintoma(37, 'mayor sensibilidad a la luz').
@@ -89,5 +95,7 @@ sintoma(37, 'mayor sensibilidad a la luz').
 % 29 - inflamación en piel
 sintoma(38, 'dificultad para respirar').
 sintoma(39, 'dolor de estómago').
+sintoma(39, 'dolor de estomago').
 sintoma(40, 'vómitos').
+sintoma(40, 'vomitos').
 sintoma(41, 'diarrea').

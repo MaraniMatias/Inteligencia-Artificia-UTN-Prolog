@@ -109,33 +109,35 @@ export default {
         this.axios(`/${text.data.text}`)
           .then(({ message, next, meta }) => {
             this.nextAPI = next || this.nextAPI;
-            if (typeof meta !== "undefined") {
+            if (typeof meta !== 'undefined') {
               message.forEach((msg, index) => {
-                if (typeof meta.replace !== "undefined") {
+                if (typeof meta.replace !== 'undefined') {
                   let w = msg.match(/~w/g);
                   if (w) {
                     w = w.length;
                     // console.log(msg, w, meta.replace);
                     for (let i = 0; i < w; i++) {
-                      msg = msg.replace("~w", meta.replace[i].toUpperCase());
+                      msg = msg.replace('~w', meta.replace[i].toUpperCase());
                     }
                   }
                 }
                 setTimeout(() => {
                   this.sendMessage(msg);
-                }, 150 * index);
+                }, 160 * (index + 1));
               });
-              if (typeof meta.idSintoma !== "undefined") {
+              if (typeof meta.idSintoma !== 'undefined') {
                 // "meta": {"idSintoma":2, "nomSintoma":"picor nasal"},
                 this.nextAPI = `${next}/${meta.idSintoma}`;
               }
             } else {
-              message.forEach(msg => {
-                this.sendMessage(msg);
+              message.forEach((msg, index) => {
+                setTimeout(() => {
+                  this.sendMessage(msg);
+                }, 200 * (index + 1));
               });
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(error);
           })
           .finally(() => {
@@ -151,20 +153,22 @@ export default {
     closeChat() {
       // called when the user clicks on the botton to close the chat
       this.isChatOpen = false;
-    }
+    },
   },
   created() {
-    this.axios("start")
+    this.axios('start')
       .then(({ message, next }) => {
         this.nextAPI = next || this.nextAPI;
-        message.forEach(msg => {
-          this.sendMessage(msg);
+        message.forEach((msg, index) => {
+          setTimeout(() => {
+            this.sendMessage(msg);
+          }, 200 * (index + 1));
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
-  }
+  },
 };
 </script>
 

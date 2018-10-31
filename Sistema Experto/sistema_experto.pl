@@ -236,6 +236,9 @@ asking_for_sintomas([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
 % Para preguntar, no tiene existir 'sintoma_confirmado' con no
 ask_for_alergia([sintoma_peso(IDSintoma, _)|ListSintomas]) :-
   not(sintoma_confirmado(no, IDSintoma)),
+  %TODO Validar que la alergia tenga todos los síntomas a los que dijiste si
+  %TODO Por cada síntoma verificar que este en los de la alergia
+  %TODO Creo que es más fácil desde check
   ask_for_alergia(ListSintomas).
 ask_for_alergia([]).
 
