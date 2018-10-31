@@ -109,7 +109,7 @@ alergia(08, 'Alergia al sol', [
 alergia(09, 'Conjuntivitis alérgica', [
   sintoma_peso(08, 30),
   sintoma_peso(12, 30),
-  sintoma_peso(34, 10),
+  % sintoma_peso(34, 10),
   sintoma_peso(13, 20),
   sintoma_peso(37, 10)
 ], 0).

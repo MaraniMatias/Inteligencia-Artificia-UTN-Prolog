@@ -83,8 +83,8 @@ sintoma(33, 'descamación').
 % 08 - picor en ojos,
 % 12 - enrojecimiento de los ojos,
 % 13 - lagrimeo
-sintoma(34, 'inflamación de la conjuntiva').
-sintoma(34, 'inflamacion de la conjuntiva').
+% sintoma(34, 'inflamación de la conjuntiva').
+% sintoma(34, 'inflamacion de la conjuntiva').
 % sintoma(35, 'mucosa conjuntiva').
 % sintoma(36, 'incremento del lagrimeo').
 sintoma(37, 'mayor sensibilidad a la luz').
