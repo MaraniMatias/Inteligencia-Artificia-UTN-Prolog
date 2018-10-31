@@ -25,6 +25,7 @@ sintoma(11, 'congestión nasal').
 sintoma(12, 'enrojecimiento de ojos').
 sintoma(12, 'enrojecimiento de los ojos').
 sintoma(13, 'lagrimeo').
+sintoma(14, 'picor en la piel').
 sintoma(14, 'picazón de la piel').
 sintoma(14, 'picazón de piel').
 sintoma(14, 'picazón en la piel').
@@ -66,10 +67,10 @@ sintoma(24, 'pérdida olfativa').
 % sintoma(25, 'escozor').
 
 % Alergia al sol
-sintoma(28, 'roncha en la piel').
+% 14 - picor en la piel
+sintoma(28, 'ronchas en la piel').
+sintoma(28, 'presencia de ronchas').
 sintoma(29, 'inflamación en piel').
-sintoma(30, 'presencia de ronchas').
-sintoma(31, 'picor en la piel').
 sintoma(32, 'ampollas').
 sintoma(33, 'descamación').
 

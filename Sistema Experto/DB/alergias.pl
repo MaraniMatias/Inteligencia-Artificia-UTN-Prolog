@@ -94,12 +94,11 @@ alergia(06, 'Alergia animales', [
 % Erupciones, Eccemas, Urticaria, Enrojecimiento
 % Inflamación, Picor, Ampollas, Descamación
 alergia(08, 'Alergia al sol', [
-  sintoma_peso(28, 5),
+  sintoma_peso(28, 30),
   sintoma_peso(29, 20),
-  sintoma_peso(30, 30),
-  sintoma_peso(31, 30),
+  sintoma_peso(14, 30),
   sintoma_peso(32, 10),
-  sintoma_peso(33, 5)
+  sintoma_peso(33, 10)
 ], 0).
 
 % Conjuntivitis alérgica
