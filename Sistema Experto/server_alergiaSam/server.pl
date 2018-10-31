@@ -11,7 +11,21 @@
 :- dynamic sintoma_confirmado/2.
 :- dynamic list_alergias_priorites/1.
 :- ['util.pl'].
-verision('v2.01').
+verision('v2.02').
+
+welcome :-
+  verision(V),
+  format('
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%  Este programa necesita install el   %%
+  %%  sigiente modulo.                    %%
+  %%                                      %%
+  %%  ?- pack_install(arouter).           %%
+  %%                                      %%
+  %%  Vercion:  ~w                      %%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  ', [V]).
+:- welcome.
 
 /******************************************************************/
 hendle_generic :-
