@@ -44,9 +44,6 @@ yes_or_no(no).
 yes_or_no('NO').
 yes_or_no('No').
 yes_or_no('no se').
-yes_or_no(X) :-
-  atom_string(X, S),
-  yes_or_no(S).
 
 /******************************************************************/
 % Hechos que representan conocer un síntoma, digamos que responde ala pregunta,
@@ -73,8 +70,8 @@ find_sintoma_by_word(Word, ID) :-
 search_sintomas([], []) :-
   open_db_sintomas.
 search_sintomas([Word|T], [ID| Sintomas]) :-
-  open_db_sintomas,
   Word \= '', Word \= "", Word \= "y",
+  open_db_sintomas,
   find_sintoma_by_word(Word, ID),
   search_sintomas(T, Sintomas).
 search_sintomas([_|T], Sintomas) :-
@@ -222,22 +219,24 @@ pivoting_simtomas(sintoma_peso(ID1, H), [sintoma_peso(ID2, X)|T], L, [sintoma_pe
 % Preguntar por cada síntoma que tiene la alergia que no fueron preguntados.
 
 % Como no restringimos entre si o no, tenemos una lista de hechos equivalentes.
-tiene('s'               , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('si'              , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('poco'            , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('apenas'          , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('algo'            , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('puede'           , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('puede ser'       , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('creo'            , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('creo que si'     , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('bastante'        , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
-tiene('todo el tiempo'  , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('s'                 , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('si'                , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('poco'              , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('algo'              , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('creo'              , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('puede'             , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('apenas'            , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('bastante'          , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('puede ser'         , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('creo que si'       , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('todo el tiempo'    , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('si todo el tiempo' , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('si, todo el tiempo', IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 
-no_tiene('n'        , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
-no_tiene('no'       , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
-no_tiene('no creo'  , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
-no_tiene('nada'     , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+no_tiene('n'              , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+no_tiene('no'             , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+no_tiene('nada'           , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
+no_tiene('no creo'        , IDSintoma) :- assert_sintoma_confirmado(no, IDSintoma).
 /**********************************************************************************/
 % preguntar por cada síntoma no preguntado
 asking_for_sintomas([]) :-

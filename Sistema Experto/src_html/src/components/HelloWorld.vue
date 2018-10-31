@@ -12,6 +12,7 @@
     :showEmoji="false"
     :showFile="false"
     :showTypingIndicator="showTypingIndicator"
+    :placeholder="Escribe un mensaje."
     :colors="colors"
     :alwaysScrollToBottom="alwaysScrollToBottom" />
 </div>

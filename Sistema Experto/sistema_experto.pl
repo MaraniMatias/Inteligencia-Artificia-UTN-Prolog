@@ -3,7 +3,7 @@
 :- dynamic sintoma/2.
 :- dynamic sintomas_alergia/1.
 :- dynamic sintoma_confirmado/2.
-verision('v2.04').
+verision('v2.05').
 
 /**********************************************************************************/
 open_db_alergia :-

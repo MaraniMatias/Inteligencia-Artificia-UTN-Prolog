@@ -11,7 +11,7 @@
 :- dynamic sintoma_confirmado/2.
 :- dynamic list_alergias_priorites/1.
 :- ['util.pl'].
-verision('v2.02').
+verision('v2.05').
 
 welcome :-
   verision(V),
@@ -73,12 +73,12 @@ handle_start :-
 :- route_get(send/answer_control_ask/Message, handle_answer_control_ask(Message)).
 
 handle_answer_control_ask(String) :-
-  yes_or_no(String),
+  yes_or_no(String), % TODO no permite ingresar sintomas
   split_string(String, ' ,', ',', WordList),
   answer_control_ask(String, WordList, Rta),
   alergiaSam(Rta).
 handle_answer_control_ask(_) :-
-  resp_yes_or_no(no_conoce_sintoma). % XXX falta ver
+  resp_yes_or_no(answer_control_ask).
 
 /******************************************************************/
 % Contesto NO
@@ -155,7 +155,8 @@ abracadabra :-
 
 abracadabra_aux([]) :-
   sintomas_alergia(IDAlergia),
-  alergia(IDAlergia, NomAlergia, ListSintomas, _),
+  alergia(IDAlergia, NomAlergia, _, _),
+  % alergia(IDAlergia, NomAlergia, ListSintomas, _),
   % check(ListSintomas),
   resp_json([
     'Esos síntomas se corresponde con ~w'
