@@ -11,7 +11,7 @@
 :- dynamic sintoma_confirmado/2.
 :- dynamic list_alergias_priorites/1.
 :- ['util.pl'].
-verision('v2.05').
+verision('v2.06').
 
 welcome :-
   verision(V),
