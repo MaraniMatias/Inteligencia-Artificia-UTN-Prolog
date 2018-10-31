@@ -2,10 +2,10 @@
 /******************************************************************/
 open_db_alergia :-
   retractall(alergia(_, _, _, _)),
-  consult('./DB/alergias.pl').
+  consult('../DB/alergias.pl').
 open_db_sintomas :-
   retractall(sintoma(_, _)),
-  consult('./DB/sintomas.pl').
+  consult('../DB/sintomas.pl').
 rest_all :-
   retractall(list_alergias_priorites(_)),
   retractall(sintomas_alergia(_)),

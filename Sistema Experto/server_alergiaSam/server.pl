@@ -10,8 +10,8 @@
 :- dynamic sintomas_alergia/1.
 :- dynamic sintoma_confirmado/2.
 :- dynamic list_alergias_priorites/1.
-:- ['server_util.pl'].
-verision('v2.00').
+:- ['util.pl'].
+verision('v2.01').
 
 /******************************************************************/
 hendle_generic :-
