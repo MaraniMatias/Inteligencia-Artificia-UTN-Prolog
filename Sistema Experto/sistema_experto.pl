@@ -180,6 +180,7 @@ pivoting(alergia_priority(ID1, H), [alergia_priority(ID2, X)|T], L, [alergia_pri
 tiene('s'               , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 tiene('si'              , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 tiene('poco'            , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
+tiene('un poco'         , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 tiene('apenas'          , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 tiene('algo'            , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).
 tiene('puede'           , IDSintoma) :- assert_sintoma_confirmado(si, IDSintoma).

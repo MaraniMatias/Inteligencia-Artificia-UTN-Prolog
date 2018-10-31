@@ -18,69 +18,69 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
-const URL_BASE = "http://localhost:8008";
+const URL_BASE = 'http://localhost:8008';
 
 export default {
-  name: "app",
+  name: 'app',
   data() {
     return {
-      nextAPI: "",
+      nextAPI: '',
       sendingMsg: false,
       participants: [
         {
-          id: "alergia_sam",
-          name: "AlergiaSam",
-          imageUrl: "./static/img/logo.png"
-        }
+          id: 'alergia_sam',
+          name: 'AlergiaSam',
+          imageUrl: './static/img/logo.png',
+        },
       ],
       // the list of all the participant of the conversation.
       // `name` is the user name, `id` is used to establish the author of a message,
       // `imageUrl` is supposed to be the user avatar.
-      titleImageUrl: "./static/img/logo2.png",
+      titleImageUrl: './static/img/logo2.png',
       messageList: [],
       newMessagesCount: 0,
       isChatOpen: true,
-      showTypingIndicator: "", // when set to a value matching the participant.id it shows the typing indicator for the specific user
+      showTypingIndicator: '', // when set to a value matching the participant.id it shows the typing indicator for the specific user
       // when set to true always scrolls the chat to the bottom
       // when new events are in (new message, user starts typing...)
       colors: {
         header: {
-          bg: "#4e8cff",
-          text: "#ffffff"
+          bg: '#4e8cff',
+          text: '#ffffff',
         },
         launcher: {
-          bg: "#4e8cff"
+          bg: '#4e8cff',
         },
         messageList: {
-          bg: "#ffffff"
+          bg: '#ffffff',
         },
         sentMessage: {
-          bg: "#4e8cff",
-          text: "#ffffff"
+          bg: '#4e8cff',
+          text: '#ffffff',
         },
         receivedMessage: {
-          bg: "#eaeaea",
-          text: "#222222"
+          bg: '#eaeaea',
+          text: '#222222',
         },
         userInput: {
-          bg: "#f4f7f9",
-          text: "#565867"
-        }
+          bg: '#f4f7f9',
+          text: '#565867',
+        },
       }, // specifies the color scheme for the component
-      alwaysScrollToBottom: false
+      alwaysScrollToBottom: false,
     };
   },
   methods: {
     axios(url) {
       return axios
         .get(`${URL_BASE}/send/${this.nextAPI}${url}`)
-        .then(resp => {
-          // console.log(resp.data);
+        .then((resp) => {
+          console.log(resp.data);
           return resp.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     },
@@ -92,10 +92,10 @@ export default {
         this.messageList = [
           ...this.messageList,
           {
-            author: "alergia_sam",
-            type: "text",
-            data: { text }
-          }
+            author: 'alergia_sam',
+            type: 'text',
+            data: { text },
+          },
         ];
       }
     },
@@ -116,7 +116,8 @@ export default {
                   if (w) {
                     w = w.length;
                     // console.log(msg, w, meta.replace);
-                    for (let i = 0; i < w; i++) {
+                    for (let i = 0; i < w; i += 1) {
+                      /* eslint no-param-reassign: "warn" */
                       msg = msg.replace('~w', meta.replace[i].toUpperCase());
                     }
                   }
@@ -126,7 +127,7 @@ export default {
                 }, 160 * (index + 1));
               });
               if (typeof meta.idSintoma !== 'undefined') {
-                // "meta": {"idSintoma":2, "nomSintoma":"picor nasal"},
+                // 'meta': {'idSintoma':2, 'nomSintoma':'picor nasal'},
                 this.nextAPI = `${next}/${meta.idSintoma}`;
               }
             } else {
