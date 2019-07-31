@@ -1,9 +1,9 @@
 % Marte alas 18 consulta
 q :- halt.
 
-operacion(13, ListaA) :-
+operacion(13, ListA) :-
   writeln('Ingrese los elementos de la otra lista y para terminar [].'),
-  read_list(ListaB),
+  read_list(ListB),
   concat_list(ListA, ListB, List),
   writeln('Lista A:'), write_list(ListA),
   writeln('Lista B:'), write_list(ListB),
@@ -59,7 +59,7 @@ operacion(1, Lista) :-
 operacion(_, _) :-
   writeln('Opcion invalida').
 
-menu :-
+start :-
   format('~t<-oO MENU Oo->~t~72|~n~n'),
   writeln('Ingrese los elementos de una lista y para terminar [].'),
   read_list(Lista),
@@ -83,9 +83,9 @@ menu :-
   format('Opcion elegida: [~w] ~n', [OPC]),
   OPC \= 0,
   operacion(OPC, Lista), nl,
-  menu.
+  start.
 
-menu :-
+start :-
   writeln('adios'),
   halt.
 
@@ -408,7 +408,6 @@ add_ele_to_list([H1|T1], Ele, [H|T]) :-
   add_ele_to_list(T1, Ele, T),
   H is H1 + Ele.
 
-
 make_list_of_ele(0, _, []).
 make_list_of_ele(C, Ele, [Ele|T]) :-
   C > 0,
@@ -425,4 +424,3 @@ get_ele([Ele|_], Index, Index, Ele).
 get_ele([_|T], IndexCount, IndexFind, Ele) :-
   IC is IndexCount + 1,
   get_ele(T, IC, IndexFind, Ele).
-
