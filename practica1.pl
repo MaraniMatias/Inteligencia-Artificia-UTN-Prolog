@@ -526,3 +526,8 @@ pow(X, Y, Z) :-
   Y1 is Y - 1,
   pow(X, Y1, Z1),
   Z is Z1 * X.
+
+% Start for swi-prolog on vscode
+start :- 
+  suma(15,Sp, Si),
+  write(Sp), nl,  write(Si).

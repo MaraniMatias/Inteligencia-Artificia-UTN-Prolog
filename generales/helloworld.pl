@@ -8,7 +8,7 @@ say_hi(_Request) :-
       format('Content-type: text/plain~n~n'),
       format('Hello World!~n').
 
-main :-
+start :-
   http_server(http_dispatch, [port(3000)]),
   thread_get_message(quit).
 
