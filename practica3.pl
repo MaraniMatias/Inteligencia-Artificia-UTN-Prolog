@@ -30,8 +30,18 @@ longitud(C, Long) :-
   longitud(C1, L1),
   Long is L1 + 1.
 
-% TODO
 % 4. Transformar una cadena en una lista de caracteres.
+ej_4 :-
+  write('Ingrese una cadena de caracteres: '),
+  read(Cadena),
+  convertir(Cadena,Lista),
+  write(Lista).
+
+convertir(Cadena,[H|T]) :-
+  sub_atom(Cadena,0,1,_,H),
+  sub_atom(Cadena,1,_,0,SubCadena),
+  convertir(SubCadena,T).
+convertir('',[]).
 
 % 5. Transformar una cadena de texto en una lista de palabras, tomando
 % como divisor el espacio
@@ -48,8 +58,32 @@ transformar(C, [H|T]) :-
   transformar(C1, T).
 transformar(P, [P]).
 
-% TODO:XXX
 % 6. Hacer un programa que transforme un número entero a binario.
+
+ej_6 :-
+  write('Ingrese un nro entero: '),
+  read(NroEntero),
+  NroEntero\=0,
+  calcularBin(NroEntero,NroBinarioReves),
+  reverse(NroBinarioReves,[],Binario),
+  write('El binario es: '),
+  write(Binario).
+
+ej_6 :-
+  writeln('El binario es: '),
+  write(0).
+
+calcularBin(0,[]).
+calcularBin(NroEntero,[H1|T1]) :-
+  NroEntero\=0,
+  Div is NroEntero//2,
+  calcularBin(Div,T1),
+  H1 is NroEntero mod 2.
+
+reverse([], Zs, Zs).
+reverse([X|Xs], Ys, Zs):-
+          reverse(Xs, [X|Ys], Zs).
+
 % TODO:XXX
 % 7. Hacer un reconocedor de palabras de la forma a n b n .
 
