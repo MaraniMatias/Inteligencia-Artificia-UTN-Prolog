@@ -139,11 +139,13 @@ make_priority([], _, 0).
 
 % Por cada síntoma encontrado dividir el peso por el mayor peso (del síntoma en común)
 % y después sumar los resultados.
-get_priority(IDAlergia, ListSintomas, Value) :-
-  alergia(IDAlergia, _, ListSintomaPeso, _),
+get_priority(IDAlergia, ListSintomas, Priority) :-
+  alergia(IDAlergia, _, ListSintomaPeso, PesoGeneral),
   filter(ListSintomas, ListSintomaPeso, ListSintomaPesoComun),
   max_sintoma_peso(ListSintomaPesoComun, Max),
-  make_priority(ListSintomaPesoComun, Max, Value).
+  make_priority(ListSintomaPesoComun, Max, Value),
+  PG is PesoGeneral + 1,
+  Priority is Value * PG.
 
 % Arma la lista de prioridades por alergia.
 get_list_priority([], _, []).

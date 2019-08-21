@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% alergia(ID, 'Nombre Humano', [SintomaPaso,...], prioridad).
+% alergia(ID, 'Nombre Humano', [SintomaPaso,...], PesoGeneral).
 % sintoma_pesos(sintomaID, Peso)
 % sintoma(ID, '')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,7 +25,7 @@ alergia(00, 'Alergia al polen', [
   sintoma_peso(09, 12),
   sintoma_peso(10, 3),
   sintoma_peso(11, 10)
-], 95).
+], 0.95).
 
 % Alergia ácaros:
 % rinitis alérgica, secreción nasal, picor nasal, estornudos,
@@ -41,7 +41,7 @@ alergia(01, 'Alergia los ácaros', [
   sintoma_peso(13, 5),
   sintoma_peso(14, 25),
   sintoma_peso(17, 5)
-], 90).
+], 0.90).
 
 % Rinitis alérgica
 % congestion,secreción nasal,estornudos
@@ -88,7 +88,7 @@ alergia(06, 'Alergia animales', [
   sintoma_peso(17, 10),
   sintoma_peso(21, 5),
   sintoma_peso(24, 5)
-], 70).
+], 0.70).
 
 % Alergia al sol
 % Erupciones, Eccemas, Urticaria, Enrojecimiento
@@ -130,5 +130,4 @@ alergia(10, 'Alergia a picaduras', [
   sintoma_peso(39, 25),
   sintoma_peso(40, 25),
   sintoma_peso(41, 20)
-], 60).
-
+], 0.60).
