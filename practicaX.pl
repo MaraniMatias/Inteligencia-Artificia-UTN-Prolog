@@ -114,7 +114,7 @@ program :-
   contar_vocales_letras('Manuel Alejandro Mex Mena<', CountVocales, CountNVocales, Resto),
   CountLetras is CountVocales + CountNVocales,
   Caracteres is  CountLetras + Resto,
-  format('~nCaracteres (A): ~w~nNo Vocales (B): ~w~nVocales: ~w~nLetras: ~w~n~n', [Caracteres, CountNVocales, CountVocales, CountLetras]),
+  format('~nCaracteres (A): ~w~nNo Vocales: ~w~nVocales (B): ~w~nLetras: ~w~n~n', [Caracteres, CountNVocales, CountVocales, CountLetras]),
   write('A '),
   es_perfecto(Caracteres), nl,
   write('B '),
